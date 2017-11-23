@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Web.Script.Serialization;
 using System.Text;
-using ImglibApi.Dto;
+using ImglibApi.Controller.Model;
 
 namespace ImglibApiTest
 {
@@ -15,7 +15,7 @@ namespace ImglibApiTest
 			using (var host = new ImglibApi.ImglibHost())
 			{
 
-				var json = new JavaScriptSerializer().Serialize(new PictureDto { Id = 2, Name = "test" });
+				var json = new JavaScriptSerializer().Serialize(new Picture { Id = 2, Name = "test" });
 
 				HttpClient client = new HttpClient();
 				var requestUri = $"http://localhost:9000/image/givepictureback";

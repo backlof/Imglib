@@ -41,13 +41,14 @@
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>True</TypeScriptNoImplicitAny>
     <TypeScriptRemoveComments>True</TypeScriptRemoveComments>
+    <TypeScriptAlwaysStrict>True</TypeScriptAlwaysStrict>
     <TypeScriptOutFile />
     <TypeScriptOutDir />
-    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
-    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
     <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptStrict>True</TypeScriptStrict>
     <TypeScriptMapRoot />
     <TypeScriptSourceRoot />
+	  <TypeScriptCompileBlocked>True</TypeScriptCompileBlocked>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -89,7 +90,6 @@
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <Content Include="Scripts\Api\Model\Enum.tst" />
     <Content Include="Scripts\Api\Model\Model.tst" />
-    <Content Include="tsconfig.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -126,6 +126,7 @@
       <DependentUpon>Enum.tst</DependentUpon>
       <CustomToolNamespace>..\ImglibApi\Controller\Enum\PictureType.cs</CustomToolNamespace>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Scripts\Bundle\Kernel.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\requirejs\require.d.ts" />
   </ItemGroup>

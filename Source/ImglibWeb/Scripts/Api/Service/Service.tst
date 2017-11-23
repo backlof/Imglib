@@ -33,18 +33,13 @@
 		return method.Parameters.First().Type.Name;
 	}
 }
-import { injectable, inject } from "inversify";
-import { $ } from "../jquery-3.2.1.min.js";
-import stuff = require("./../jquery-3.2.1.min.js");
-
 namespace Api {$Classes(:ApiController)[
 	
-	interface I$ClassName {$Methods[
+	export interface I$ClassName {$Methods[
 		$name($FirstParameterName: $FirstParameterType) : JQueryDeferred<$ReturnType>;]
 	}
 
-	@injectable("IRcpService")
-	class $ClassName implements I$ClassName {
+	export class $ClassName implements I$ClassName {
 
 		constructor(private _rcpService: IRcpService) { 
 		}
