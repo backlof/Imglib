@@ -1,19 +1,20 @@
 ﻿
 class Kernel {
 
+	private _apiHost: IApiHost;
 	private _imageService: Api.IImageService;
-	private _rcpService: IRcpService;
+	private _rcpService: IDeferredRcpClient;
 	private _templateResolver: TemplateResolver;
 
-	private static SingletonScope<T>(prop: T, setter: () => T) {
+	private static SingletonScope<T>(prop: T, init: () => T) {
 		if (!prop) {
-			prop = setter();
+			prop = init();
 		}
 		return prop;
 	}
 
-	private static TransientScope<T>(getter: () => T) {
-		return getter();
+	private static TransientScope<T>(init: () => T) {
+		return init();
 	}
 
 	constructor() {
@@ -23,12 +24,16 @@ class Kernel {
 		});
 	}
 
-	get ImageService() {
-		return Kernel.SingletonScope(this._imageService, () => new Api.ImageService(this.RcpService));
+	get ApiHost() {
+		return Kernel.SingletonScope(this._apiHost, () => new OwenSelfHostingApi());
 	}
 
-	get RcpService() {
-		return Kernel.SingletonScope(this._rcpService, () => new RcpService());
+	get ImageService() {
+		return Kernel.SingletonScope(this._imageService, () => new Api.ImageService(this.RcpClient));
+	}
+
+	get RcpClient() {
+		return Kernel.SingletonScope(this._rcpService, () => new LocalRcpClient(this.ApiHost));
 	}
 
 	get TemplateResolver() {

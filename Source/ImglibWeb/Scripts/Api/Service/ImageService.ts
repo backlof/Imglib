@@ -8,7 +8,7 @@ namespace Api {
 
 	export class ImageService implements IImageService {
 
-		constructor(private _rcpService: IRcpService) { 
+		constructor(private _rcpService: IDeferredRcpClient) { 
 		}
 		
 		public givePictureBack(picture: Picture) {

@@ -1,24 +1,29 @@
 ﻿
-class RcpService implements IRcpService {
+interface IApiHost {
+	base: string;
+	name: string;
+}
 
-	private static readonly HostAddress = "http://localhost:9000";
-	private static readonly ApiName = "api";
+class OwenSelfHostingApi implements IApiHost {
+	public base = "http://localhost:9000";
+	public name = "api";
+}
 
-	constructor() {
 
+class LocalRcpClient implements IDeferredRcpClient {
 
-
+	constructor(private _host: IApiHost) {
 	}
 
-	private getUrl(controller: string, method: string) {
-		return `${RcpService.HostAddress}/${RcpService.ApiName}/${controller}/${method}`;
+	private getActionUrl(controller: string, action: string) {
+		return `${this._host.base}/${this._host.name}/${controller}/${action}`;
 	}
 
-	public post<TIn, TOut>(data: TIn, controller: string, method: string): JQueryDeferred<TOut> {
+	public post<TIn, TOut>(data: TIn, controller: string, action: string): JQueryDeferred<TOut> {
 		const promise = $.Deferred<TOut>();
 
 		$.ajax({
-			url: this.getUrl(controller, method),
+			url: this.getActionUrl(controller, action),
 			method: "POST",
 			data: data,
 			dataType: "application/json"
@@ -31,11 +36,11 @@ class RcpService implements IRcpService {
 		return promise;
 	}
 
-	public get<TIn>(data: TIn, controller: string, method: string): JQueryDeferred<void> {
+	public get<TIn>(data: TIn, controller: string, action: string): JQueryDeferred<void> {
 		const promise = $.Deferred<void>();
 
 		$.ajax({
-			url: this.getUrl(controller, method),
+			url: this.getActionUrl(controller, action),
 			method: "GET",
 			data: data,
 			dataType: "application/json"

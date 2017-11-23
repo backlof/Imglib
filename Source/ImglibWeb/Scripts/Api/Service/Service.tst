@@ -41,7 +41,7 @@ namespace Api {$Classes(:ApiController)[
 
 	export class $ClassName implements I$ClassName {
 
-		constructor(private _rcpService: IRcpService) { 
+		constructor(private _rcpService: IDeferredRcpClient) { 
 		}
 		$Methods[
 		public $name($FirstParameterName: $FirstParameterType) {
