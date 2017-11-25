@@ -1,5 +1,4 @@
-﻿
-namespace Api {
+﻿module Api {
 	
 	export interface IImageService {
 		givePictureBack(picture: Picture) : JQueryDeferred<Picture>;
@@ -8,7 +7,7 @@ namespace Api {
 
 	export class ImageService implements IImageService {
 
-		constructor(private _rcpService: IDeferredRcpClient) { 
+		constructor(private _rcpService: Service.IDeferredRcpClient) { 
 		}
 		
 		public givePictureBack(picture: Picture) {

@@ -37,8 +37,8 @@
     <WarningLevel>4</WarningLevel>
     <TypeScriptTarget>ES5</TypeScriptTarget>
     <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
-    <TypeScriptModuleKind>UMD</TypeScriptModuleKind>
-    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
+    <TypeScriptCompileOnSaveEnabled>False</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>True</TypeScriptNoImplicitAny>
     <TypeScriptRemoveComments>True</TypeScriptRemoveComments>
     <TypeScriptAlwaysStrict>True</TypeScriptAlwaysStrict>
@@ -48,7 +48,9 @@
     <TypeScriptStrict>True</TypeScriptStrict>
     <TypeScriptMapRoot />
     <TypeScriptSourceRoot />
-	  <TypeScriptCompileBlocked>True</TypeScriptCompileBlocked>
+    <TypeScriptCompileBlocked>True</TypeScriptCompileBlocked>
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -88,8 +90,8 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
-    <Content Include="Scripts\Api\Model\Enum.tst" />
-    <Content Include="Scripts\Api\Model\Model.tst" />
+    <Content Include="TypeScript\Api\Enum.tst" />
+    <Content Include="TypeScript\Api\Model.tst" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -106,29 +108,40 @@
     <Content Include="Scripts\r.js" />
     <Content Include="Scripts\require.js" />
     <Content Include="Web.config" />
-    <Content Include="Scripts\Api\Service\Service.tst" />
+    <Content Include="TypeScript\Api\Service.tst" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\Api\IRcpService.ts" />
-    <TypeScriptCompile Include="Scripts\Api\RcpService.ts" />
-    <TypeScriptCompile Include="Scripts\Api\Service\ImageService.ts">
-      <DependentUpon>Service.tst</DependentUpon>
-      <CustomToolNamespace>..\ImglibApi\Controller\ImageController.cs</CustomToolNamespace>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="Scripts\Api\Model\Picture.ts">
+    <TypeScriptCompile Include="TypeScript\Api\Picture.ts">
       <DependentUpon>Model.tst</DependentUpon>
       <CustomToolNamespace>..\ImglibApi\Controller\Model\Picture.cs</CustomToolNamespace>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Scripts\Api\Model\PictureType.ts">
+    <TypeScriptCompile Include="TypeScript\Bundle\IServiceResolver.ts" />
+    <TypeScriptCompile Include="TypeScript\Bundle\ITemplate.ts" />
+    <TypeScriptCompile Include="TypeScript\Bundle\ITemplateConfiguration.ts" />
+    <TypeScriptCompile Include="TypeScript\Bundle\ServiceResolver.ts" />
+    <TypeScriptCompile Include="TypeScript\Bundle\Template.ts" />
+    <TypeScriptCompile Include="TypeScript\Bundle\TemplateConfiguration.ts" />
+    <TypeScriptCompile Include="TypeScript\Service\IApiHost.ts" />
+    <TypeScriptCompile Include="TypeScript\Service\IDeferredRcpClient.ts" />
+    <TypeScriptCompile Include="TypeScript\Service\ITemplateResolver.ts" />
+    <TypeScriptCompile Include="TypeScript\Service\LocalRcpClient.ts" />
+    <TypeScriptCompile Include="TypeScript\Api\ImageService.ts">
+      <DependentUpon>Service.tst</DependentUpon>
+      <CustomToolNamespace>..\ImglibApi\Controller\ImageController.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="TypeScript\Api\PictureType.ts">
       <DependentUpon>Enum.tst</DependentUpon>
       <CustomToolNamespace>..\ImglibApi\Controller\Enum\PictureType.cs</CustomToolNamespace>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Scripts\Bundle\Kernel.ts" />
+    <TypeScriptCompile Include="TypeScript\Service\OwenSelfHostingApi.ts" />
+    <TypeScriptCompile Include="TypeScript\Service\TemplateResolver.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\requirejs\require.d.ts" />
+    <TypeScriptCompile Include="TypeScript\ViewModel\ExampleViewModel.ts" />
+    <TypeScriptCompile Include="TypeScript\ViewModel\KnockoutViewModelBase.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

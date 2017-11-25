@@ -9,7 +9,7 @@
 		};
 	}
 }
-namespace Api {$Enums(x => x.Namespace == "ImglibApi.Controller.Enum")[
+module Api {$Enums(x => x.Namespace == "ImglibApi.Controller.Enum")[
 
 	export enum $Name {$Values[
 		$Name = $Value][,]

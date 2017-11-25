@@ -1,5 +1,6 @@
 ﻿${
 	using Typewriter.Extensions.WebApi;
+	using Typewriter.Extensions.Types;
 	
 	Template(Settings settings)
 	{
@@ -32,8 +33,12 @@
 	string FirstParameterType(Method method){
 		return method.Parameters.First().Type.Name;
 	}
-}
-namespace Api {$Classes(:ApiController)[
+
+	IEnumerable<Type> DefinedTypes(Class c)
+	{
+		return c.Methods.Where(m => m.Type.Unwrap().IsDefined).Select(m => m.Type.Unwrap());
+	}
+}module Api {$Classes(:ApiController)[
 	
 	export interface I$ClassName {$Methods[
 		$name($FirstParameterName: $FirstParameterType) : JQueryDeferred<$ReturnType>;]
@@ -41,7 +46,7 @@ namespace Api {$Classes(:ApiController)[
 
 	export class $ClassName implements I$ClassName {
 
-		constructor(private _rcpService: IDeferredRcpClient) { 
+		constructor(private _rcpService: Service.IDeferredRcpClient) { 
 		}
 		$Methods[
 		public $name($FirstParameterName: $FirstParameterType) {
