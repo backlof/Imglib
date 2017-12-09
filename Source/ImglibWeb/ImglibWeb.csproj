@@ -84,6 +84,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Index.html" />
     <Content Include="Web\Page.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -107,7 +108,9 @@
     <Content Include="Scripts\jquery-3.2.1.slim.min.js" />
     <Content Include="Scripts\r.js" />
     <Content Include="Scripts\require.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="TypeScript\Api\Service.tst" />
   </ItemGroup>
   <ItemGroup>
