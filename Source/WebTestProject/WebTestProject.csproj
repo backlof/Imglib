@@ -9,12 +9,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{ED1962B6-FC77-4365-A084-ACC6FA65EE95}</ProjectGuid>
+    <ProjectGuid>{77A83CE1-2243-4EA4-8918-A04EB972E574}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ImglibWeb</RootNamespace>
-    <AssemblyName>ImglibWeb</AssemblyName>
+    <RootNamespace>WebTestProject</RootNamespace>
+    <AssemblyName>WebTestProject</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -41,16 +41,13 @@
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
     <TypeScriptRemoveComments>True</TypeScriptRemoveComments>
-    <TypeScriptAlwaysStrict>True</TypeScriptAlwaysStrict>
     <TypeScriptOutFile>Scripts/app.js</TypeScriptOutFile>
-    <TypeScriptOutDir />
-    <TypeScriptSourceMap>False</TypeScriptSourceMap>
-    <TypeScriptStrict>True</TypeScriptStrict>
-    <TypeScriptMapRoot />
-    <TypeScriptSourceRoot />
-    <TypeScriptCompileBlocked>True</TypeScriptCompileBlocked>
     <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
     <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptOutDir />
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -84,13 +81,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Index.html" />
-    <Content Include="Scripts\app.js" />
-    <Content Include="Scripts\knockout-3.4.2.js" />
-    <Content Include="Web\rating.html" />
     <None Include="packages.config" />
-    <Content Include="TypeScript\Api\Enum.tst" />
-    <Content Include="TypeScript\Api\Model.tst" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -99,48 +90,24 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\jquery-3.2.1.js" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="TypeScript\Api\Service.tst" />
+    <Content Include="Index.html" />
+    <Content Include="Scripts\app.js" />
+    <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\typings\imglib.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\knockout\knockout.d.ts" />
-    <TypeScriptCompile Include="TypeScript\Api\Picture.ts">
-      <DependentUpon>Model.tst</DependentUpon>
-      <CustomToolNamespace>..\ImglibApi\Controller\Model\Picture.cs</CustomToolNamespace>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="TypeScript\Api\PictureType.ts">
-      <DependentUpon>Enum.tst</DependentUpon>
-      <CustomToolNamespace>..\ImglibApi\Controller\Model\PictureType.cs</CustomToolNamespace>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="TypeScript\Application.ts" />
-    <TypeScriptCompile Include="TypeScript\Bundle\TemplateConfiguration.ts" />
-    <TypeScriptCompile Include="TypeScript\Service\ServiceResolver.ts" />
-    <TypeScriptCompile Include="TypeScript\Service\ApiHost.ts" />
-    <TypeScriptCompile Include="TypeScript\Service\DeferredRcpClient.ts" />
-    <TypeScriptCompile Include="TypeScript\Api\ImageService.ts">
-      <DependentUpon>Service.tst</DependentUpon>
-      <CustomToolNamespace>..\ImglibApi\Controller\ImageController.cs</CustomToolNamespace>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="TypeScript\Bundle\TemplateResolver.ts" />
-    <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
-    <TypeScriptCompile Include="TypeScript\Service\HtmlScriptInserter.ts" />
-    <TypeScriptCompile Include="TypeScript\Utility\String.ts" />
-    <TypeScriptCompile Include="TypeScript\ViewModel\RatingViewModel.ts" />
-    <TypeScriptCompile Include="TypeScript\ViewModel\MainViewModel.ts" />
-    <TypeScriptCompile Include="TypeScript\ViewModel\ViewModelBase.ts" />
+    <TypeScriptCompile Include="Typescript\Api\Enum\Employment.ts" />
+    <TypeScriptCompile Include="Typescript\Api\Enum\Gender.ts" />
+    <TypeScriptCompile Include="Typescript\Application.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Styles\" />
+    <Folder Include="Typescript\Api\Controller\" />
+    <Folder Include="Typescript\Api\Model\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -156,9 +123,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>49531</DevelopmentServerPort>
+          <DevelopmentServerPort>49800</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49485/</IISUrl>
+          <IISUrl>http://localhost:49800/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

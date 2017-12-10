@@ -1,4 +1,6 @@
-﻿module Api {
+﻿/// <reference path="../Service/DeferredRcpClient.ts" />
+
+namespace Api {
 	
 	export interface IImageService {
 		givePictureBack(picture: Picture) : JQueryDeferred<Picture>;

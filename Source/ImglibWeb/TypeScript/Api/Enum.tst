@@ -8,8 +8,7 @@
 			return file.Name.Replace(".cs", ".ts");
 		};
 	}
-}
-module Api {$Enums(x => x.Namespace == "ImglibApi.Controller.Enum")[
+}namespace Api {$Enums(x => x.Namespace == "ImglibApi.Controller.Model")[
 
 	export enum $Name {$Values[
 		$Name = $Value][,]

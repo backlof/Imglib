@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImglibApi.Controller.Enum
+namespace ImglibApi.Controller.Model
 {
 	public enum PictureType
 	{

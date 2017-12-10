@@ -3,9 +3,22 @@
 <head>
 	<meta charset="utf-8" />
 	<title>Imglib</title>
-	<script data-main="scripts/main" src="scripts/require.js"></script>
+	<script src="Scripts/jquery-3.2.1.js"></script>
+	<script src="Scripts/knockout-3.4.2.js"></script>
+	<script src="Scripts/app.js"></script>
 </head>
 <body>
+	<h1>Imglib</h1>
 
+	<div class="left-menu">
+		<a href="#" data-bind="click: function() { navigateToRatedImages(5); }">5 stars</a>
+		<a href="#" data-bind="click: function() { navigateToRatedImages(4); }">4 stars</a>
+		<a href="#" data-bind="click: function() { navigateToRatedImages(3); }">3 stars</a>
+		<a href="#" data-bind="click: function() { navigateToRatedImages(2); }">2 stars</a>
+		<a href="#" data-bind="click: function() { navigateToRatedImages(1); }">1 star</a>
+	</div>
+
+	<div data-bind="template: { if: subpage, name: subpage.name, data: subpage.data }"></div>
+	<!--<div data-bind="if: subpage, template: subpage"></div>-->
 </body>
 </html>

@@ -83,7 +83,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\Enum\PictureType.cs" />
+    <Compile Include="Controller\Model\PictureType.cs" />
     <Compile Include="Controller\ImageController.cs" />
     <Compile Include="Controller\Model\Picture.cs" />
     <Compile Include="Host.cs" />

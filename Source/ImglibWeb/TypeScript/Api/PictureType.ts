@@ -1,5 +1,4 @@
-﻿
-module Api {
+﻿namespace Api {
 
 	export enum PictureType {
 		First = 0,

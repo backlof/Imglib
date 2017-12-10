@@ -38,7 +38,9 @@
 	{
 		return c.Methods.Where(m => m.Type.Unwrap().IsDefined).Select(m => m.Type.Unwrap());
 	}
-}module Api {$Classes(:ApiController)[
+}/// <reference path="../Service/DeferredRcpClient.ts" />
+
+namespace Api {$Classes(:ApiController)[
 	
 	export interface I$ClassName {$Methods[
 		$name($FirstParameterName: $FirstParameterType) : JQueryDeferred<$ReturnType>;]

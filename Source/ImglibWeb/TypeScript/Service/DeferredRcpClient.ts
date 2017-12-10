@@ -1,7 +1,12 @@
-﻿/// <reference path = "IDeferredRcpClient.ts" /> 
-/// <reference path = "IApiHost.ts" />
+﻿/// <reference path="../Service/ApiHost.ts" />
 
-module Service {
+namespace Service {
+
+	export interface IDeferredRcpClient {
+		post<TIn, TOut>(data: TIn, controller: string, method: string): JQueryDeferred<TOut>;
+		get<TIn>(data: TIn, controller: string, method: string): JQueryDeferred<void>;
+	}
+
 	export class LocalRcpClient implements IDeferredRcpClient {
 
 		constructor(private _host: IApiHost) {
@@ -17,7 +22,7 @@ module Service {
 			$.ajax({
 				url: this.getActionUrl(controller, action),
 				method: "POST",
-				data: data,
+				data: JSON.stringify(data),
 				dataType: "application/json"
 			}).done((data) => {
 				promise.resolve(data);
@@ -34,7 +39,7 @@ module Service {
 			$.ajax({
 				url: this.getActionUrl(controller, action),
 				method: "GET",
-				data: data,
+				data: JSON.stringify(data),
 				dataType: "application/json"
 			}).done(() => {
 				promise.resolve();

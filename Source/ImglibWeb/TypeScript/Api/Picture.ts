@@ -1,4 +1,4 @@
-﻿module Api {
+﻿namespace Api {
 
 	export interface Picture {
 		id: number;
