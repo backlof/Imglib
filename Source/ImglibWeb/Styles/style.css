@@ -1,4 +1,6 @@
-﻿/* top, right, bottom, left */
+﻿/* https://color.adobe.com/create/color-wheel/?base=3&rule=Analogous&selected=1&name=My%20Color%20Theme&mode=rgb&rgbvalues=0.7800000000000001,0.4737433590522465,0.6405158635103838,0.3345002298845005,0.33740158884511134,0.3900000000000001,0.7373985719883352,0.8200000000000001,0.29252683085210135,0.29692022746589514,0.7300000000000001,0.5859966556381474,0.7800000000000001,0.7259414642280124,0.6585074765352322&swatchOrder=0,1,2,3,4 */
+/* Color theme */
+/* top, right, bottom, left */
 .hidden {
   display: none !important;
   visibility: hidden;
@@ -19,7 +21,7 @@ section {
 }
 /* Background color */
 body {
-  background-color: #fff;
+  background-color: rgba(199, 185, 168, 0.01);
 }
 /* Change the color of anchors to default in application */
 a {
@@ -40,16 +42,20 @@ footer {
   right: 0;
   bottom: 0;
   left: 0;
-  color: #4a4a4a;
-  padding: 2px 0 2px 6px;
-  background-color: #efefef;
-  border-top: solid 1px #e0e0e0;
+  color: #6b6b6b;
+  /*padding: 5px 0 3px 8px;*/
+  padding-left: 6px;
+  padding-top: 5px;
+  padding-bottom: 3px;
+  background-color: #eaeaea;
+  border-top: solid 1px #c8c8c8;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 /* Move navigation bar to the left */
 section {
-  float: left;
   padding: 12px 0 12px 12px;
-  width: 100%;
 }
 section > nav {
   float: left;
@@ -77,11 +83,11 @@ nav > div.tags > :not(:first-child) {
 }
 /* Style external links */
 a.link {
-  color: #0082ad;
+  color: #42ab87;
   text-decoration: underline;
 }
 a.link:visited {
-  color: #1d040a;
+  color: #4d4d4d;
 }
 /* Paragraph styling */
 article p {
@@ -90,5 +96,8 @@ article p {
   margin: 0;
 }
 article p {
-  margin: 0.8em 0 0 0;
+  margin: 0 0 0.8em 0;
+}
+article ul {
+  padding-left: 2.5em;
 }

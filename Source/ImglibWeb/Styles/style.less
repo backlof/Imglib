@@ -1,11 +1,15 @@
 ﻿@black: #000;
 @white: #fff;
-@blue: #7ADEFF;
-@green: #94E872;
-@yellow: #FFD683;
-@red: #E86B86;
-@purple: #E86B86;
 @text: lighten(@black, 20%);
+
+/* https://color.adobe.com/create/color-wheel/?base=3&rule=Analogous&selected=1&name=My%20Color%20Theme&mode=rgb&rgbvalues=0.7800000000000001,0.4737433590522465,0.6405158635103838,0.3345002298845005,0.33740158884511134,0.3900000000000001,0.7373985719883352,0.8200000000000001,0.29252683085210135,0.29692022746589514,0.7300000000000001,0.5859966556381474,0.7800000000000001,0.7259414642280124,0.6585074765352322&swatchOrder=0,1,2,3,4 */
+
+/* Color theme */
+@magenta: #4CBA95;
+@green: #BCD14B;
+@gray: #555663;
+@pink: #C779A3;
+@brown: #C7B9A8;
 
 /* top, right, bottom, left */
 
@@ -36,7 +40,7 @@ section {
 /* Background color */
 
 body {
-	background-color: @white;
+	background-color: fade(@brown, 1%);
 }
 
 /* Change the color of anchors to default in application */
@@ -63,18 +67,22 @@ footer {
 	right: 0;
 	bottom: 0;
 	left: 0;
-	color: #4a4a4a;
-	padding: 2px 0 2px 6px;
-	background-color: #efefef;
-	border-top: solid 1px #e0e0e0;
+	color: #6b6b6b;
+	/*padding: 5px 0 3px 8px;*/
+	padding-left: 6px;
+	padding-top: 5px;
+	padding-bottom: 3px;
+	background-color: #eaeaea;
+	border-top: solid 1px #c8c8c8;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 /* Move navigation bar to the left */
 
 section {
-	float: left;
 	padding: 12px 0 12px 12px;
-	width: 100%;
 
 	& > nav {
 		float: left;
@@ -113,11 +121,11 @@ nav {
 /* Style external links */
 
 a.link {
-	color: darken(@blue, 40%);
+	color: darken(@magenta, 5%);
 	text-decoration: underline;
 
 	&:visited {
-		color: darken(@purple, 60%);
+		color: lighten(@black, 30%);
 	}
 
 	&:hover {
@@ -136,7 +144,11 @@ article {
 		margin: 0;
 	}
 
-	p{
-		margin: 0.8em 0 0 0;
+	p {
+		margin: 0 0 0.8em 0;
+	}
+
+	ul {
+		padding-left: 2.5em;
 	}
 }
