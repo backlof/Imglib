@@ -48,7 +48,8 @@ footer {
 /* Move navigation bar to the left */
 section {
   float: left;
-  padding: 12px 0 0 12px;
+  padding: 12px 0 12px 12px;
+  width: 100%;
 }
 section > nav {
   float: left;
@@ -59,7 +60,6 @@ section > nav {
 }
 section > article {
   float: left;
-  padding: 0 8px 0 0;
 }
 /* Style links in navigation bar*/
 nav a {
