@@ -63,6 +63,7 @@ footer {
 	right: 0;
 	bottom: 0;
 	left: 0;
+	color: #4a4a4a;
 	padding: 2px 0 2px 6px;
 	background-color: #efefef;
 	border-top: solid 1px #e0e0e0;
@@ -116,14 +117,26 @@ a.link {
 	text-decoration: underline;
 
 	&:visited {
-		color: @black;
+		color: darken(@purple, 60%);
 	}
 
 	&:hover {
-		color: darken(@blue, 70%);
 	}
 
 	&:active {
-		font-weight: bold;
+	}
+}
+
+/* Paragraph styling */
+
+article {
+	p {
+		line-height: 1.5em;
+		/*margin: 2px 0 8px 0;*/
+		margin: 0;
+	}
+
+	p{
+		margin: 0.8em 0 0 0;
 	}
 }
