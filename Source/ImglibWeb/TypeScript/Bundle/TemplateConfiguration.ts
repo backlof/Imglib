@@ -6,6 +6,7 @@
 
 	class TemplateConfigurations {
 		public Rating = new TemplateConfiguration("rating", (param: ViewModel.RatingViewModel, resolver) => new ViewModel.RatingViewModel(param, resolver.TemplateResolver));
+		public Test = new TemplateConfiguration("test", (param: ViewModel.TestViewModelParams, resolver) => new ViewModel.TestViewModel(param));
 	}
 
 	export var Template = new TemplateConfigurations();

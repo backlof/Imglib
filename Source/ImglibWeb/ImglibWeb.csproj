@@ -88,6 +88,7 @@
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\knockout-3.4.2.js" />
     <Content Include="Web\rating.html" />
+    <Content Include="Web\test.html" />
     <None Include="packages.config" />
     <Content Include="TypeScript\Api\Enum.tst" />
     <Content Include="TypeScript\Api\Model.tst" />
@@ -134,6 +135,7 @@
     <TypeScriptCompile Include="TypeScript\Utility\String.ts" />
     <TypeScriptCompile Include="TypeScript\ViewModel\RatingViewModel.ts" />
     <TypeScriptCompile Include="TypeScript\ViewModel\MainViewModel.ts" />
+    <TypeScriptCompile Include="TypeScript\ViewModel\TestViewModel.ts" />
     <TypeScriptCompile Include="TypeScript\ViewModel\ViewModelBase.ts" />
   </ItemGroup>
   <ItemGroup>

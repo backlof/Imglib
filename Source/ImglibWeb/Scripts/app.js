@@ -202,6 +202,7 @@ var Bundle;
     var TemplateConfigurations = (function () {
         function TemplateConfigurations() {
             this.Rating = new TemplateConfiguration("rating", function (param, resolver) { return new ViewModel.RatingViewModel(param, resolver.TemplateResolver); });
+            this.Test = new TemplateConfiguration("test", function (param, resolver) { return new ViewModel.TestViewModel(param); });
         }
         return TemplateConfigurations;
     }());
@@ -245,15 +246,12 @@ var Service;
             }).fail(function () {
                 promise.reject();
             });
-            var x = document.createElement("script");
-            var y = document.createElement("script");
-            $("head").append([x, y]);
             return promise;
         };
         LocalWebDirectoryHtmlInserter.prototype.loadScripts = function (scriptIds) {
             var _this = this;
             var promise = $.Deferred();
-            $.when(scriptIds.map(function (x) { return _this.loadSingleScript(x); })).done(function (x) {
+            $.when.apply($, scriptIds.map(function (x) { return _this.loadSingleScript(x); })).done(function (success) {
                 promise.resolve();
             }).fail(function () {
                 promise.reject();
@@ -291,4 +289,15 @@ var ViewModel;
         return RatingViewModel;
     }(ViewModel.ViewModelBase));
     ViewModel.RatingViewModel = RatingViewModel;
+})(ViewModel || (ViewModel = {}));
+var ViewModel;
+(function (ViewModel) {
+    var TestViewModel = (function (_super) {
+        __extends(TestViewModel, _super);
+        function TestViewModel(param) {
+            return _super.call(this) || this;
+        }
+        return TestViewModel;
+    }(ViewModel.ViewModelBase));
+    ViewModel.TestViewModel = TestViewModel;
 })(ViewModel || (ViewModel = {}));
