@@ -75,6 +75,17 @@ var Api;
     }());
     Api.ImageService = ImageService;
 })(Api || (Api = {}));
+var ViewModel;
+(function (ViewModel) {
+    var ViewModelBase = (function () {
+        function ViewModelBase() {
+        }
+        ViewModelBase.prototype.dispose = function () {
+        };
+        return ViewModelBase;
+    }());
+    ViewModel.ViewModelBase = ViewModelBase;
+})(ViewModel || (ViewModel = {}));
 var Bundle;
 (function (Bundle) {
     var TemplateResolver = (function () {
@@ -91,17 +102,6 @@ var Bundle;
     }());
     Bundle.TemplateResolver = TemplateResolver;
 })(Bundle || (Bundle = {}));
-var ViewModel;
-(function (ViewModel) {
-    var ViewModelBase = (function () {
-        function ViewModelBase() {
-        }
-        ViewModelBase.prototype.dispose = function () {
-        };
-        return ViewModelBase;
-    }());
-    ViewModel.ViewModelBase = ViewModelBase;
-})(ViewModel || (ViewModel = {}));
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -251,7 +251,7 @@ var Service;
         LocalWebDirectoryHtmlInserter.prototype.loadScripts = function (scriptIds) {
             var _this = this;
             var promise = $.Deferred();
-            $.when.apply($, scriptIds.map(function (x) { return _this.loadSingleScript(x); })).done(function (success) {
+            $.when.apply($, scriptIds.map(function (x) { return _this.loadSingleScript(x); })).done(function () {
                 promise.resolve();
             }).fail(function () {
                 promise.reject();

@@ -87,11 +87,23 @@
     <Content Include="Index.html" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\knockout-3.4.2.js" />
+    <Content Include="Styles\normalize.css" />
+    <Content Include="Styles\style.css">
+      <DependentUpon>style.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\style.min.css">
+      <DependentUpon>style.css</DependentUpon>
+    </Content>
     <Content Include="Web\rating.html" />
     <Content Include="Web\test.html" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <Content Include="TypeScript\Api\Enum.tst" />
     <Content Include="TypeScript\Api\Model.tst" />
+    <Content Include="Styles\style.less" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -141,9 +153,7 @@
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Styles\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

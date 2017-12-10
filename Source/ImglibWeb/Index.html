@@ -3,22 +3,42 @@
 <head>
 	<meta charset="utf-8" />
 	<title>Imglib</title>
+	<link rel="stylesheet" href="Styles/normalize.css">
+	<link rel="stylesheet" href="Styles/style.css">
 	<script src="Scripts/jquery-3.2.1.js"></script>
 	<script src="Scripts/knockout-3.4.2.js"></script>
 	<script src="Scripts/app.js"></script>
 </head>
 <body>
-	<h1>Imglib</h1>
+	<header>Image Library</header>
+	<section>
+		<nav>
+			<div>
+				<a href="#" data-bind="click: function() { console.log(" navigateToRating); }">Rating</a>
+				<a href="#" data-bind="click: function() { navigateToRatedImages(5); }">5 stars</a>
+				<a href="#" data-bind="click: function() { navigateToRatedImages(4); }">4 stars</a>
+				<a href="#" data-bind="click: function() { navigateToRatedImages(3); }">3 stars</a>
+				<a href="#" data-bind="click: function() { navigateToRatedImages(2); }">2 stars</a>
+				<a href="#" data-bind="click: function() { navigateToRatedImages(1); }">1 star</a>
+			</div>
+			<div class="tags">
+				<a href="#" data-bind="click: function() { console.log('clicked'); }">Tags</a>
+				<a href="#" data-bind="click: function() { console.log('clicked'); }">blurry</a>
+				<a href="#" data-bind="click: function() { console.log('clicked'); }">tag2</a>
+			</div>
+			<div>
+				<a href="#" data-bind="click: function() { console.log('clicked'); }">Add files</a>
+			</div>
+		</nav>
+		<article>
+			<a href="https://stackoverflow.com/questions/11198221/defining-variable-variables-using-less-css" class="link">Link</a>
+			<p>Testing some stuff.</p>
+			<p>Testing some more stuff.</p>
 
-	<div class="left-menu">
-		<a href="#" data-bind="click: function() { navigateToRatedImages(5); }">5 stars</a>
-		<a href="#" data-bind="click: function() { navigateToRatedImages(4); }">4 stars</a>
-		<a href="#" data-bind="click: function() { navigateToRatedImages(3); }">3 stars</a>
-		<a href="#" data-bind="click: function() { navigateToRatedImages(2); }">2 stars</a>
-		<a href="#" data-bind="click: function() { navigateToRatedImages(1); }">1 star</a>
-	</div>
-
-	<div data-bind="template: { if: subpage, name: subpage.name, data: subpage.data }"></div>
-	<!--<div data-bind="if: subpage, template: subpage"></div>-->
+			<!--<article data-bind="template: { if: subpage, name: subpage.name, data: subpage.data }"></article>-->
+			<!--<article data-bind="if: subpage, template: subpage"></article>-->
+		</article>
+	</section>
+	<footer>This is the footer</footer>
 </body>
 </html>

@@ -1,4 +1,4 @@
-﻿/// <reference path="../ViewModel/KnockoutViewModelBase.ts" />
+﻿/// <reference path="../ViewModel/ViewModelBase.ts" />
 
 namespace Bundle {
 

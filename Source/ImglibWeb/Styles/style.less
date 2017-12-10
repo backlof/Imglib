@@ -1,0 +1,129 @@
+﻿@black: #000;
+@white: #fff;
+@blue: #7ADEFF;
+@green: #94E872;
+@yellow: #FFD683;
+@red: #E86B86;
+@purple: #E86B86;
+@text: lighten(@black, 20%);
+
+/* top, right, bottom, left */
+
+.hidden {
+	display: none !important;
+	visibility: hidden;
+}
+
+.invisible {
+	visibility: hidden;
+}
+
+/* Change text globally*/
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: @text;
+	/*line-height: 20px;*/
+}
+
+/* Create padding around the page */
+
+section {
+	padding: 12px 8px;
+}
+
+/* Background color */
+
+body {
+	background-color: @white;
+}
+
+/* Change the color of anchors to default in application */
+
+a {
+	color: @text;
+}
+
+/* Header design */
+
+header {
+	font-weight: bold;
+	font-size: 12px;
+	text-align: center;
+	background-color: #f3f3f3;
+	padding: 2px;
+	border-bottom: solid 1px #e0e0e0;
+}
+
+/* Footer design */
+
+footer {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	padding: 2px 0 2px 6px;
+	background-color: #efefef;
+	border-top: solid 1px #e0e0e0;
+}
+
+/* Move navigation bar to the left */
+
+section {
+	float: left;
+	padding: 12px 0 0 12px;
+
+	& > nav {
+		float: left;
+		padding-right: 14px;
+		margin: 0 8px 0 0;
+		padding: 0 22px 0 0;
+		border-right: solid 1px #f1f1f1;
+	}
+
+	& > article {
+		float: left;
+		padding: 0 8px 0 0;
+	}
+}
+
+/* Style links in navigation bar*/
+
+nav {
+	a {
+		display: block;
+	}
+
+	& > div {
+		& > :first-child {
+			font-weight: bold;
+			margin-bottom: 2px;
+		}
+
+		margin-bottom: 6px;
+	}
+
+	& > div.tags > :not(:first-child) {
+		font-style: italic;
+	}
+}
+
+/* Style external links */
+
+a.link {
+	color: darken(@blue, 40%);
+	text-decoration: underline;
+
+	&:visited {
+		color: @black;
+	}
+
+	&:hover {
+		color: darken(@blue, 70%);
+	}
+
+	&:active {
+		font-weight: bold;
+	}
+}
