@@ -7,7 +7,7 @@ namespace ViewModel {
 	}
 
 	export class RatingViewModel extends ViewModelBase {
-		constructor(param: RatingViewModel, private _templateResolver: Bundle.ITemplateResolver) {
+		constructor(param: RatingViewModel) {
 			super();
 		}
 	}

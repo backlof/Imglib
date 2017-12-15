@@ -1,4 +1,6 @@
-﻿namespace ViewModel {
+﻿/// <reference path="ViewModelBase.ts" />
+
+namespace ViewModel {
 
 	export interface TestViewModelParams {
 

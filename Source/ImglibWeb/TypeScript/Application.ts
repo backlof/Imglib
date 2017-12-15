@@ -1,23 +1,22 @@
 ﻿/// <reference path="Service/ServiceResolver.ts" />
-/// <reference path="Bundle/TemplateConfiguration.ts" />
+/// <reference path="Bundle/KnockoutComponentConfiguration.ts" />
 /// <reference path="ViewModel/MainViewModel.ts" />
 
 class Application {
 
 	constructor(private _serviceResolver: Service.IServiceResolver) {
-		this.loadScripts().done(() => {
-			ko.applyBindings(new ViewModel.MainViewModel(this._serviceResolver.TemplateResolver));
+		_serviceResolver.ComponentResolver.register(Bundle.getAllComponents()).done(() => {
+			ko.applyBindings(new ViewModel.MainViewModel());
 		}).fail(() => {
 			console.error("Couldn't load html templates");
 		});
 	}
-
-	private loadScripts() {
-		return this._serviceResolver.HtmlScriptInserter.loadScripts(Bundle.getAllHtmlFileNames());
-	}
 }
 
-//$(document).ready(() => {});
-window.onload = () => {
+$(document).ready(() => {
 	const app = new Application(new Service.ServiceResolver());
-};
+});
+
+//window.onload = () => {
+//	const app = new Application(new Service.ServiceResolver());
+//};

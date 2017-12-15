@@ -14,10 +14,11 @@
 	<section>
 		<nav>
 			<div>
-				<a href="#" data-bind="click: function() { console.log('clicked'); }">About</a>
+				<a href="http://github.com/backlof/Imglib" target="_blank">About</a>
+				<!-- TODO The web page should be in native browser: create event caught by application -->
 			</div>
 			<div>
-				<a href="#" data-bind="click: function() { console.log(" navigateToRating); }">Rating</a>
+				<a href="#" data-bind="click: function() { console.log('navigateToRating'); }">Rating</a>
 				<a href="#" data-bind="click: function() { navigateToRatedImages(5); }">5 stars</a>
 				<a href="#" data-bind="click: function() { navigateToRatedImages(4); }">4 stars</a>
 				<a href="#" data-bind="click: function() { navigateToRatedImages(3); }">3 stars</a>
@@ -32,32 +33,13 @@
 			<div>
 				<a href="#" data-bind="click: function() { console.log('clicked'); }">Add files</a>
 			</div>
+			<div>
+				<a href="#" data-bind="click: function() { navigateToTest(); }">Test</a>
+			</div>
 		</nav>
-		<article>
-			<h2>About</h2>
-			<p>This application uses the following frameworks</p>
-			<ul>
-				<li>Knockout.js</li>
-				<li>jQuery</li>
-				<li>Ninject</li>
-				<li>Entity Framework</li>
-				<li>SQLite</li>
-				<li>Owen</li>
-				<li>{Less}</li>
-				<li>TypeScript</li>
-			</ul>
-
-			<b>Website</b>
-			<p>Visit the project site on <a href="https://github.com/backlof/Imglib" class="link">GitHub</a></p>
-
-			<h3>Formatting</h3>
-			<p>This is a <a href="https://stackoverflow.com/questions/11198221/defining-variable-variables-using-less-css" class="link">link</a>, and you know what that means! It's readable. But wait, there are also visited <a href="https://stackoverflow.com/questions/12289853/how-can-i-use-a-notfirst-child-selector" class="link">links</a> that are purple and slightly darker.</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sodales tempus convallis. Vivamus ante tortor, ultricies in velit sit amet, ullamcorper ullamcorper erat. Curabitur porttitor elit eu orci ullamcorper cursus. Vestibulum non lacus et felis euismod viverra tincidunt eu leo. Vestibulum in sapien ac neque tristique pretium. Proin faucibus arcu lectus, nec sollicitudin augue ullamcorper non. Aliquam in erat quis orci venenatis euismod. Vivamus mollis sodales orci, a maximus urna iaculis ac. Nam nec urna quis purus eleifend pulvinar et at purus.</p>
-			<p>Morbi iaculis tellus id sem fermentum, at maximus ex pellentesque. Donec ac lacinia nisi. Praesent sed imperdiet sapien. Donec tempus volutpat mi ac vehicula. Fusce non justo diam. Mauris ornare sit amet turpis ac mattis. In ac hendrerit nisl, in vulputate ligula. Suspendisse vitae ante pulvinar justo fringilla auctor. Morbi iaculis lectus vel pharetra blandit. Ut faucibus lacus in lacus tristique, et ultrices enim consectetur.</p>
-
-			<!--<article data-bind="template: { if: subpage, name: subpage.name, data: subpage.data }"></article>-->
-			<!--<article data-bind="if: subpage, template: subpage"></article>-->
-		</article>
+		<!-- ko if: subpage -->
+		<article data-bind="component: subpage"></article>
+		<!-- /ko -->
 	</section>
 	<footer>This is the footer where application messages will appear</footer>
 </body>

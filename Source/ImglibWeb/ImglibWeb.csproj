@@ -133,7 +133,8 @@
       <CustomToolNamespace>..\ImglibApi\Controller\Model\PictureType.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Application.ts" />
-    <TypeScriptCompile Include="TypeScript\Bundle\TemplateConfiguration.ts" />
+    <TypeScriptCompile Include="TypeScript\Bundle\KnockoutComponentRegisterer.ts" />
+    <TypeScriptCompile Include="TypeScript\Bundle\KnockoutComponentConfiguration.ts" />
     <TypeScriptCompile Include="TypeScript\Service\ServiceResolver.ts" />
     <TypeScriptCompile Include="TypeScript\Service\ApiHost.ts" />
     <TypeScriptCompile Include="TypeScript\Service\DeferredRcpClient.ts" />
@@ -141,9 +142,7 @@
       <DependentUpon>Service.tst</DependentUpon>
       <CustomToolNamespace>..\ImglibApi\Controller\ImageController.cs</CustomToolNamespace>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="TypeScript\Bundle\TemplateResolver.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
-    <TypeScriptCompile Include="TypeScript\Service\HtmlScriptInserter.ts" />
     <TypeScriptCompile Include="TypeScript\Utility\String.ts" />
     <TypeScriptCompile Include="TypeScript\ViewModel\RatingViewModel.ts" />
     <TypeScriptCompile Include="TypeScript\ViewModel\MainViewModel.ts" />

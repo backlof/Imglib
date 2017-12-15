@@ -86,22 +86,6 @@ var ViewModel;
     }());
     ViewModel.ViewModelBase = ViewModelBase;
 })(ViewModel || (ViewModel = {}));
-var Bundle;
-(function (Bundle) {
-    var TemplateResolver = (function () {
-        function TemplateResolver(_serviceResolver) {
-            this._serviceResolver = _serviceResolver;
-        }
-        TemplateResolver.prototype.getTemplate = function (template, params) {
-            return {
-                name: template.htmlFileName,
-                data: template.init(params, this._serviceResolver)
-            };
-        };
-        return TemplateResolver;
-    }());
-    Bundle.TemplateResolver = TemplateResolver;
-})(Bundle || (Bundle = {}));
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -116,17 +100,16 @@ var ViewModel;
 (function (ViewModel) {
     var MainViewModel = (function (_super) {
         __extends(MainViewModel, _super);
-        function MainViewModel(_templateResolver) {
+        function MainViewModel() {
             var _this = _super.call(this) || this;
-            _this._templateResolver = _templateResolver;
-            _this.helloWorld = ko.observable("Hello world!");
-            _this.test = ko.observable("testing");
             _this.subpage = ko.observable();
             return _this;
         }
         MainViewModel.prototype.navigateToRatedImages = function (rating) {
-            var subpage = this._templateResolver.getTemplate(Bundle.Template.Rating, { rating: rating });
-            this.subpage(subpage);
+            this.subpage(Bundle.getComponent(Bundle.Component.Rating, { rating: rating }));
+        };
+        MainViewModel.prototype.navigateToTest = function () {
+            this.subpage(Bundle.getComponent(Bundle.Component.Test, {}));
         };
         return MainViewModel;
     }(ViewModel.ViewModelBase));
@@ -147,10 +130,10 @@ var Service;
         ServiceResolver.prototype.Transient = function (getter) {
             return getter();
         };
-        Object.defineProperty(ServiceResolver.prototype, "TemplateResolver", {
+        Object.defineProperty(ServiceResolver.prototype, "ComponentResolver", {
             get: function () {
                 var _this = this;
-                return this.Singleton("TemplateResolver", function () { return new Bundle.TemplateResolver(_this); });
+                return this.Singleton("ComponentResolver", function () { return new Bundle.HtmlScriptInsertKnockoutComponentRegisterer(_this); });
             },
             enumerable: true,
             configurable: true
@@ -178,90 +161,52 @@ var Service;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(ServiceResolver.prototype, "HtmlScriptInserter", {
-            get: function () {
-                return this.Singleton("HtmlScriptInserter", function () { return new Service.LocalWebDirectoryHtmlInserter(); });
-            },
-            enumerable: true,
-            configurable: true
-        });
         return ServiceResolver;
     }());
     Service.ServiceResolver = ServiceResolver;
 })(Service || (Service = {}));
 var Bundle;
 (function (Bundle) {
-    var TemplateConfiguration = (function () {
-        function TemplateConfiguration(htmlFileName, init) {
-            this.htmlFileName = htmlFileName;
+    var KnockoutGenericComponentConfiguration = (function () {
+        function KnockoutGenericComponentConfiguration(name, init) {
+            this.name = name;
             this.init = init;
         }
-        return TemplateConfiguration;
+        return KnockoutGenericComponentConfiguration;
     }());
-    Bundle.TemplateConfiguration = TemplateConfiguration;
-    var TemplateConfigurations = (function () {
-        function TemplateConfigurations() {
-            this.Rating = new TemplateConfiguration("rating", function (param, resolver) { return new ViewModel.RatingViewModel(param, resolver.TemplateResolver); });
-            this.Test = new TemplateConfiguration("test", function (param, resolver) { return new ViewModel.TestViewModel(param); });
+    Bundle.KnockoutGenericComponentConfiguration = KnockoutGenericComponentConfiguration;
+    var KnockoutComponentConfigurations = (function () {
+        function KnockoutComponentConfigurations() {
+            this.Rating = new KnockoutGenericComponentConfiguration("rating", function (param, resolver) { return new ViewModel.RatingViewModel(param); });
+            this.Test = new KnockoutGenericComponentConfiguration("test", function (param, resolver) { return new ViewModel.TestViewModel(param); });
         }
-        return TemplateConfigurations;
+        return KnockoutComponentConfigurations;
     }());
-    Bundle.Template = new TemplateConfigurations();
-    Bundle.getAllHtmlFileNames = function () {
-        return Object.keys(Bundle.Template).map(function (key) { return Bundle.Template[key].htmlFileName; });
+    Bundle.Component = new KnockoutComponentConfigurations();
+    Bundle.getAllComponents = function () {
+        return Object.keys(Bundle.Component).map(function (key) { return Bundle.Component[key]; });
+    };
+    Bundle.getComponent = function (configuartion, params) {
+        return {
+            name: configuartion.name,
+            params: params
+        };
     };
 })(Bundle || (Bundle = {}));
 var Application = (function () {
     function Application(_serviceResolver) {
-        var _this = this;
         this._serviceResolver = _serviceResolver;
-        this.loadScripts().done(function () {
-            ko.applyBindings(new ViewModel.MainViewModel(_this._serviceResolver.TemplateResolver));
+        _serviceResolver.ComponentResolver.register(Bundle.getAllComponents()).done(function () {
+            ko.applyBindings(new ViewModel.MainViewModel());
         }).fail(function () {
             console.error("Couldn't load html templates");
         });
     }
-    Application.prototype.loadScripts = function () {
-        return this._serviceResolver.HtmlScriptInserter.loadScripts(Bundle.getAllHtmlFileNames());
-    };
     return Application;
 }());
-window.onload = function () {
+$(document).ready(function () {
     var app = new Application(new Service.ServiceResolver());
-};
-var Service;
-(function (Service) {
-    var LocalWebDirectoryHtmlInserter = (function () {
-        function LocalWebDirectoryHtmlInserter() {
-        }
-        LocalWebDirectoryHtmlInserter.prototype.loadSingleScript = function (scriptId) {
-            var promise = $.Deferred();
-            $.get("Web/" + scriptId + ".html").done(function (data) {
-                var script = document.createElement("script");
-                script.type = "text/html";
-                script.innerHTML = data;
-                script.id = scriptId;
-                $("head").append(script);
-                promise.resolve();
-            }).fail(function () {
-                promise.reject();
-            });
-            return promise;
-        };
-        LocalWebDirectoryHtmlInserter.prototype.loadScripts = function (scriptIds) {
-            var _this = this;
-            var promise = $.Deferred();
-            $.when.apply($, scriptIds.map(function (x) { return _this.loadSingleScript(x); })).done(function () {
-                promise.resolve();
-            }).fail(function () {
-                promise.reject();
-            });
-            return promise;
-        };
-        return LocalWebDirectoryHtmlInserter;
-    }());
-    Service.LocalWebDirectoryHtmlInserter = LocalWebDirectoryHtmlInserter;
-})(Service || (Service = {}));
+});
 var _this = this;
 var StringContainsParameter;
 (function (StringContainsParameter) {
@@ -281,10 +226,8 @@ var ViewModel;
 (function (ViewModel) {
     var RatingViewModel = (function (_super) {
         __extends(RatingViewModel, _super);
-        function RatingViewModel(param, _templateResolver) {
-            var _this = _super.call(this) || this;
-            _this._templateResolver = _templateResolver;
-            return _this;
+        function RatingViewModel(param) {
+            return _super.call(this) || this;
         }
         return RatingViewModel;
     }(ViewModel.ViewModelBase));
@@ -301,3 +244,54 @@ var ViewModel;
     }(ViewModel.ViewModelBase));
     ViewModel.TestViewModel = TestViewModel;
 })(ViewModel || (ViewModel = {}));
+var Bundle;
+(function (Bundle) {
+    var HtmlScriptInsertKnockoutComponentRegisterer = (function () {
+        function HtmlScriptInsertKnockoutComponentRegisterer(_serviceResolver) {
+            this._serviceResolver = _serviceResolver;
+        }
+        HtmlScriptInsertKnockoutComponentRegisterer.prototype.loadHtml = function (scriptId) {
+            var promise = $.Deferred();
+            $.get("Web/" + scriptId + ".html").done(function (data) {
+                var script = document.createElement("script");
+                script.type = "text/html";
+                script.innerHTML = data;
+                script.id = scriptId;
+                $("head").append(script);
+                promise.resolve();
+            }).fail(function () {
+                promise.reject();
+            });
+            return promise;
+        };
+        HtmlScriptInsertKnockoutComponentRegisterer.prototype.registerComponent = function (component) {
+            var _this = this;
+            var promise = $.Deferred();
+            this.loadHtml(component.name).done(function () {
+                ko.components.register(component.name, {
+                    viewModel: function (params) {
+                        return component.init(params, _this._serviceResolver);
+                    },
+                    template: document.getElementById(component.name).innerHTML,
+                    synchronous: true
+                });
+                promise.resolve();
+            }).fail(function () {
+                promise.reject();
+            });
+            return promise;
+        };
+        HtmlScriptInsertKnockoutComponentRegisterer.prototype.register = function (components) {
+            var _this = this;
+            var promise = $.Deferred();
+            $.when.apply($, components.map(function (component) { return _this.registerComponent(component); })).done(function () {
+                promise.resolve();
+            }).fail(function () {
+                promise.reject();
+            });
+            return promise;
+        };
+        return HtmlScriptInsertKnockoutComponentRegisterer;
+    }());
+    Bundle.HtmlScriptInsertKnockoutComponentRegisterer = HtmlScriptInsertKnockoutComponentRegisterer;
+})(Bundle || (Bundle = {}));

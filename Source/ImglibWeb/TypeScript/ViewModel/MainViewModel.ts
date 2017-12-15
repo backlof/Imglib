@@ -2,21 +2,22 @@
 
 namespace ViewModel {
 
-	// Class shouldn't appear among template configurations, as it doesn't have an html
+	// Class shouldn't appear among component configurations, as it doesn't have an html template
 
 	export class MainViewModel extends ViewModelBase {
-		private helloWorld = ko.observable("Hello world!");
-		public test = ko.observable("testing");
 
-		private subpage = ko.observable<KnockoutTemplate<any>>();
+		private subpage = ko.observable<KnockoutComponent>();
 
-		constructor(private _templateResolver: Bundle.ITemplateResolver) {
+		constructor() {
 			super();
 		}
 
 		public navigateToRatedImages(rating: number) {
-			const subpage = this._templateResolver.getTemplate(Bundle.Template.Rating, { rating: rating });
-			this.subpage(subpage);
+			this.subpage(Bundle.getComponent(Bundle.Component.Rating, { rating: rating }));
+		}
+
+		public navigateToTest() {
+			this.subpage(Bundle.getComponent(Bundle.Component.Test, {}))
 		}
 	}
 }

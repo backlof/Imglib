@@ -1,4 +1,4 @@
-﻿/// <reference path="../Bundle/TemplateResolver.ts" />
+﻿/// <reference path="../Bundle/ComponentResolver.ts" />
 /// <reference path="../ViewModel/MainViewModel.ts" />
 /// <reference path="DeferredRcpClient.ts" />
 /// <reference path="ApiHost.ts" />
@@ -8,10 +8,9 @@ namespace Service {
 
 	export interface IServiceResolver {
 		readonly ApiHost: Service.IApiHost;
-		readonly TemplateResolver: Bundle.ITemplateResolver;
+		readonly ComponentResolver: Bundle.IKnockoutComponentRegisterer;
 		readonly RcpService: Service.IDeferredRcpClient;
 		readonly ImageService: Api.IImageService;
-		readonly HtmlScriptInserter: Service.IHtmlScriptInserter;
 	}
 
 	export class ServiceResolver implements IServiceResolver {
@@ -31,8 +30,8 @@ namespace Service {
 		constructor() {
 		}
 
-		get TemplateResolver(): Bundle.ITemplateResolver {
-			return this.Singleton("TemplateResolver", () => new Bundle.TemplateResolver(this));
+		get ComponentResolver(): Bundle.HtmlScriptInsertKnockoutComponentRegisterer {
+			return this.Singleton("ComponentResolver", () => new Bundle.HtmlScriptInsertKnockoutComponentRegisterer(this));
 		}
 
 		get ApiHost(): Service.IApiHost {
@@ -45,10 +44,6 @@ namespace Service {
 
 		get ImageService(): Api.IImageService {
 			return this.Singleton("ImageService", () => new Api.ImageService(this.RcpService));
-		}
-
-		get HtmlScriptInserter(): Service.IHtmlScriptInserter {
-			return this.Singleton("HtmlScriptInserter", () => new Service.LocalWebDirectoryHtmlInserter());
 		}
 	}
 }
