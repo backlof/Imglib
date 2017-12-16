@@ -6,7 +6,7 @@ class Application {
 
 	constructor(private _serviceResolver: Service.IServiceResolver) {
 		_serviceResolver.ComponentResolver.register(Bundle.getAllComponents()).done(() => {
-			ko.applyBindings(new ViewModel.MainViewModel());
+			ko.applyBindings(_serviceResolver.BindingViewModel);
 		}).fail(() => {
 			console.error("Couldn't load html templates");
 		});

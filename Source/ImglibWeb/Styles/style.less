@@ -34,13 +34,13 @@ body {
 /* Create padding around the page */
 
 section {
-	padding: 12px 8px;
+	padding: 12px 8px 12px 8px;
 }
 
 /* Background color */
 
 body {
-	background-color: fade(@brown, 1%);
+	background-color: @white;
 }
 
 /* Change the color of anchors to default in application */
@@ -81,19 +81,20 @@ footer {
 
 /* Move navigation bar to the left */
 
+@left-menu-size: 120px;
+@border-width: 1px;
+
 section {
-	padding: 12px 0 12px 12px;
+	/*padding: 12px 0 12px 12px;*/
 
 	& > nav {
 		float: left;
-		padding-right: 14px;
-		margin: 0 8px 0 0;
-		padding: 0 22px 0 0;
 		border-right: solid 1px #f1f1f1;
+		padding-right: 22px;
 	}
 
 	& > article {
-		float: left;
+		margin-left: 95px;
 	}
 }
 

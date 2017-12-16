@@ -7,8 +7,13 @@ namespace ViewModel {
 	}
 
 	export class RatingViewModel extends ViewModelBase {
+
+		private header = ko.observable<string>();
+
 		constructor(param: RatingViewModel) {
 			super();
+
+			this.header(`${param.rating} stars`);
 		}
 	}
 }

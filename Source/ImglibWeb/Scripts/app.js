@@ -75,175 +75,6 @@ var Api;
     }());
     Api.ImageService = ImageService;
 })(Api || (Api = {}));
-var ViewModel;
-(function (ViewModel) {
-    var ViewModelBase = (function () {
-        function ViewModelBase() {
-        }
-        ViewModelBase.prototype.dispose = function () {
-        };
-        return ViewModelBase;
-    }());
-    ViewModel.ViewModelBase = ViewModelBase;
-})(ViewModel || (ViewModel = {}));
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var ViewModel;
-(function (ViewModel) {
-    var MainViewModel = (function (_super) {
-        __extends(MainViewModel, _super);
-        function MainViewModel() {
-            var _this = _super.call(this) || this;
-            _this.subpage = ko.observable();
-            return _this;
-        }
-        MainViewModel.prototype.navigateToRatedImages = function (rating) {
-            this.subpage(Bundle.getComponent(Bundle.Component.Rating, { rating: rating }));
-        };
-        MainViewModel.prototype.navigateToTest = function () {
-            this.subpage(Bundle.getComponent(Bundle.Component.Test, {}));
-        };
-        return MainViewModel;
-    }(ViewModel.ViewModelBase));
-    ViewModel.MainViewModel = MainViewModel;
-})(ViewModel || (ViewModel = {}));
-var Service;
-(function (Service) {
-    var ServiceResolver = (function () {
-        function ServiceResolver() {
-            this._singletons = {};
-        }
-        ServiceResolver.prototype.Singleton = function (name, getter) {
-            if (!this._singletons[name]) {
-                this._singletons[name] = getter();
-            }
-            return this._singletons[name];
-        };
-        ServiceResolver.prototype.Transient = function (getter) {
-            return getter();
-        };
-        Object.defineProperty(ServiceResolver.prototype, "ComponentResolver", {
-            get: function () {
-                var _this = this;
-                return this.Singleton("ComponentResolver", function () { return new Bundle.HtmlScriptInsertKnockoutComponentRegisterer(_this); });
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ServiceResolver.prototype, "ApiHost", {
-            get: function () {
-                return this.Singleton("ApiHost", function () { return new Service.OwenSelfHostingApi(); });
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ServiceResolver.prototype, "RcpService", {
-            get: function () {
-                var _this = this;
-                return this.Singleton("RcpService", function () { return new Service.LocalRcpClient(_this.ApiHost); });
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ServiceResolver.prototype, "ImageService", {
-            get: function () {
-                var _this = this;
-                return this.Singleton("ImageService", function () { return new Api.ImageService(_this.RcpService); });
-            },
-            enumerable: true,
-            configurable: true
-        });
-        return ServiceResolver;
-    }());
-    Service.ServiceResolver = ServiceResolver;
-})(Service || (Service = {}));
-var Bundle;
-(function (Bundle) {
-    var KnockoutGenericComponentConfiguration = (function () {
-        function KnockoutGenericComponentConfiguration(name, init) {
-            this.name = name;
-            this.init = init;
-        }
-        return KnockoutGenericComponentConfiguration;
-    }());
-    Bundle.KnockoutGenericComponentConfiguration = KnockoutGenericComponentConfiguration;
-    var KnockoutComponentConfigurations = (function () {
-        function KnockoutComponentConfigurations() {
-            this.Rating = new KnockoutGenericComponentConfiguration("rating", function (param, resolver) { return new ViewModel.RatingViewModel(param); });
-            this.Test = new KnockoutGenericComponentConfiguration("test", function (param, resolver) { return new ViewModel.TestViewModel(param); });
-        }
-        return KnockoutComponentConfigurations;
-    }());
-    Bundle.Component = new KnockoutComponentConfigurations();
-    Bundle.getAllComponents = function () {
-        return Object.keys(Bundle.Component).map(function (key) { return Bundle.Component[key]; });
-    };
-    Bundle.getComponent = function (configuartion, params) {
-        return {
-            name: configuartion.name,
-            params: params
-        };
-    };
-})(Bundle || (Bundle = {}));
-var Application = (function () {
-    function Application(_serviceResolver) {
-        this._serviceResolver = _serviceResolver;
-        _serviceResolver.ComponentResolver.register(Bundle.getAllComponents()).done(function () {
-            ko.applyBindings(new ViewModel.MainViewModel());
-        }).fail(function () {
-            console.error("Couldn't load html templates");
-        });
-    }
-    return Application;
-}());
-$(document).ready(function () {
-    var app = new Application(new Service.ServiceResolver());
-});
-var _this = this;
-var StringContainsParameter;
-(function (StringContainsParameter) {
-    StringContainsParameter[StringContainsParameter["IgnoreCase"] = 0] = "IgnoreCase";
-    StringContainsParameter[StringContainsParameter["CaseSensitive"] = 1] = "CaseSensitive";
-})(StringContainsParameter || (StringContainsParameter = {}));
-String.prototype.contains = function (p, type) {
-    var value = _this.valueOf();
-    switch (type) {
-        case StringContainsParameter.IgnoreCase:
-            return value.indexOf(p.toLowerCase()) !== -1;
-        default:
-            return value.indexOf(p) !== -1;
-    }
-};
-var ViewModel;
-(function (ViewModel) {
-    var RatingViewModel = (function (_super) {
-        __extends(RatingViewModel, _super);
-        function RatingViewModel(param) {
-            return _super.call(this) || this;
-        }
-        return RatingViewModel;
-    }(ViewModel.ViewModelBase));
-    ViewModel.RatingViewModel = RatingViewModel;
-})(ViewModel || (ViewModel = {}));
-var ViewModel;
-(function (ViewModel) {
-    var TestViewModel = (function (_super) {
-        __extends(TestViewModel, _super);
-        function TestViewModel(param) {
-            return _super.call(this) || this;
-        }
-        return TestViewModel;
-    }(ViewModel.ViewModelBase));
-    ViewModel.TestViewModel = TestViewModel;
-})(ViewModel || (ViewModel = {}));
 var Bundle;
 (function (Bundle) {
     var HtmlScriptInsertKnockoutComponentRegisterer = (function () {
@@ -295,3 +126,215 @@ var Bundle;
     }());
     Bundle.HtmlScriptInsertKnockoutComponentRegisterer = HtmlScriptInsertKnockoutComponentRegisterer;
 })(Bundle || (Bundle = {}));
+var ViewModel;
+(function (ViewModel) {
+    var ViewModelBase = (function () {
+        function ViewModelBase() {
+        }
+        ViewModelBase.prototype.dispose = function () {
+        };
+        return ViewModelBase;
+    }());
+    ViewModel.ViewModelBase = ViewModelBase;
+})(ViewModel || (ViewModel = {}));
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var ViewModel;
+(function (ViewModel) {
+    var MainViewModel = (function (_super) {
+        __extends(MainViewModel, _super);
+        function MainViewModel(_logger) {
+            var _this = _super.call(this) || this;
+            _this._logger = _logger;
+            _this.subpage = ko.observable();
+            _this.subpage(Bundle.getComponent(Bundle.Component.Test, {}));
+            _this._logger.log("Testing the logging system");
+            setTimeout(function () {
+                _this._logger.log("2000 ms have passed");
+            }, 2000);
+            return _this;
+        }
+        MainViewModel.prototype.navigateToRatedImages = function (rating) {
+            this.subpage(Bundle.getComponent(Bundle.Component.Rating, { rating: rating }));
+        };
+        MainViewModel.prototype.navigateToTest = function () {
+            this.subpage(Bundle.getComponent(Bundle.Component.Test, {}));
+        };
+        return MainViewModel;
+    }(ViewModel.ViewModelBase));
+    ViewModel.MainViewModel = MainViewModel;
+})(ViewModel || (ViewModel = {}));
+var Service;
+(function (Service) {
+    var FooterBarLogger = (function () {
+        function FooterBarLogger() {
+        }
+        Object.defineProperty(FooterBarLogger.prototype, "Footer", {
+            get: function () {
+                return document.getElementsByTagName("footer")[0];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        FooterBarLogger.prototype.log = function (value) {
+            this.Footer.innerHTML = value;
+        };
+        return FooterBarLogger;
+    }());
+    Service.FooterBarLogger = FooterBarLogger;
+})(Service || (Service = {}));
+var Service;
+(function (Service) {
+    var ServiceResolver = (function () {
+        function ServiceResolver() {
+            this._singletons = {};
+        }
+        ServiceResolver.prototype.Singleton = function (name, getter) {
+            if (!this._singletons[name]) {
+                this._singletons[name] = getter();
+            }
+            return this._singletons[name];
+        };
+        ServiceResolver.prototype.Transient = function (getter) {
+            return getter();
+        };
+        Object.defineProperty(ServiceResolver.prototype, "ComponentResolver", {
+            get: function () {
+                var _this = this;
+                return this.Singleton("ComponentResolver", function () { return new Bundle.HtmlScriptInsertKnockoutComponentRegisterer(_this); });
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ServiceResolver.prototype, "ApiHost", {
+            get: function () {
+                return this.Singleton("ApiHost", function () { return new Service.OwenSelfHostingApi(); });
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ServiceResolver.prototype, "RcpService", {
+            get: function () {
+                var _this = this;
+                return this.Singleton("RcpService", function () { return new Service.LocalRcpClient(_this.ApiHost); });
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ServiceResolver.prototype, "ImageService", {
+            get: function () {
+                var _this = this;
+                return this.Singleton("ImageService", function () { return new Api.ImageService(_this.RcpService); });
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ServiceResolver.prototype, "Logger", {
+            get: function () {
+                return this.Singleton("Logger", function () { return new Service.FooterBarLogger(); });
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ServiceResolver.prototype, "BindingViewModel", {
+            get: function () {
+                var _this = this;
+                return this.Transient(function () { return new ViewModel.MainViewModel(_this.Logger); });
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return ServiceResolver;
+    }());
+    Service.ServiceResolver = ServiceResolver;
+})(Service || (Service = {}));
+var Bundle;
+(function (Bundle) {
+    var KnockoutGenericComponentConfiguration = (function () {
+        function KnockoutGenericComponentConfiguration(name, init) {
+            this.name = name;
+            this.init = init;
+        }
+        return KnockoutGenericComponentConfiguration;
+    }());
+    Bundle.KnockoutGenericComponentConfiguration = KnockoutGenericComponentConfiguration;
+    var KnockoutComponentConfigurations = (function () {
+        function KnockoutComponentConfigurations() {
+            this.Rating = new KnockoutGenericComponentConfiguration("rating", function (param, resolver) { return new ViewModel.RatingViewModel(param); });
+            this.Test = new KnockoutGenericComponentConfiguration("test", function (param, resolver) { return new ViewModel.TestViewModel(param); });
+        }
+        return KnockoutComponentConfigurations;
+    }());
+    Bundle.Component = new KnockoutComponentConfigurations();
+    Bundle.getAllComponents = function () {
+        return Object.keys(Bundle.Component).map(function (key) { return Bundle.Component[key]; });
+    };
+    Bundle.getComponent = function (configuartion, params) {
+        return {
+            name: configuartion.name,
+            params: params
+        };
+    };
+})(Bundle || (Bundle = {}));
+var Application = (function () {
+    function Application(_serviceResolver) {
+        this._serviceResolver = _serviceResolver;
+        _serviceResolver.ComponentResolver.register(Bundle.getAllComponents()).done(function () {
+            ko.applyBindings(_serviceResolver.BindingViewModel);
+        }).fail(function () {
+            console.error("Couldn't load html templates");
+        });
+    }
+    return Application;
+}());
+$(document).ready(function () {
+    var app = new Application(new Service.ServiceResolver());
+});
+var _this = this;
+var StringContainsParameter;
+(function (StringContainsParameter) {
+    StringContainsParameter[StringContainsParameter["IgnoreCase"] = 0] = "IgnoreCase";
+    StringContainsParameter[StringContainsParameter["CaseSensitive"] = 1] = "CaseSensitive";
+})(StringContainsParameter || (StringContainsParameter = {}));
+String.prototype.contains = function (p, type) {
+    var value = _this.valueOf();
+    switch (type) {
+        case StringContainsParameter.IgnoreCase:
+            return value.indexOf(p.toLowerCase()) !== -1;
+        default:
+            return value.indexOf(p) !== -1;
+    }
+};
+var ViewModel;
+(function (ViewModel) {
+    var RatingViewModel = (function (_super) {
+        __extends(RatingViewModel, _super);
+        function RatingViewModel(param) {
+            var _this = _super.call(this) || this;
+            _this.header = ko.observable();
+            _this.header(param.rating + " stars");
+            return _this;
+        }
+        return RatingViewModel;
+    }(ViewModel.ViewModelBase));
+    ViewModel.RatingViewModel = RatingViewModel;
+})(ViewModel || (ViewModel = {}));
+var ViewModel;
+(function (ViewModel) {
+    var TestViewModel = (function (_super) {
+        __extends(TestViewModel, _super);
+        function TestViewModel(param) {
+            return _super.call(this) || this;
+        }
+        return TestViewModel;
+    }(ViewModel.ViewModelBase));
+    ViewModel.TestViewModel = TestViewModel;
+})(ViewModel || (ViewModel = {}));

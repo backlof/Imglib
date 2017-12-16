@@ -1,8 +1,9 @@
-﻿/// <reference path="../Bundle/ComponentResolver.ts" />
+﻿/// <reference path="../Bundle/KnockoutComponentRegisterer.ts" />
 /// <reference path="../ViewModel/MainViewModel.ts" />
 /// <reference path="DeferredRcpClient.ts" />
 /// <reference path="ApiHost.ts" />
 /// <reference path="../Api/ImageService.ts" />
+/// <reference path="Logger.ts" />
 
 namespace Service {
 
@@ -11,6 +12,8 @@ namespace Service {
 		readonly ComponentResolver: Bundle.IKnockoutComponentRegisterer;
 		readonly RcpService: Service.IDeferredRcpClient;
 		readonly ImageService: Api.IImageService;
+		readonly Logger: Service.ILogger;
+		readonly BindingViewModel: ViewModel.ViewModelBase;
 	}
 
 	export class ServiceResolver implements IServiceResolver {
@@ -44,6 +47,14 @@ namespace Service {
 
 		get ImageService(): Api.IImageService {
 			return this.Singleton("ImageService", () => new Api.ImageService(this.RcpService));
+		}
+
+		get Logger(): ILogger {
+			return this.Singleton("Logger", () => new Service.FooterBarLogger());
+		}
+
+		get BindingViewModel(): ViewModel.ViewModelBase {
+			return this.Transient(() => new ViewModel.MainViewModel(this.Logger));
 		}
 	}
 }

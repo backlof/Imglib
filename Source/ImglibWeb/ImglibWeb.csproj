@@ -135,6 +135,7 @@
     <TypeScriptCompile Include="TypeScript\Application.ts" />
     <TypeScriptCompile Include="TypeScript\Bundle\KnockoutComponentRegisterer.ts" />
     <TypeScriptCompile Include="TypeScript\Bundle\KnockoutComponentConfiguration.ts" />
+    <TypeScriptCompile Include="TypeScript\Service\Logger.ts" />
     <TypeScriptCompile Include="TypeScript\Service\ServiceResolver.ts" />
     <TypeScriptCompile Include="TypeScript\Service\ApiHost.ts" />
     <TypeScriptCompile Include="TypeScript\Service\DeferredRcpClient.ts" />

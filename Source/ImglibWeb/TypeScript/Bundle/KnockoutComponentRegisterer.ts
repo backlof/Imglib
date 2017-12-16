@@ -1,7 +1,7 @@
 ﻿module Bundle {
 
 	export interface IKnockoutComponentRegisterer {
-		register: (components: KnockoutComponentConfiguration[]) => JQueryDeferred<void>;
+		register(components: KnockoutComponentConfiguration[]): JQueryDeferred<void>;
 	}
 
 	export class HtmlScriptInsertKnockoutComponentRegisterer implements IKnockoutComponentRegisterer {

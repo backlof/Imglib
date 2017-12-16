@@ -17,11 +17,11 @@ body {
 }
 /* Create padding around the page */
 section {
-  padding: 12px 8px;
+  padding: 12px 8px 12px 8px;
 }
 /* Background color */
 body {
-  background-color: rgba(199, 185, 168, 0.01);
+  background-color: #fff;
 }
 /* Change the color of anchors to default in application */
 a {
@@ -55,17 +55,15 @@ footer {
 }
 /* Move navigation bar to the left */
 section {
-  padding: 12px 0 12px 12px;
+  /*padding: 12px 0 12px 12px;*/
 }
 section > nav {
   float: left;
-  padding-right: 14px;
-  margin: 0 8px 0 0;
-  padding: 0 22px 0 0;
   border-right: solid 1px #f1f1f1;
+  padding-right: 22px;
 }
 section > article {
-  float: left;
+  margin-left: 95px;
 }
 /* Style links in navigation bar*/
 nav a {

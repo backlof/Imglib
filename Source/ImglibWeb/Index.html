@@ -37,10 +37,11 @@
 				<a href="#" data-bind="click: function() { navigateToTest(); }">Test</a>
 			</div>
 		</nav>
+		<!-- TODO Remove if around subpage when you no longer need it (start at default subpage) -->
 		<!-- ko if: subpage -->
 		<article data-bind="component: subpage"></article>
 		<!-- /ko -->
 	</section>
-	<footer>This is the footer where application messages will appear</footer>
+	<footer></footer>
 </body>
 </html>
