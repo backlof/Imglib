@@ -84,12 +84,7 @@ var Bundle;
         HtmlScriptInsertKnockoutComponentRegisterer.prototype.loadHtml = function (scriptId) {
             var promise = $.Deferred();
             $.get("Web/" + scriptId + ".html").done(function (data) {
-                var script = document.createElement("script");
-                script.type = "text/html";
-                script.innerHTML = data;
-                script.id = scriptId;
-                $("head").append(script);
-                promise.resolve();
+                promise.resolve(data);
             }).fail(function () {
                 promise.reject();
             });
@@ -97,25 +92,20 @@ var Bundle;
         };
         HtmlScriptInsertKnockoutComponentRegisterer.prototype.registerComponent = function (component) {
             var _this = this;
-            var promise = $.Deferred();
-            this.loadHtml(component.name).done(function () {
+            return this.loadHtml(component.name).done(function (html) {
                 ko.components.register(component.name, {
                     viewModel: function (params) {
                         return component.init(params, _this._serviceResolver);
                     },
-                    template: document.getElementById(component.name).innerHTML,
+                    template: html,
                     synchronous: true
                 });
-                promise.resolve();
-            }).fail(function () {
-                promise.reject();
             });
-            return promise;
         };
         HtmlScriptInsertKnockoutComponentRegisterer.prototype.register = function (components) {
             var _this = this;
             var promise = $.Deferred();
-            $.when.apply($, components.map(function (component) { return _this.registerComponent(component); })).done(function () {
+            $.when.apply($, components.filter(function (x) { return x != null; }).map(function (component) { return _this.registerComponent(component); })).done(function () {
                 promise.resolve();
             }).fail(function () {
                 promise.reject();
@@ -181,20 +171,36 @@ var ViewModel;
     }(ViewModel.ViewModelBase));
     ViewModel.MainViewModel = MainViewModel;
 })(ViewModel || (ViewModel = {}));
+Object.defineProperty(Date, "Now", {
+    get: function () {
+        return new Date();
+    }
+});
+var formatDate = function (value) {
+    return value.getFullYear() + "-" + String.padLeft(value.getMonth() + 1, 2) + "-" + String.padLeft(value.getDate(), 2) + " " + String.padLeft(value.getHours(), 2) + ":" + String.padLeft(value.getMinutes(), 2) + ":" + String.padLeft(value.getSeconds(), 2);
+};
 var Service;
 (function (Service) {
     var FooterBarLogger = (function () {
         function FooterBarLogger() {
         }
-        Object.defineProperty(FooterBarLogger.prototype, "Footer", {
+        Object.defineProperty(FooterBarLogger.prototype, "FooterTimeStamp", {
             get: function () {
-                return document.getElementsByTagName("footer")[0];
+                return document.getElementById("footer-timestamp");
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(FooterBarLogger.prototype, "FooterStatus", {
+            get: function () {
+                return document.getElementById("footer-status");
             },
             enumerable: true,
             configurable: true
         });
         FooterBarLogger.prototype.log = function (value) {
-            this.Footer.innerHTML = value;
+            this.FooterTimeStamp.innerHTML = formatDate(Date.Now);
+            this.FooterStatus.innerHTML = value;
         };
         return FooterBarLogger;
     }());
@@ -325,41 +331,21 @@ String.prototype.contains = function (p, type) {
             return value.indexOf(p) !== -1;
     }
 };
-var ViewModel;
-(function (ViewModel) {
-    var TestViewModel = (function (_super) {
-        __extends(TestViewModel, _super);
-        function TestViewModel(param) {
-            return _super.call(this) || this;
-        }
-        return TestViewModel;
-    }(ViewModel.ViewModelBase));
-    ViewModel.TestViewModel = TestViewModel;
-})(ViewModel || (ViewModel = {}));
-var ViewModel;
-(function (ViewModel) {
-    var RatingViewModel = (function (_super) {
-        __extends(RatingViewModel, _super);
-        function RatingViewModel(params, _imageService) {
-            var _this = _super.call(this) || this;
-            _this._imageService = _imageService;
-            return _this;
-        }
-        return RatingViewModel;
-    }(ViewModel.ViewModelBase));
-    ViewModel.RatingViewModel = RatingViewModel;
-})(ViewModel || (ViewModel = {}));
-var ViewModel;
-(function (ViewModel) {
-    var TagsViewModel = (function (_super) {
-        __extends(TagsViewModel, _super);
-        function TagsViewModel(params) {
-            return _super.call(this) || this;
-        }
-        return TagsViewModel;
-    }(ViewModel.ViewModelBase));
-    ViewModel.TagsViewModel = TagsViewModel;
-})(ViewModel || (ViewModel = {}));
+String.padLeft = function (value, length, type) {
+    if (type === void 0) { type = "0"; }
+    if (!type)
+        throw new Error();
+    if (type.length !== 1)
+        throw new Error();
+    if (value == null)
+        throw new Error();
+    var str = value + "";
+    if (length < str.length)
+        throw new Error();
+    while (str.length < length)
+        str = "0" + str;
+    return str;
+};
 var ViewModel;
 (function (ViewModel) {
     var RatedViewModel = (function (_super) {
@@ -376,6 +362,19 @@ var ViewModel;
 })(ViewModel || (ViewModel = {}));
 var ViewModel;
 (function (ViewModel) {
+    var RatingViewModel = (function (_super) {
+        __extends(RatingViewModel, _super);
+        function RatingViewModel(params, _imageService) {
+            var _this = _super.call(this) || this;
+            _this._imageService = _imageService;
+            return _this;
+        }
+        return RatingViewModel;
+    }(ViewModel.ViewModelBase));
+    ViewModel.RatingViewModel = RatingViewModel;
+})(ViewModel || (ViewModel = {}));
+var ViewModel;
+(function (ViewModel) {
     var TagViewModel = (function (_super) {
         __extends(TagViewModel, _super);
         function TagViewModel(params) {
@@ -386,4 +385,26 @@ var ViewModel;
         return TagViewModel;
     }(ViewModel.ViewModelBase));
     ViewModel.TagViewModel = TagViewModel;
+})(ViewModel || (ViewModel = {}));
+var ViewModel;
+(function (ViewModel) {
+    var TestViewModel = (function (_super) {
+        __extends(TestViewModel, _super);
+        function TestViewModel(param) {
+            return _super.call(this) || this;
+        }
+        return TestViewModel;
+    }(ViewModel.ViewModelBase));
+    ViewModel.TestViewModel = TestViewModel;
+})(ViewModel || (ViewModel = {}));
+var ViewModel;
+(function (ViewModel) {
+    var TagsViewModel = (function (_super) {
+        __extends(TagsViewModel, _super);
+        function TagsViewModel(params) {
+            return _super.call(this) || this;
+        }
+        return TagsViewModel;
+    }(ViewModel.ViewModelBase));
+    ViewModel.TagsViewModel = TagsViewModel;
 })(ViewModel || (ViewModel = {}));

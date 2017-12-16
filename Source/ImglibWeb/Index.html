@@ -28,10 +28,10 @@
 			<div class="tags">
 				<a href="#" data-bind="click: function() { openTags(); }">Tags</a>
 				<a href="#" data-bind="click: function() { openTag('blurry'); }">blurry</a>
-				<a href="#" data-bind="click: function() { openTag('tag2';) }">tag2</a>
+				<a href="#" data-bind="click: function() { openTag('tag2'); }">tag2</a>
 			</div>
 			<div>
-				<a href="#" data-bind="click: function() { console.log('clicked'); }">Add files</a>
+				<a href="#" data-bind="click: function() { }">Add files</a>
 			</div>
 			<div>
 				<a href="#" data-bind="click: function() { openTest(); }">Test</a>
@@ -42,6 +42,9 @@
 		<article data-bind="component: subpage"></article>
 		<!-- /ko -->
 	</section>
-	<footer></footer>
+	<footer>
+		<div id="footer-timestamp"></div>
+		<div id="footer-status"></div>
+	</footer>
 </body>
 </html>

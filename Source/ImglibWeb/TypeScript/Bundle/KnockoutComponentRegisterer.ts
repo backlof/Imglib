@@ -8,16 +8,11 @@
 
 		constructor(private _serviceResolver: Service.IServiceResolver) { }
 
-		private loadHtml(scriptId: string): JQueryDeferred<void> {
-			const promise = $.Deferred<void>();
+		private loadHtml(scriptId: string): JQueryDeferred<string> {
+			const promise = $.Deferred<string>();
 
 			$.get(`Web/${scriptId}.html`).done((data: string) => {
-				var script = document.createElement("script");
-				script.type = "text/html";
-				script.innerHTML = data;
-				script.id = scriptId;
-				$("head").append(script);
-				promise.resolve();
+				promise.resolve(data);
 			}).fail(() => {
 				promise.reject();
 			});
@@ -26,29 +21,22 @@
 		}
 
 		private registerComponent(component: KnockoutComponentConfiguration) {
-			const promise = $.Deferred<void>();
-
-			this.loadHtml(component.name).done(() => {
+			return this.loadHtml(component.name).done((html: string) => {
 				ko.components.register(component.name, {
 					viewModel: (params) => {
 						return component.init(params, this._serviceResolver);
 					},
-					template: document.getElementById(component.name).innerHTML as string,
+					template: html,
 					synchronous: true
 
 				} as KnockoutComponentTypes.Config);
-				promise.resolve();
-			}).fail(() => {
-				promise.reject();
 			});
-
-			return promise;
 		}
 
 		public register(components: KnockoutComponentConfiguration[]) {
 			const promise = $.Deferred<void>();
 
-			$.when.apply($, components.map(component => this.registerComponent(component))).done(() => {
+			$.when.apply($, components.filter(x => x != null).map(component => this.registerComponent(component))).done(() => {
 				promise.resolve();
 			}).fail(() => {
 				promise.reject();
