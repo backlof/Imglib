@@ -94,7 +94,10 @@
     <Content Include="Styles\style.min.css">
       <DependentUpon>style.css</DependentUpon>
     </Content>
+    <Content Include="Web\rated.html" />
     <Content Include="Web\rating.html" />
+    <Content Include="Web\tag.html" />
+    <Content Include="Web\tags.html" />
     <Content Include="Web\test.html" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
@@ -145,8 +148,11 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="TypeScript\Utility\String.ts" />
-    <TypeScriptCompile Include="TypeScript\ViewModel\RatingViewModel.ts" />
+    <TypeScriptCompile Include="TypeScript\ViewModel\RatedViewModel.ts" />
     <TypeScriptCompile Include="TypeScript\ViewModel\MainViewModel.ts" />
+    <TypeScriptCompile Include="TypeScript\ViewModel\RatingViewModel.ts" />
+    <TypeScriptCompile Include="TypeScript\ViewModel\TagViewModel.ts" />
+    <TypeScriptCompile Include="TypeScript\ViewModel\TagsViewModel.ts" />
     <TypeScriptCompile Include="TypeScript\ViewModel\TestViewModel.ts" />
     <TypeScriptCompile Include="TypeScript\ViewModel\ViewModelBase.ts" />
   </ItemGroup>

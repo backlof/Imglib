@@ -11,7 +11,7 @@ namespace ViewModel {
 		constructor(private _logger: Service.ILogger) {
 			super();
 
-			this.subpage(Bundle.getComponent(Bundle.Component.Test, {}))
+			this.openTest();
 			this._logger.log("Testing the logging system");
 
 			setTimeout(() => {
@@ -19,15 +19,24 @@ namespace ViewModel {
 			}, 2000);
 		}
 
-		public navigateToRatedImages(rating: number) {
-			//console.log("test");
-			//this.subpage(null);
-			//console.log(null);
-			this.subpage(Bundle.getComponent(Bundle.Component.Rating, { rating: rating }));
+		public openRating() {
+			this.subpage(Bundle.getComponent(Bundle.Component.Rating, {}));
 		}
 
-		public navigateToTest() {
-			this.subpage(Bundle.getComponent(Bundle.Component.Test, {}))
+		public openRated(rating: number) {
+			this.subpage(Bundle.getComponent(Bundle.Component.Rated, { rating: rating }));
+		}
+
+		public openTest() {
+			this.subpage(Bundle.getComponent(Bundle.Component.Test, {}));
+		}
+
+		public openTags() {
+			this.subpage(Bundle.getComponent(Bundle.Component.Tags, {}));
+		}
+
+		public openTag(tag: string) {
+			this.subpage(Bundle.getComponent(Bundle.Component.Tag, { tag: tag }));
 		}
 	}
 }

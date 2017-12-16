@@ -1,19 +1,15 @@
 ﻿/// <reference path="ViewModelBase.ts" />
 
-namespace ViewModel {
+module ViewModel {
 
-	export interface RatingViewModel {
-		rating: number;
+	export interface IRatingViewModelParams {
+
 	}
 
 	export class RatingViewModel extends ViewModelBase {
 
-		private header = ko.observable<string>();
-
-		constructor(param: RatingViewModel) {
+		constructor(params: IRatingViewModelParams, private _imageService: Api.IImageService) {
 			super();
-
-			this.header(`${param.rating} stars`);
 		}
 	}
 }

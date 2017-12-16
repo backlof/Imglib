@@ -155,18 +155,27 @@ var ViewModel;
             var _this = _super.call(this) || this;
             _this._logger = _logger;
             _this.subpage = ko.observable();
-            _this.subpage(Bundle.getComponent(Bundle.Component.Test, {}));
+            _this.openTest();
             _this._logger.log("Testing the logging system");
             setTimeout(function () {
                 _this._logger.log("2000 ms have passed");
             }, 2000);
             return _this;
         }
-        MainViewModel.prototype.navigateToRatedImages = function (rating) {
-            this.subpage(Bundle.getComponent(Bundle.Component.Rating, { rating: rating }));
+        MainViewModel.prototype.openRating = function () {
+            this.subpage(Bundle.getComponent(Bundle.Component.Rating, {}));
         };
-        MainViewModel.prototype.navigateToTest = function () {
+        MainViewModel.prototype.openRated = function (rating) {
+            this.subpage(Bundle.getComponent(Bundle.Component.Rated, { rating: rating }));
+        };
+        MainViewModel.prototype.openTest = function () {
             this.subpage(Bundle.getComponent(Bundle.Component.Test, {}));
+        };
+        MainViewModel.prototype.openTags = function () {
+            this.subpage(Bundle.getComponent(Bundle.Component.Tags, {}));
+        };
+        MainViewModel.prototype.openTag = function (tag) {
+            this.subpage(Bundle.getComponent(Bundle.Component.Tag, { tag: tag }));
         };
         return MainViewModel;
     }(ViewModel.ViewModelBase));
@@ -268,8 +277,11 @@ var Bundle;
     Bundle.KnockoutGenericComponentConfiguration = KnockoutGenericComponentConfiguration;
     var KnockoutComponentConfigurations = (function () {
         function KnockoutComponentConfigurations() {
-            this.Rating = new KnockoutGenericComponentConfiguration("rating", function (param, resolver) { return new ViewModel.RatingViewModel(param); });
+            this.Rated = new KnockoutGenericComponentConfiguration("rated", function (param, resolver) { return new ViewModel.RatedViewModel(param); });
             this.Test = new KnockoutGenericComponentConfiguration("test", function (param, resolver) { return new ViewModel.TestViewModel(param); });
+            this.Rating = new KnockoutGenericComponentConfiguration("rating", function (param, resolver) { return new ViewModel.RatingViewModel(param, resolver.ImageService); });
+            this.Tags = new KnockoutGenericComponentConfiguration("tags", function (param, resolver) { return new ViewModel.TagsViewModel(param); });
+            this.Tag = new KnockoutGenericComponentConfiguration("tag", function (param, resolver) { return new ViewModel.TagViewModel(param); });
         }
         return KnockoutComponentConfigurations;
     }());
@@ -315,20 +327,6 @@ String.prototype.contains = function (p, type) {
 };
 var ViewModel;
 (function (ViewModel) {
-    var RatingViewModel = (function (_super) {
-        __extends(RatingViewModel, _super);
-        function RatingViewModel(param) {
-            var _this = _super.call(this) || this;
-            _this.header = ko.observable();
-            _this.header(param.rating + " stars");
-            return _this;
-        }
-        return RatingViewModel;
-    }(ViewModel.ViewModelBase));
-    ViewModel.RatingViewModel = RatingViewModel;
-})(ViewModel || (ViewModel = {}));
-var ViewModel;
-(function (ViewModel) {
     var TestViewModel = (function (_super) {
         __extends(TestViewModel, _super);
         function TestViewModel(param) {
@@ -337,4 +335,55 @@ var ViewModel;
         return TestViewModel;
     }(ViewModel.ViewModelBase));
     ViewModel.TestViewModel = TestViewModel;
+})(ViewModel || (ViewModel = {}));
+var ViewModel;
+(function (ViewModel) {
+    var RatingViewModel = (function (_super) {
+        __extends(RatingViewModel, _super);
+        function RatingViewModel(params, _imageService) {
+            var _this = _super.call(this) || this;
+            _this._imageService = _imageService;
+            return _this;
+        }
+        return RatingViewModel;
+    }(ViewModel.ViewModelBase));
+    ViewModel.RatingViewModel = RatingViewModel;
+})(ViewModel || (ViewModel = {}));
+var ViewModel;
+(function (ViewModel) {
+    var TagsViewModel = (function (_super) {
+        __extends(TagsViewModel, _super);
+        function TagsViewModel(params) {
+            return _super.call(this) || this;
+        }
+        return TagsViewModel;
+    }(ViewModel.ViewModelBase));
+    ViewModel.TagsViewModel = TagsViewModel;
+})(ViewModel || (ViewModel = {}));
+var ViewModel;
+(function (ViewModel) {
+    var RatedViewModel = (function (_super) {
+        __extends(RatedViewModel, _super);
+        function RatedViewModel(param) {
+            var _this = _super.call(this) || this;
+            _this.header = ko.observable();
+            _this.header(param.rating + " stars");
+            return _this;
+        }
+        return RatedViewModel;
+    }(ViewModel.ViewModelBase));
+    ViewModel.RatedViewModel = RatedViewModel;
+})(ViewModel || (ViewModel = {}));
+var ViewModel;
+(function (ViewModel) {
+    var TagViewModel = (function (_super) {
+        __extends(TagViewModel, _super);
+        function TagViewModel(params) {
+            var _this = _super.call(this) || this;
+            _this.header = params.tag;
+            return _this;
+        }
+        return TagViewModel;
+    }(ViewModel.ViewModelBase));
+    ViewModel.TagViewModel = TagViewModel;
 })(ViewModel || (ViewModel = {}));

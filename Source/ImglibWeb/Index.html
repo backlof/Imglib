@@ -18,23 +18,23 @@
 				<!-- TODO The web page should be in native browser: create event caught by application -->
 			</div>
 			<div>
-				<a href="#" data-bind="click: function() { console.log('navigateToRating'); }">Rating</a>
-				<a href="#" data-bind="click: function() { navigateToRatedImages(5); }">5 stars</a>
-				<a href="#" data-bind="click: function() { navigateToRatedImages(4); }">4 stars</a>
-				<a href="#" data-bind="click: function() { navigateToRatedImages(3); }">3 stars</a>
-				<a href="#" data-bind="click: function() { navigateToRatedImages(2); }">2 stars</a>
-				<a href="#" data-bind="click: function() { navigateToRatedImages(1); }">1 star</a>
+				<a href="#" data-bind="click: function() { openRating(); }">Rating</a>
+				<a href="#" data-bind="click: function() { openRated(5); }">5 stars</a>
+				<a href="#" data-bind="click: function() { openRated(4); }">4 stars</a>
+				<a href="#" data-bind="click: function() { openRated(3); }">3 stars</a>
+				<a href="#" data-bind="click: function() { openRated(2); }">2 stars</a>
+				<a href="#" data-bind="click: function() { openRated(1); }">1 star</a>
 			</div>
 			<div class="tags">
-				<a href="#" data-bind="click: function() { console.log('clicked'); }">Tags</a>
-				<a href="#" data-bind="click: function() { console.log('clicked'); }">blurry</a>
-				<a href="#" data-bind="click: function() { console.log('clicked'); }">tag2</a>
+				<a href="#" data-bind="click: function() { openTags(); }">Tags</a>
+				<a href="#" data-bind="click: function() { openTag('blurry'); }">blurry</a>
+				<a href="#" data-bind="click: function() { openTag('tag2';) }">tag2</a>
 			</div>
 			<div>
 				<a href="#" data-bind="click: function() { console.log('clicked'); }">Add files</a>
 			</div>
 			<div>
-				<a href="#" data-bind="click: function() { navigateToTest(); }">Test</a>
+				<a href="#" data-bind="click: function() { openTest(); }">Test</a>
 			</div>
 		</nav>
 		<!-- TODO Remove if around subpage when you no longer need it (start at default subpage) -->

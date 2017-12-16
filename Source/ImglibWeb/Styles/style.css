@@ -99,3 +99,7 @@ article p {
 article ul {
   padding-left: 2.5em;
 }
+/* Italic heading */
+.italic {
+  font-style: italic;
+}

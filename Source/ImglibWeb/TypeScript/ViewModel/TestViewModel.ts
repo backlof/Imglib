@@ -2,12 +2,12 @@
 
 namespace ViewModel {
 
-	export interface TestViewModelParams {
+	export interface ITestViewModelParams {
 
 	}
 
 	export class TestViewModel extends ViewModelBase {
-		constructor(param: TestViewModelParams) {
+		constructor(param: ITestViewModelParams) {
 			super();
 		}
 	}
