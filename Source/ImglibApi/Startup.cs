@@ -18,9 +18,6 @@ namespace ImglibApi
 			// Configure Web API for self-host. 
 			HttpConfiguration config = new HttpConfiguration();
 
-			// Add this line to register Attribute-Routing
-			//config.MapHttpAttributeRoutes();
-
 			config.Routes.MapHttpRoute(
 				 name: "Web Api RPC",
 				 routeTemplate: "api/{controller}/{action}",

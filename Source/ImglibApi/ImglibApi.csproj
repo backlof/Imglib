@@ -86,10 +86,10 @@
     <Compile Include="Controller\Model\PictureType.cs" />
     <Compile Include="Controller\ImageController.cs" />
     <Compile Include="Controller\Model\Picture.cs" />
-    <Compile Include="Host.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\ImglibRepository.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="WebApiHost.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

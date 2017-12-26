@@ -8,23 +8,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ImglibApi;
+using OwinTest;
 
 namespace Imglib
 {
-	public partial class Form1 : Form
+	public partial class Browser : Form
 	{
-		private readonly ImglibHost _host;
+		private readonly WebApiHost _webApi;
+		private readonly FileServerHost _fileServer;
 
-		public Form1()
+		public Browser()
 		{
-			_host = new ImglibHost();
+			_webApi = new WebApiHost();
+			_fileServer = new FileServerHost();
 			InitializeComponent();
 		}
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			var directory = System.IO.Directory.GetCurrentDirectory();
-			webBrowser1.Navigate(new Uri(System.IO.Path.Combine(directory, "Web", "Page.html")));
+			webBrowser1.Navigate(_fileServer.Url);
+			//var directory = System.IO.Directory.GetCurrentDirectory();
+			//new Uri(System.IO.Path.Combine(directory, "Web", "Page.html")));
 		}
 
 		private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
@@ -34,7 +38,8 @@ namespace Imglib
 
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			_host.Dispose();
+			_webApi.Dispose();
+			_fileServer.Dispose();
 			base.OnFormClosing(e);
 		}
 	}
