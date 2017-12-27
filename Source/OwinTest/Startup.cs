@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin.StaticFiles;
+﻿using Microsoft.Owin.FileSystems;
+using Microsoft.Owin.StaticFiles;
 using Owin;
 
 namespace OwinTest
@@ -7,35 +8,12 @@ namespace OwinTest
 	{
 		public void Configuration(IAppBuilder app)
 		{
-			//var x = System.AppDomain.CurrentDomain.BaseDirectory;
-
 			app.UseFileServer(new FileServerOptions
 			{
-				//EnableDefaultFiles = true,
-				//FileSystem = new PhysicalFileSystem("Assets"),
-				EnableDirectoryBrowsing = true
+				EnableDefaultFiles = true,
+				FileSystem = new PhysicalFileSystem(""),
+				EnableDirectoryBrowsing = true, // Will not happen as long as there is an Index.html
 			});
-
-			//app.UseStaticFiles(new StaticFileOptions
-			//{
-			//	RequestPath = new PathString()
-			//})
-
-
-			//var relativePath = string.Format(@"..{0}..{0}", Path.DirectorySeparatorChar);
-			//string contentPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), relativePath);
-
-			//app.UseFileServer(new FileServerOptions()
-			//{
-			//	RequestPath = PathString.Empty,
-			//	FileSystem = new PhysicalFileSystem(contentPath),
-			//});
-
-			//app.UseStaticFiles(new StaticFileOptions()
-			//{
-			//	RequestPath = new PathString(""),
-			//	FileSystem = new PhysicalFileSystem(contentPath)
-			//});
 		}
 	}
 }
