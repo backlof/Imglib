@@ -2,7 +2,7 @@
 using Microsoft.Owin.StaticFiles;
 using Owin;
 
-namespace OwinTest
+namespace ImglibWeb
 {
 	public class Startup
 	{

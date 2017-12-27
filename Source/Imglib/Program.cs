@@ -1,9 +1,9 @@
 ﻿using ImglibApi;
-using OwinTest;
+using ImglibWeb;
 using System;
 using System.Windows.Forms;
 
-namespace Imglib
+namespace ImglibApp
 {
 	static class Program
 	{
@@ -25,7 +25,7 @@ namespace Imglib
 			Console.WriteLine("Initializing api...");
 			var api = new WebApiHost();
 			Console.WriteLine("Initializing file server");
-			var fileServer = new FileServerHost();
+			var fileServer = new WebServerHost();
 
 			Console.WriteLine("Opening web site...");
 			System.Diagnostics.Process.Start(fileServer.Url);

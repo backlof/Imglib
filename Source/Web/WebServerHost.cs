@@ -5,20 +5,20 @@ using System.IO;
 using System.Reflection;
 using Microsoft.Owin;
 
-namespace OwinTest
+namespace ImglibWeb
 {
-	public class FileServerHost : IDisposable
+	public class WebServerHost : IDisposable
 	{
 		private readonly IDisposable _webApp;
 		private readonly int _port;
 
 		public string Url => $"http://localhost:{_port}";
 
-		public FileServerHost() : this(8080)
+		public WebServerHost() : this(8080)
 		{
 		}
 
-		public FileServerHost(int port)
+		public WebServerHost(int port)
 		{
 			if (port < 8000)
 			{

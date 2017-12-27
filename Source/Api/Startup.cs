@@ -30,14 +30,15 @@ namespace ImglibApi
 			);
 
 			config.Formatters.JsonFormatter.UseDataContractJsonSerializer = false;
+
 #if DEBUG
 			config.Formatters.JsonFormatter.SerializerSettings.Formatting = Formatting.Indented;
 #else
 			config.Formatters.JsonFormatter.SerializerSettings.Formatting = Formatting.None;
 #endif
-			config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
 			//Deserialization is case insensitive
+			config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
 			appBuilder.UseNinjectMiddleware(SetUp).UseNinjectWebApi(config);
 		}

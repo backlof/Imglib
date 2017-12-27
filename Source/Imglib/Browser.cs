@@ -8,19 +8,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ImglibApi;
-using OwinTest;
+using ImglibWeb;
 
-namespace Imglib
+namespace ImglibApp
 {
 	public partial class Browser : Form
 	{
 		private readonly WebApiHost _webApi;
-		private readonly FileServerHost _fileServer;
+		private readonly WebServerHost _fileServer;
 
 		public Browser()
 		{
 			_webApi = new WebApiHost();
-			_fileServer = new FileServerHost();
+			_fileServer = new WebServerHost();
 			InitializeComponent();
 		}
 

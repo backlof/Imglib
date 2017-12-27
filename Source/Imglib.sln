@@ -5,15 +5,15 @@ VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Imglib", "Imglib\Imglib.csproj", "{A5FFD05C-A908-4934-BEC3-00446364A59F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImglibApiTest", "ImglibApiTest\ImglibApiTest.csproj", "{94F9991F-398A-4A84-8E22-8D762E23EE67}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiTest", "ApiTest\ApiTest.csproj", "{94F9991F-398A-4A84-8E22-8D762E23EE67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImglibApi", "ImglibApi\ImglibApi.csproj", "{3C0F22E7-6187-4F73-B759-A9A54D9580A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{3C0F22E7-6187-4F73-B759-A9A54D9580A4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImglibWeb", "ImglibWeb\ImglibWeb.csproj", "{ED1962B6-FC77-4365-A084-ACC6FA65EE95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwinTest", "OwinTest\OwinTest.csproj", "{6AA8CE27-62B4-4A45-A28D-98BE4B3ED248}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{6AA8CE27-62B4-4A45-A28D-98BE4B3ED248}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwinUnitTest", "OwinUnitTest\OwinUnitTest.csproj", "{18B2478D-6C9B-4F25-9F64-C5C95B7BD72C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebTest", "WebTest\WebTest.csproj", "{18B2478D-6C9B-4F25-9F64-C5C95B7BD72C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

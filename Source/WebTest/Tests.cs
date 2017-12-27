@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OwinTest;
+using ImglibWeb;
 using System.Net.Http;
 
-namespace OwinUnitTest
+namespace ImglibWebTest
 {
 	[TestClass]
 	public class Tests
@@ -11,7 +11,7 @@ namespace OwinUnitTest
 		[TestMethod]
 		public void ShouldNotGet404WhenGettingIndexHtml()
 		{
-			using (var fileServerHost =  new FileServerHost())
+			using (var fileServerHost =  new WebServerHost())
 			{
 				HttpClient client = new HttpClient();
 

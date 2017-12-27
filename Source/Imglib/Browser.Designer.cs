@@ -1,4 +1,4 @@
-﻿namespace Imglib
+﻿namespace ImglibApp
 {
 	partial class Browser
 	{

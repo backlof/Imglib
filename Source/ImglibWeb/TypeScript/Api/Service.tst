@@ -4,7 +4,7 @@
 	
 	Template(Settings settings)
 	{
-		settings.IncludeProject("ImglibApi");
+		settings.IncludeProject("Api");
 		settings.OutputFilenameFactory = (file) => {
 			return file.Name.Replace("Controller.cs", "Service.ts");
 		};
