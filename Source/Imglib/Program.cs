@@ -22,20 +22,16 @@ namespace ImglibApp
 
 		public static void InitializeDebug()
 		{
-			Console.WriteLine("Initializing api...");
-			var api = new WebApiHost();
-			Console.WriteLine("Initializing file server");
-			var fileServer = new WebServerHost();
+			Console.WriteLine("Initializing...");
 
-			Console.WriteLine("Opening web site...");
+			var api = new WebApiHost();
+			var fileServer = new WebServerHost();
 			System.Diagnostics.Process.Start(fileServer.Url);
 
 			Console.Write("Press enter to exit:");
 			Console.Read();
 
-			Console.WriteLine("Disposing of api...");
 			api.Dispose();
-			Console.WriteLine("Disposing of file server...");
 			fileServer.Dispose();
 		}
 

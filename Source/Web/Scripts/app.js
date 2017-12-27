@@ -314,6 +314,7 @@ var Application = (function () {
     return Application;
 }());
 $(document).ready(function () {
+    console.log("test");
     var app = new Application(new Service.ServiceResolver());
 });
 var _this = this;
@@ -375,6 +376,17 @@ var ViewModel;
 })(ViewModel || (ViewModel = {}));
 var ViewModel;
 (function (ViewModel) {
+    var TagsViewModel = (function (_super) {
+        __extends(TagsViewModel, _super);
+        function TagsViewModel(params) {
+            return _super.call(this) || this;
+        }
+        return TagsViewModel;
+    }(ViewModel.ViewModelBase));
+    ViewModel.TagsViewModel = TagsViewModel;
+})(ViewModel || (ViewModel = {}));
+var ViewModel;
+(function (ViewModel) {
     var TagViewModel = (function (_super) {
         __extends(TagViewModel, _super);
         function TagViewModel(params) {
@@ -396,15 +408,4 @@ var ViewModel;
         return TestViewModel;
     }(ViewModel.ViewModelBase));
     ViewModel.TestViewModel = TestViewModel;
-})(ViewModel || (ViewModel = {}));
-var ViewModel;
-(function (ViewModel) {
-    var TagsViewModel = (function (_super) {
-        __extends(TagsViewModel, _super);
-        function TagsViewModel(params) {
-            return _super.call(this) || this;
-        }
-        return TagsViewModel;
-    }(ViewModel.ViewModelBase));
-    ViewModel.TagsViewModel = TagsViewModel;
 })(ViewModel || (ViewModel = {}));

@@ -13,10 +13,9 @@ class Application {
 	}
 }
 
+//window.onload = () => { };
 $(document).ready(() => {
+	console.log("test");
+
 	const app = new Application(new Service.ServiceResolver());
 });
-
-//window.onload = () => {
-//	const app = new Application(new Service.ServiceResolver());
-//};

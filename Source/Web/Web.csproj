@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -13,6 +14,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TypeScriptToolsVersion>2.3</TypeScriptToolsVersion>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -98,17 +101,95 @@
     <Compile Include="WebServerHost.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\app.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Styles\style.min.css">
+      <DependentUpon>style.css</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\rated.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\rating.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\tag.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\tags.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web\test.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="packages.config" />
+    <Content Include="Styles\style.css">
+      <DependentUpon>style.less</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Styles\style.less" />
+    <Content Include="TypeScript\Api\Enum.tst" />
+    <Content Include="TypeScript\Api\Model.tst" />
+    <Content Include="TypeScript\Api\Service.tst" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Index.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Script\Script.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="Scripts\jquery-3.2.1.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\knockout-3.4.2.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Styles\normalize.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\typings\imglib.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\knockout\knockout.d.ts" />
+    <TypeScriptCompile Include="TypeScript\Api\ImageService.ts">
+      <DependentUpon>Service.tst</DependentUpon>
+      <CustomToolNamespace>..\ImglibApi\Controller\ImageController.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="TypeScript\Api\Picture.ts">
+      <DependentUpon>Model.tst</DependentUpon>
+      <CustomToolNamespace>..\ImglibApi\Controller\Model\Picture.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="TypeScript\Api\PictureType.ts">
+      <DependentUpon>Enum.tst</DependentUpon>
+      <CustomToolNamespace>..\ImglibApi\Controller\Model\PictureType.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="TypeScript\Application.ts" />
+    <TypeScriptCompile Include="TypeScript\Bundle\KnockoutComponentConfiguration.ts" />
+    <TypeScriptCompile Include="TypeScript\Bundle\KnockoutComponentRegisterer.ts" />
+    <TypeScriptCompile Include="TypeScript\Service\ApiHost.ts" />
+    <TypeScriptCompile Include="TypeScript\Service\DeferredRcpClient.ts" />
+    <TypeScriptCompile Include="TypeScript\Service\Logger.ts" />
+    <TypeScriptCompile Include="TypeScript\Service\ServiceResolver.ts" />
+    <TypeScriptCompile Include="TypeScript\Utility\Date.ts" />
+    <TypeScriptCompile Include="TypeScript\Utility\String.ts" />
+    <TypeScriptCompile Include="TypeScript\ViewModel\MainViewModel.ts" />
+    <TypeScriptCompile Include="TypeScript\ViewModel\RatedViewModel.ts" />
+    <TypeScriptCompile Include="TypeScript\ViewModel\RatingViewModel.ts" />
+    <TypeScriptCompile Include="TypeScript\ViewModel\TagsViewModel.ts" />
+    <TypeScriptCompile Include="TypeScript\ViewModel\TagViewModel.ts" />
+    <TypeScriptCompile Include="TypeScript\ViewModel\TestViewModel.ts" />
+    <TypeScriptCompile Include="TypeScript\ViewModel\ViewModelBase.ts" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props'))" />
+  </Target>
 </Project>
