@@ -15,5 +15,8 @@ module ViewModel {
 
 			this.header = params.tag;
 		}
+
+		public onDisposal(): void {
+		}
 	}
 }

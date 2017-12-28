@@ -8,33 +8,52 @@ using System.Windows.Forms;
 
 namespace ImglibApp
 {
+	//REMEMBER This only works for one parameter, which is why it's the return type
+	//REMEMBER Only checks for methods
+
 	public interface IScriptInvokeFunction
 	{
-		void AddedFolder(bool arguments);
+		string Test();
+		void Testish();
 	}
 
-	public class ScriptInvoker : IScriptInvokeFunction
+	public class ScriptInvoker
 	{
 		private readonly WebBrowser _browser;
 
-		public ScriptInvoker(WebBrowser browser)
+		public ScriptInvoker(ref WebBrowser browser)
 		{
 			_browser = browser;
 		}
 
-		public void AddedFolder(bool arguments)
-		{
-			Invoke("AddedFolder", arguments);
-		}
-
-		private void Invoke(string method, object arguments)
+		public void Invoke(Expression<Action<IScriptInvokeFunction>> method)
 		{
 			if (method == null)
 			{
 				throw new ArgumentNullException();
 			}
 
-			_browser.Document.InvokeScript(Char.ToLowerInvariant(method[0]) + method.Substring(1), new object[] { arguments });
+			InternalInvoke((method.Body as MethodCallExpression).Method.Name.ToCamelCase());
+		}
+
+		public void Invoke<T>(Expression<Func<IScriptInvokeFunction, T>> method, T argument)
+		{
+			if (method == null)
+			{
+				throw new ArgumentNullException();
+			}
+
+			InternalInvoke((method.Body as MethodCallExpression).Method.Name.ToCamelCase(), argument);
+		}
+
+		private void InternalInvoke<T>(string name, T argument)
+		{
+			_browser.Document.InvokeScript(name, new object[] { argument });
+		}
+
+		private void InternalInvoke(string name)
+		{
+			_browser.Document.InvokeScript(name);
 		}
 	}
 }

@@ -16,6 +16,7 @@ namespace ImglibApp
 	{
 		private readonly WebApiHost _webApiHost;
 		private readonly WebServerHost _webServerHost;
+		private ScriptInvoker _invoker;
 
 		public Browser()
 		{
@@ -26,29 +27,29 @@ namespace ImglibApp
 
 		private void OnFormLoaded(object sender, EventArgs e)
 		{
+			_invoker = new ScriptInvoker(ref browser);
 			browser.AllowNavigation = false;
 			browser.AllowWebBrowserDrop = false;
 			browser.IsWebBrowserContextMenuEnabled = false;
 			browser.WebBrowserShortcutsEnabled = false;
-			browser.ObjectForScripting = new WindowExternalObject(browser, new ScriptInvoker(browser));
+			browser.ScrollBarsEnabled = false;
 			browser.Navigate(_webServerHost.Url);
 		}
 
 		private void OnWebBrowserDocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
 		{
+			browser.ObjectForScripting = new WindowExternalObject(ref browser);
 		}
 
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
+			//_invoker.Invoke(x => x.Testish());
+			_invoker.Invoke(x => x.Test(), "Outpit");
+
 			_webApiHost.Dispose();
 			_webServerHost.Dispose();
 
 			base.OnFormClosing(e);
-		}
-
-		public void OpenAboutPage()
-		{
-			
 		}
 	}
 }

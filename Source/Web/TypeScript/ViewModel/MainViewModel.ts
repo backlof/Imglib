@@ -8,15 +8,18 @@ namespace ViewModel {
 
 		private subpage = ko.observable<KnockoutComponent>();
 
-		constructor(private _logger: Service.ILogger, private _browserHandler: Service.IBrowserHandler) {
+		constructor(private _logger: Service.ILogger, private _browserHandler: Browser.IBrowserInvoker) {
 			super();
 
-			this.openTest();
-			this._logger.log("Testing the logging system");
+			this.onBrowserEvent(Browser.Event.Testish, (sda) => {
+				alert(sda);
+			});
 
-			setTimeout(() => {
-				this._logger.log("2000 ms have passed");
-			}, 2000);
+			this.onBrowserEvent(Browser.Event.Test, (value) => {
+				alert(value);
+			});
+
+			this.openTest();
 		}
 
 		public openRating() {
@@ -40,20 +43,27 @@ namespace ViewModel {
 		}
 
 		public openAbout() {
-			this._browserHandler.external.openAboutPage();
+			const url = "https://github.com/backlof/Imglib";
+			if (this._browserHandler.isSupported) {
+				this._browserHandler.openWebPageInBrowser(url);
+			}
+			else {
+				window.open(url, '_blank');
+			}
 		}
 
 		public addFiles() {
-			if (this._browserHandler.hasBrowserSupport) {
-				const binding = this._browserHandler.on(Browser.InvokeFunction.AddedFolder, (jq, param) => {
-					this._logger.log(`${param}`);
-					this._browserHandler.off(binding);
-				});
-				this._browserHandler.external.addFiles();
+			if (this._browserHandler.isSupported) {
+				this._browserHandler.addFiles();
+				//TODO Refresh page
 			}
 			else {
-				console.error("Browser doesn't support adding files");
+				console.error("Browser invocation isn't supported");
 			}
+		}
+
+		public onDisposal(): void {
+
 		}
 	}
 }

@@ -10,5 +10,8 @@ namespace ViewModel {
 		constructor(param: ITestViewModelParams) {
 			super();
 		}
+
+		public onDisposal(): void {
+		}
 	}
 }

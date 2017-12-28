@@ -10,5 +10,8 @@ module ViewModel {
 		constructor(params: ITagsViewModelParams) {
 			super();
 		}
+
+		public onDisposal(): void {
+		}
 	}
 }

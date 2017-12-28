@@ -15,5 +15,8 @@ namespace ViewModel {
 
 			this.header(`${param.rating} stars`);
 		}
+
+		public onDisposal(): void {
+		}
 	}
 }

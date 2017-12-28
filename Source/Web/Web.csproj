@@ -136,8 +136,8 @@
     <Content Include="TypeScript\Api\Enum.tst" />
     <Content Include="TypeScript\Api\Model.tst" />
     <Content Include="TypeScript\Api\Service.tst" />
-    <None Include="TypeScript\Browser\BrowserExternalHandler.tst" />
-    <None Include="TypeScript\Browser\ScriptInvokeFunctions.tst" />
+    <None Include="TypeScript\Browser\BrowserInvoker.tst" />
+    <None Include="TypeScript\Browser\BrowserEventConfiguration.tst" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Index.html">
@@ -170,20 +170,19 @@
       <CustomToolNamespace>..\ImglibApi\Controller\Model\PictureType.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Application.ts" />
-    <TypeScriptCompile Include="TypeScript\Browser\BrowserExternalHandler.ts">
-      <DependentUpon>BrowserExternalHandler.tst</DependentUpon>
+    <TypeScriptCompile Include="TypeScript\Browser\BrowserEventConfiguration.ts">
+      <DependentUpon>BrowserEventConfiguration.tst</DependentUpon>
+      <CustomToolNamespace>..\Imglib\Binding\ScriptInvoker.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="TypeScript\Browser\BrowserInvoker.ts">
+      <DependentUpon>BrowserInvoker.tst</DependentUpon>
       <CustomToolNamespace>..\Imglib\Binding\WindowExternalObject.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Bundle\KnockoutComponentConfiguration.ts" />
     <TypeScriptCompile Include="TypeScript\Bundle\KnockoutComponentRegisterer.ts" />
     <TypeScriptCompile Include="TypeScript\Service\ApiHost.ts" />
-    <TypeScriptCompile Include="TypeScript\Service\BrowserHandler.ts" />
     <TypeScriptCompile Include="TypeScript\Service\DeferredRcpClient.ts" />
     <TypeScriptCompile Include="TypeScript\Service\Logger.ts" />
-    <TypeScriptCompile Include="TypeScript\Browser\ScriptInvokeFunction.ts">
-      <DependentUpon>ScriptInvokeFunctions.tst</DependentUpon>
-      <CustomToolNamespace>..\Imglib\Binding\ScriptInvoker.cs</CustomToolNamespace>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Service\ServiceResolver.ts" />
     <TypeScriptCompile Include="TypeScript\Utility\Date.ts" />
     <TypeScriptCompile Include="TypeScript\Utility\String.ts" />

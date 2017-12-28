@@ -120,8 +120,41 @@ var ViewModel;
 (function (ViewModel) {
     var ViewModelBase = (function () {
         function ViewModelBase() {
+            this.subscriptions = [];
+            this.computeds = [];
+            this.eventBindings = [];
         }
         ViewModelBase.prototype.dispose = function () {
+            for (var _i = 0, _a = this.computeds; _i < _a.length; _i++) {
+                var computed = _a[_i];
+                computed.dispose();
+            }
+            for (var _b = 0, _c = this.subscriptions; _b < _c.length; _b++) {
+                var subscription = _c[_b];
+                subscription.dispose();
+            }
+            for (var _d = 0, _e = this.eventBindings; _d < _e.length; _d++) {
+                var even = _e[_d];
+                $(document).off(even.name, even.handler);
+            }
+            this.onDisposal();
+        };
+        ViewModelBase.prototype.onBrowserEvent = function (event, handler) {
+            this.on(event.name, function (jq, param) { handler(param); });
+        };
+        ViewModelBase.prototype.on = function (events, handler) {
+            $(document).on(events, handler);
+            this.eventBindings.push({ name: events, handler: handler });
+        };
+        ViewModelBase.prototype.subscribe = function (subsribable, callback) {
+            var subscription = subsribable.subscribe(callback);
+            this.subscriptions.push(subscription);
+            return subscription;
+        };
+        ViewModelBase.prototype.computed = function (option) {
+            var computed = ko.pureComputed(option);
+            this.computeds.push(computed);
+            return computed;
         };
         return ViewModelBase;
     }());
@@ -146,11 +179,13 @@ var ViewModel;
             _this._logger = _logger;
             _this._browserHandler = _browserHandler;
             _this.subpage = ko.observable();
+            _this.onBrowserEvent(Browser.Event.Testish, function (sda) {
+                alert(sda);
+            });
+            _this.onBrowserEvent(Browser.Event.Test, function (value) {
+                alert(value);
+            });
             _this.openTest();
-            _this._logger.log("Testing the logging system");
-            setTimeout(function () {
-                _this._logger.log("2000 ms have passed");
-            }, 2000);
             return _this;
         }
         MainViewModel.prototype.openRating = function () {
@@ -169,20 +204,23 @@ var ViewModel;
             this.subpage(Bundle.getComponent(Bundle.Component.Tag, { tag: tag }));
         };
         MainViewModel.prototype.openAbout = function () {
-            this._browserHandler.external.openAboutPage();
-        };
-        MainViewModel.prototype.addFiles = function () {
-            var _this = this;
-            if (this._browserHandler.hasBrowserSupport) {
-                var binding_1 = this._browserHandler.on(Browser.InvokeFunction.AddedFolder, function (jq, param) {
-                    _this._logger.log("" + param);
-                    _this._browserHandler.off(binding_1);
-                });
-                this._browserHandler.external.addFiles();
+            var url = "https://github.com/backlof/Imglib";
+            if (this._browserHandler.isSupported) {
+                this._browserHandler.openWebPageInBrowser(url);
             }
             else {
-                console.error("Browser doesn't support adding files");
+                window.open(url, '_blank');
             }
+        };
+        MainViewModel.prototype.addFiles = function () {
+            if (this._browserHandler.isSupported) {
+                this._browserHandler.addFiles();
+            }
+            else {
+                console.error("Browser invocation isn't supported");
+            }
+        };
+        MainViewModel.prototype.onDisposal = function () {
         };
         return MainViewModel;
     }(ViewModel.ViewModelBase));
@@ -238,17 +276,9 @@ var Service;
         ServiceResolver.prototype.Transient = function (getter) {
             return getter();
         };
-        Object.defineProperty(ServiceResolver.prototype, "BrowserExternal", {
+        Object.defineProperty(ServiceResolver.prototype, "BrowserInvoker", {
             get: function () {
-                return this.Singleton("BrowserExternal", function () { return new Browser.BrowserExternalHandler(); });
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ServiceResolver.prototype, "WebBrowserHandler", {
-            get: function () {
-                var _this = this;
-                return this.Singleton("WebBrowserHandler", function () { return new Service.BrowserHandler(_this.BrowserExternal); });
+                return this.Singleton("BrowserExternal", function () { return new Browser.BrowserInvoker(); });
             },
             enumerable: true,
             configurable: true
@@ -294,7 +324,7 @@ var Service;
         Object.defineProperty(ServiceResolver.prototype, "BindingViewModel", {
             get: function () {
                 var _this = this;
-                return this.Transient(function () { return new ViewModel.MainViewModel(_this.Logger, _this.WebBrowserHandler); });
+                return this.Transient(function () { return new ViewModel.MainViewModel(_this.Logger, _this.BrowserInvoker); });
             },
             enumerable: true,
             configurable: true
@@ -388,6 +418,8 @@ var ViewModel;
             _this.header(param.rating + " stars");
             return _this;
         }
+        RatedViewModel.prototype.onDisposal = function () {
+        };
         return RatedViewModel;
     }(ViewModel.ViewModelBase));
     ViewModel.RatedViewModel = RatedViewModel;
@@ -401,6 +433,8 @@ var ViewModel;
             _this._imageService = _imageService;
             return _this;
         }
+        RatingViewModel.prototype.onDisposal = function () {
+        };
         return RatingViewModel;
     }(ViewModel.ViewModelBase));
     ViewModel.RatingViewModel = RatingViewModel;
@@ -412,6 +446,8 @@ var ViewModel;
         function TagsViewModel(params) {
             return _super.call(this) || this;
         }
+        TagsViewModel.prototype.onDisposal = function () {
+        };
         return TagsViewModel;
     }(ViewModel.ViewModelBase));
     ViewModel.TagsViewModel = TagsViewModel;
@@ -425,6 +461,8 @@ var ViewModel;
             _this.header = params.tag;
             return _this;
         }
+        TagViewModel.prototype.onDisposal = function () {
+        };
         return TagViewModel;
     }(ViewModel.ViewModelBase));
     ViewModel.TagViewModel = TagViewModel;
@@ -436,79 +474,51 @@ var ViewModel;
         function TestViewModel(param) {
             return _super.call(this) || this;
         }
+        TestViewModel.prototype.onDisposal = function () {
+        };
         return TestViewModel;
     }(ViewModel.ViewModelBase));
     ViewModel.TestViewModel = TestViewModel;
 })(ViewModel || (ViewModel = {}));
-var addedFolder = function (param) {
-    $(document).trigger("AddedFolder", param);
+var Browser;
+(function (Browser) {
+    var BrowserInvoker = (function () {
+        function BrowserInvoker() {
+        }
+        Object.defineProperty(BrowserInvoker.prototype, "isSupported", {
+            get: function () {
+                return "AddFiles" in window.external && "OpenWebPageInBrowser" in window.external;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        BrowserInvoker.prototype.addFiles = function () {
+            return window.external.AddFiles();
+        };
+        BrowserInvoker.prototype.openWebPageInBrowser = function (url) {
+            window.external.OpenWebPageInBrowser(url);
+        };
+        return BrowserInvoker;
+    }());
+    Browser.BrowserInvoker = BrowserInvoker;
+})(Browser || (Browser = {}));
+var test = function (param) {
+    $(document).trigger("Test", param);
+};
+var testish = function () {
+    $(document).trigger("Testish");
 };
 var Browser;
 (function (Browser) {
-    var ScriptInvokeConfiguration = (function () {
-        function ScriptInvokeConfiguration(name) {
+    var BrowserEventConfiguration = (function () {
+        function BrowserEventConfiguration(name) {
             this.name = name;
         }
-        return ScriptInvokeConfiguration;
+        return BrowserEventConfiguration;
     }());
-    Browser.ScriptInvokeConfiguration = ScriptInvokeConfiguration;
-    Browser.InvokeFunction = {
-        AddedFolder: new ScriptInvokeConfiguration("AddedFolder")
+    Browser.BrowserEventConfiguration = BrowserEventConfiguration;
+    Browser.Event = {
+        Test: new BrowserEventConfiguration("Test"),
+        Testish: new BrowserEventConfiguration("Testish")
     };
-})(Browser || (Browser = {}));
-var Service;
-(function (Service) {
-    var BrowserHandler = (function () {
-        function BrowserHandler(_external) {
-            this._external = _external;
-        }
-        Object.defineProperty(BrowserHandler.prototype, "hasBrowserSupport", {
-            get: function () {
-                return this._external.hasBrowserSupport;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        BrowserHandler.prototype.on = function (event, handler) {
-            $(document).on(event.name, handler);
-            return {
-                event: event,
-                handler: handler
-            };
-        };
-        BrowserHandler.prototype.off = function (obj) {
-            $(document).off(obj.event.name, obj.handler);
-        };
-        Object.defineProperty(BrowserHandler.prototype, "external", {
-            get: function () {
-                return this._external;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        return BrowserHandler;
-    }());
-    Service.BrowserHandler = BrowserHandler;
-})(Service || (Service = {}));
-var Browser;
-(function (Browser) {
-    var BrowserExternalHandler = (function () {
-        function BrowserExternalHandler() {
-        }
-        Object.defineProperty(BrowserExternalHandler.prototype, "hasBrowserSupport", {
-            get: function () {
-                return window.external.AddFiles != null && window.external.OpenAboutPage != null;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        BrowserExternalHandler.prototype.addFiles = function () {
-            window.external.AddFiles();
-        };
-        BrowserExternalHandler.prototype.openAboutPage = function () {
-            window.external.OpenAboutPage();
-        };
-        return BrowserExternalHandler;
-    }());
-    Browser.BrowserExternalHandler = BrowserExternalHandler;
 })(Browser || (Browser = {}));

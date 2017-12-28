@@ -11,5 +11,8 @@ module ViewModel {
 		constructor(params: IRatingViewModelParams, private _imageService: Api.IImageService) {
 			super();
 		}
+
+		public onDisposal(): void {
+		}
 	}
 }
