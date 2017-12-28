@@ -51,6 +51,9 @@ namespace ViewModel {
 				});
 				this._browserHandler.external.addFiles();
 			}
+			else {
+				console.error("Browser doesn't support adding files");
+			}
 		}
 	}
 }
