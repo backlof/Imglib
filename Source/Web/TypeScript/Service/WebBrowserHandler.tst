@@ -17,13 +17,13 @@ module Service {
 	declare type JQueryEventHandler<T> = (eventObject: JQueryEventObject, param: T) => void;
 
 	export interface ListenerObject<T> {
-		event: ScriptInvokeFunction<T>;
+		event: Invoke.ScriptInvokeFunction<T>;
 		handler: JQueryEventHandler<T>;
 	}
 
 	export interface IWebBrowserHandler {
 		unbind<T>(boundObj: ListenerObject<T>): void;
-		bind<T>(event: ScriptInvokeFunction<T>, handler: JQueryEventHandler<T>): ListenerObject<T>;$Interfaces(x => x.Name == "IWindowExternalObject")[
+		bind<T>(event: Invoke.ScriptInvokeFunction<T>, handler: JQueryEventHandler<T>): ListenerObject<T>;$Interfaces(x => x.Name == "IWindowExternalObject")[
 		$Methods[$name($Parameters[$name: $Type][;
 		]): void;]]
 	}
@@ -31,11 +31,11 @@ module Service {
 	export class WebBrowserHandler implements IWebBrowserHandler {
 		
 		unbind<T>(boundObj: ListenerObject<T>): void {
-			$(document).off(boundObj.event, boundObj.handler);
+			$(document).off(boundObj.event.name, boundObj.handler);
 		}
 
-		bind<T>(event: ScriptInvokeFunction<T>, handler: JQueryEventHandler<T>): ListenerObject<T> {
-			$(document).on(event as string, handler);
+		bind<T>(event: Invoke.ScriptInvokeFunction<T>, handler: JQueryEventHandler<T>): ListenerObject<T> {
+			$(document).on(event.name, handler);
 			return {
 				event: event,
 				handler: handler

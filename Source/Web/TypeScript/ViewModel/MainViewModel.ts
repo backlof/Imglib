@@ -44,7 +44,7 @@ namespace ViewModel {
 		}
 
 		public addFiles() {
-			var binding = this._browserHandler.bind<boolean>("AddedFolder", (jq, param) => {
+			var binding = this._browserHandler.bind(Invoke.Function.AddedFolder, (jq, param) => {
 				this._logger.log(`${param}`);
 				this._browserHandler.unbind(binding);
 			});

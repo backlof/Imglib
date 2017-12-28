@@ -10,7 +10,7 @@ namespace ImglibApp
 {
 	public interface IScriptInvokeFunction
 	{
-		void AddedFolder(object arguments);
+		void AddedFolder(bool arguments);
 	}
 
 	public class ScriptInvoker : IScriptInvokeFunction
@@ -22,7 +22,7 @@ namespace ImglibApp
 			_browser = browser;
 		}
 
-		public void AddedFolder(object arguments)
+		public void AddedFolder(bool arguments)
 		{
 			Invoke("AddedFolder", arguments);
 		}

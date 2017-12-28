@@ -173,8 +173,8 @@ var ViewModel;
         };
         MainViewModel.prototype.addFiles = function () {
             var _this = this;
-            var binding = this._browserHandler.bind("AddedFolder", function (jq, param) {
-                _this._logger.log(param + " " + (param === true));
+            var binding = this._browserHandler.bind(Invoke.Function.AddedFolder, function (jq, param) {
+                _this._logger.log("" + param);
                 _this._browserHandler.unbind(binding);
             });
             this._browserHandler.addFiles();
@@ -433,10 +433,10 @@ var Service;
         function WebBrowserHandler() {
         }
         WebBrowserHandler.prototype.unbind = function (boundObj) {
-            $(document).off(boundObj.event, boundObj.handler);
+            $(document).off(boundObj.event.name, boundObj.handler);
         };
         WebBrowserHandler.prototype.bind = function (event, handler) {
-            $(document).on(event, handler);
+            $(document).on(event.name, handler);
             return {
                 event: event,
                 handler: handler
@@ -458,6 +458,23 @@ var Service;
     }());
     Service.WebBrowserHandler = WebBrowserHandler;
 })(Service || (Service = {}));
+var Invoke;
+(function (Invoke) {
+    var ScriptInvokeFunction = (function () {
+        function ScriptInvokeFunction(name) {
+            this.name = name;
+        }
+        return ScriptInvokeFunction;
+    }());
+    Invoke.ScriptInvokeFunction = ScriptInvokeFunction;
+    var ScriptInvokeFunctions = (function () {
+        function ScriptInvokeFunctions() {
+            this.AddedFolder = new ScriptInvokeFunction("AddedFolder");
+        }
+        return ScriptInvokeFunctions;
+    }());
+    Invoke.Function = new ScriptInvokeFunctions();
+})(Invoke || (Invoke = {}));
 var addedFolder = function (param) {
     $(document).trigger("AddedFolder", param);
 };
