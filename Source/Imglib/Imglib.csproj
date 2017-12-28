@@ -162,7 +162,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FileServer\Host.csproj">
+    <ProjectReference Include="..\Host\Host.csproj">
       <Project>{6e4612f4-7e38-425f-bbb9-4aeada1d78aa}</Project>
       <Name>Host</Name>
     </ProjectReference>

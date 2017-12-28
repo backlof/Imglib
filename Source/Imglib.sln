@@ -5,13 +5,13 @@ VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Imglib", "Imglib\Imglib.csproj", "{A5FFD05C-A908-4934-BEC3-00446364A59F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostTest", "ApiTest\HostTest.csproj", "{94F9991F-398A-4A84-8E22-8D762E23EE67}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostTest", "HostTest\HostTest.csproj", "{94F9991F-398A-4A84-8E22-8D762E23EE67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebContent", "Web\WebContent.csproj", "{6AA8CE27-62B4-4A45-A28D-98BE4B3ED248}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebContent", "WebContent\WebContent.csproj", "{6AA8CE27-62B4-4A45-A28D-98BE4B3ED248}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{FF6E5137-03E2-4BAC-9BB6-CDD2E1F90FA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host", "FileServer\Host.csproj", "{6E4612F4-7E38-425F-BBB9-4AEADA1D78AA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host", "Host\Host.csproj", "{6E4612F4-7E38-425F-BBB9-4AEADA1D78AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

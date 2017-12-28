@@ -106,7 +106,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Web\WebContent.csproj">
+    <ProjectReference Include="..\WebContent\WebContent.csproj">
       <Project>{6aa8ce27-62b4-4a45-a28d-98be4b3ed248}</Project>
       <Name>WebContent</Name>
     </ProjectReference>
