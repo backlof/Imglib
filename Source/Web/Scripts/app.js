@@ -173,7 +173,7 @@ var ViewModel;
         };
         MainViewModel.prototype.addFiles = function () {
             var _this = this;
-            var binding = this._browserHandler.bind(Invoke.Function.AddedFolder, function (jq, param) {
+            var binding = this._browserHandler.bind(ScriptInvokeFunction.AddedFolder, function (jq, param) {
                 _this._logger.log("" + param);
                 _this._browserHandler.unbind(binding);
             });
@@ -458,23 +458,19 @@ var Service;
     }());
     Service.WebBrowserHandler = WebBrowserHandler;
 })(Service || (Service = {}));
-var Invoke;
-(function (Invoke) {
-    var ScriptInvokeFunction = (function () {
-        function ScriptInvokeFunction(name) {
+var ScriptInvoke;
+(function (ScriptInvoke) {
+    var Configuration = (function () {
+        function Configuration(name) {
             this.name = name;
         }
-        return ScriptInvokeFunction;
+        return Configuration;
     }());
-    Invoke.ScriptInvokeFunction = ScriptInvokeFunction;
-    var ScriptInvokeFunctions = (function () {
-        function ScriptInvokeFunctions() {
-            this.AddedFolder = new ScriptInvokeFunction("AddedFolder");
-        }
-        return ScriptInvokeFunctions;
-    }());
-    Invoke.Function = new ScriptInvokeFunctions();
-})(Invoke || (Invoke = {}));
+    ScriptInvoke.Configuration = Configuration;
+})(ScriptInvoke || (ScriptInvoke = {}));
+var ScriptInvokeFunction = {
+    AddedFolder: new ScriptInvoke.Configuration("AddedFolder")
+};
 var addedFolder = function (param) {
     $(document).trigger("AddedFolder", param);
 };

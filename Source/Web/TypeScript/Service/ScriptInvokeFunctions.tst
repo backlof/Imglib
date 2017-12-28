@@ -9,18 +9,17 @@
 		};
 	 }
 
-}namespace Invoke {
-	export class ScriptInvokeFunction<T> {
+}namespace ScriptInvoke {
+
+	export class Configuration<T> {
 		constructor(public name: string) { }
 	}
 
-	class ScriptInvokeFunctions {$Interfaces(x => x.Name == "IScriptInvokeFunction")[
-		$Methods[public $Name = new ScriptInvokeFunction<$Parameters[$Type]>("$Name");][
-	]]
-	}
-
-	export var Function = new ScriptInvokeFunctions();
 }
+var ScriptInvokeFunction = {$Interfaces(x => x.Name == "IScriptInvokeFunction")[
+	$Methods[$Name: new ScriptInvoke.Configuration<$Parameters[$Type]>("$Name")][,
+]]
+};
 
 $Interfaces(x => x.Name == "IScriptInvokeFunction")[$Methods[var $name = (param: any) => {
 	$(document).trigger("$Name", param);

@@ -1,14 +1,13 @@
-﻿namespace Invoke {
-	export class ScriptInvokeFunction<T> {
+﻿namespace ScriptInvoke {
+
+	export class Configuration<T> {
 		constructor(public name: string) { }
 	}
 
-	class ScriptInvokeFunctions {
-		public AddedFolder = new ScriptInvokeFunction<boolean>("AddedFolder");
-	}
-
-	export var Function = new ScriptInvokeFunctions();
 }
+var ScriptInvokeFunction = {
+	AddedFolder: new ScriptInvoke.Configuration<boolean>("AddedFolder")
+};
 
 var addedFolder = (param: any) => {
 	$(document).trigger("AddedFolder", param);

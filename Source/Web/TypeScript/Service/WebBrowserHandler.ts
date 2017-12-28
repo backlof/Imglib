@@ -8,13 +8,13 @@ module Service {
 	declare type JQueryEventHandler<T> = (eventObject: JQueryEventObject, param: T) => void;
 
 	export interface ListenerObject<T> {
-		event: Invoke.ScriptInvokeFunction<T>;
+		event: ScriptInvoke.Configuration<T>;
 		handler: JQueryEventHandler<T>;
 	}
 
 	export interface IWebBrowserHandler {
 		unbind<T>(boundObj: ListenerObject<T>): void;
-		bind<T>(event: Invoke.ScriptInvokeFunction<T>, handler: JQueryEventHandler<T>): ListenerObject<T>;
+		bind<T>(event: ScriptInvoke.Configuration<T>, handler: JQueryEventHandler<T>): ListenerObject<T>;
 		addFiles(): void;openAboutPage(): void;
 	}
 
@@ -24,7 +24,7 @@ module Service {
 			$(document).off(boundObj.event.name, boundObj.handler);
 		}
 
-		bind<T>(event: Invoke.ScriptInvokeFunction<T>, handler: JQueryEventHandler<T>): ListenerObject<T> {
+		bind<T>(event: ScriptInvoke.Configuration<T>, handler: JQueryEventHandler<T>): ListenerObject<T> {
 			$(document).on(event.name, handler);
 			return {
 				event: event,
