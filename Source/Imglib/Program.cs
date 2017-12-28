@@ -14,7 +14,7 @@ namespace ImglibApp
 		static void Main(string[] args)
 		{
 #if DEBUG
-			OpenApplicationInWindowsForms();
+			OpenApplicationInBrowser();
 #else
 			OpenApplicationInWindowsForms();
 #endif

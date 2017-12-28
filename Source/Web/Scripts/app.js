@@ -169,15 +169,17 @@ var ViewModel;
             this.subpage(Bundle.getComponent(Bundle.Component.Tag, { tag: tag }));
         };
         MainViewModel.prototype.openAbout = function () {
-            this._browserHandler.openAboutPage();
+            this._browserHandler.external.openAboutPage();
         };
         MainViewModel.prototype.addFiles = function () {
             var _this = this;
-            var binding = this._browserHandler.bind(ScriptInvokeFunction.AddedFolder, function (jq, param) {
-                _this._logger.log("" + param);
-                _this._browserHandler.unbind(binding);
-            });
-            this._browserHandler.addFiles();
+            if (this._browserHandler.hasBrowserSupport) {
+                var binding_1 = this._browserHandler.on(Browser.InvokeFunction.AddedFolder, function (jq, param) {
+                    _this._logger.log("" + param);
+                    _this._browserHandler.off(binding_1);
+                });
+                this._browserHandler.external.addFiles();
+            }
         };
         return MainViewModel;
     }(ViewModel.ViewModelBase));
@@ -233,9 +235,17 @@ var Service;
         ServiceResolver.prototype.Transient = function (getter) {
             return getter();
         };
+        Object.defineProperty(ServiceResolver.prototype, "BrowserExternal", {
+            get: function () {
+                return this.Singleton("BrowserExternal", function () { return new Browser.BrowserExternalHandler(); });
+            },
+            enumerable: true,
+            configurable: true
+        });
         Object.defineProperty(ServiceResolver.prototype, "WebBrowserHandler", {
             get: function () {
-                return this.Singleton("WebBrowserHandler", function () { return new Service.WebBrowserHandler(); });
+                var _this = this;
+                return this.Singleton("WebBrowserHandler", function () { return new Service.BrowserHandler(_this.BrowserExternal); });
             },
             enumerable: true,
             configurable: true
@@ -427,50 +437,75 @@ var ViewModel;
     }(ViewModel.ViewModelBase));
     ViewModel.TestViewModel = TestViewModel;
 })(ViewModel || (ViewModel = {}));
+var addedFolder = function (param) {
+    $(document).trigger("AddedFolder", param);
+};
+var Browser;
+(function (Browser) {
+    var ScriptInvokeConfiguration = (function () {
+        function ScriptInvokeConfiguration(name) {
+            this.name = name;
+        }
+        return ScriptInvokeConfiguration;
+    }());
+    Browser.ScriptInvokeConfiguration = ScriptInvokeConfiguration;
+    Browser.InvokeFunction = {
+        AddedFolder: new ScriptInvokeConfiguration("AddedFolder")
+    };
+})(Browser || (Browser = {}));
 var Service;
 (function (Service) {
-    var WebBrowserHandler = (function () {
-        function WebBrowserHandler() {
+    var BrowserHandler = (function () {
+        function BrowserHandler(_external) {
+            this._external = _external;
         }
-        WebBrowserHandler.prototype.unbind = function (boundObj) {
-            $(document).off(boundObj.event.name, boundObj.handler);
-        };
-        WebBrowserHandler.prototype.bind = function (event, handler) {
+        Object.defineProperty(BrowserHandler.prototype, "hasBrowserSupport", {
+            get: function () {
+                return this._external.hasBrowserSupport;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        BrowserHandler.prototype.on = function (event, handler) {
             $(document).on(event.name, handler);
             return {
                 event: event,
                 handler: handler
             };
         };
-        WebBrowserHandler.prototype.addFiles = function () {
-            if (window.external.AddFiles)
-                window.external.AddFiles();
-            else
-                console.error("AddFiles is not registered on window.external", window.external);
+        BrowserHandler.prototype.off = function (obj) {
+            $(document).off(obj.event.name, obj.handler);
         };
-        WebBrowserHandler.prototype.openAboutPage = function () {
-            if (window.external.OpenAboutPage)
-                window.external.OpenAboutPage();
-            else
-                console.error("OpenAboutPage is not registered on window.external", window.external);
-        };
-        return WebBrowserHandler;
+        Object.defineProperty(BrowserHandler.prototype, "external", {
+            get: function () {
+                return this._external;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return BrowserHandler;
     }());
-    Service.WebBrowserHandler = WebBrowserHandler;
+    Service.BrowserHandler = BrowserHandler;
 })(Service || (Service = {}));
-var ScriptInvoke;
-(function (ScriptInvoke) {
-    var Configuration = (function () {
-        function Configuration(name) {
-            this.name = name;
+var Browser;
+(function (Browser) {
+    var BrowserExternalHandler = (function () {
+        function BrowserExternalHandler() {
         }
-        return Configuration;
+        Object.defineProperty(BrowserExternalHandler.prototype, "hasBrowserSupport", {
+            get: function () {
+                return window.external.AddFiles != null && window.external.OpenAboutPage != null;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        BrowserExternalHandler.prototype.addFiles = function () {
+            window.external.AddFiles();
+        };
+        BrowserExternalHandler.prototype.openAboutPage = function () {
+            window.external.OpenAboutPage();
+        };
+        return BrowserExternalHandler;
     }());
-    ScriptInvoke.Configuration = Configuration;
-})(ScriptInvoke || (ScriptInvoke = {}));
-var ScriptInvokeFunction = {
-    AddedFolder: new ScriptInvoke.Configuration("AddedFolder")
-};
-var addedFolder = function (param) {
-    $(document).trigger("AddedFolder", param);
-};
+    Browser.BrowserExternalHandler = BrowserExternalHandler;
+})(Browser || (Browser = {}));

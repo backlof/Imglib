@@ -8,7 +8,7 @@ namespace ViewModel {
 
 		private subpage = ko.observable<KnockoutComponent>();
 
-		constructor(private _logger: Service.ILogger, private _browserHandler: Service.IWebBrowserHandler) {
+		constructor(private _logger: Service.ILogger, private _browserHandler: Service.IBrowserHandler) {
 			super();
 
 			this.openTest();
@@ -40,15 +40,17 @@ namespace ViewModel {
 		}
 
 		public openAbout() {
-			this._browserHandler.openAboutPage();
+			this._browserHandler.external.openAboutPage();
 		}
 
 		public addFiles() {
-			var binding = this._browserHandler.bind(ScriptInvokeFunction.AddedFolder, (jq, param) => {
-				this._logger.log(`${param}`);
-				this._browserHandler.unbind(binding);
-			});
-			this._browserHandler.addFiles();
+			if (this._browserHandler.hasBrowserSupport) {
+				const binding = this._browserHandler.on(Browser.InvokeFunction.AddedFolder, (jq, param) => {
+					this._logger.log(`${param}`);
+					this._browserHandler.off(binding);
+				});
+				this._browserHandler.external.addFiles();
+			}
 		}
 	}
 }
