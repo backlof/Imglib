@@ -7,7 +7,7 @@
 	export declare type KnockoutComponentConfiguration = KnockoutGenericComponentConfiguration<any, any>;
 
 	class KnockoutComponentConfigurations {
-		public Rated = new KnockoutGenericComponentConfiguration("rated", (param: ViewModel.IRatedViewModelParams, resolver) => new ViewModel.RatedViewModel(param));
+		public Rated = new KnockoutGenericComponentConfiguration("rated", (param: ViewModel.IRatedViewModelParams, resolver) => new ViewModel.RatedViewModel(param, resolver.ImageService));
 		public Test = new KnockoutGenericComponentConfiguration("test", (param: ViewModel.ITestViewModelParams, resolver) => new ViewModel.TestViewModel(param));
 		public Rating = new KnockoutGenericComponentConfiguration("rating", (param: ViewModel.IRatingViewModelParams, resolver) => new ViewModel.RatingViewModel(param, resolver.ImageService));
 		public Tags = new KnockoutGenericComponentConfiguration("tags", (param: ViewModel.ITagsViewModelParams, resolver) => new ViewModel.TagsViewModel(param));

@@ -10,7 +10,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ImglibWeb</RootNamespace>
-    <AssemblyName>Web</AssemblyName>
+    <AssemblyName>WebContent</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TypeScriptToolsVersion>2.3</TypeScriptToolsVersion>
@@ -68,24 +68,6 @@
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.FileSystems, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.FileSystems.3.1.0\lib\net45\Microsoft.Owin.FileSystems.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Host.HttpListener, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Host.HttpListener.3.1.0\lib\net45\Microsoft.Owin.Host.HttpListener.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Hosting, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Hosting.3.1.0\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.StaticFiles, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.StaticFiles.3.1.0\lib\net45\Microsoft.Owin.StaticFiles.dll</HintPath>
-    </Reference>
-    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
-      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -97,8 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Startup.cs" />
-    <Compile Include="WebServerHost.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\app.js">
@@ -136,6 +116,7 @@
     <Content Include="TypeScript\Api\Enum.tst" />
     <Content Include="TypeScript\Api\Model.tst" />
     <Content Include="TypeScript\Api\Service.tst" />
+    <None Include="TypeScript\Api\Result.tst" />
     <None Include="TypeScript\Browser\BrowserInvoker.tst" />
     <None Include="TypeScript\Browser\BrowserEventConfiguration.tst" />
   </ItemGroup>
@@ -159,15 +140,23 @@
     <TypeScriptCompile Include="Scripts\typings\knockout\knockout.d.ts" />
     <TypeScriptCompile Include="TypeScript\Api\ImageService.ts">
       <DependentUpon>Service.tst</DependentUpon>
-      <CustomToolNamespace>..\ImglibApi\Controller\ImageController.cs</CustomToolNamespace>
+      <CustomToolNamespace>..\FileServer\Controller\ImageController.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Api\Picture.ts">
       <DependentUpon>Model.tst</DependentUpon>
-      <CustomToolNamespace>..\ImglibApi\Controller\Model\Picture.cs</CustomToolNamespace>
+      <CustomToolNamespace>..\FileServer\Controller\Model\Picture.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Api\PictureType.ts">
       <DependentUpon>Enum.tst</DependentUpon>
-      <CustomToolNamespace>..\ImglibApi\Controller\Model\PictureType.cs</CustomToolNamespace>
+      <CustomToolNamespace>..\FileServer\Controller\Model\PictureType.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="TypeScript\Api\Result.ts">
+      <DependentUpon>Result.tst</DependentUpon>
+      <CustomToolNamespace>..\FileServer\Controller\Result.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="TypeScript\Api\TestParameters.ts">
+      <DependentUpon>Model.tst</DependentUpon>
+      <CustomToolNamespace>..\FileServer\Controller\Model\TestParameters.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Application.ts" />
     <TypeScriptCompile Include="TypeScript\Browser\BrowserEventConfiguration.ts">

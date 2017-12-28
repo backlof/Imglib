@@ -2,7 +2,7 @@
 
 namespace ViewModel {
 
-	// Class shouldn't appear among component configurations, as it doesn't have an html template
+	//REMEMBER Class shouldn't appear among component configurations, as it doesn't have an html template
 
 	export class MainViewModel extends ViewModelBase {
 

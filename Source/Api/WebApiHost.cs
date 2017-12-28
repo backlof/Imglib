@@ -9,7 +9,7 @@ namespace ImglibApi
 		private readonly int _port;
 		public string BaseUrl => $"http://localhost:{_port}";
 
-		public WebApiHost() : this(9000)
+		public WebApiHost() : this(8080)
 		{
 		}
 

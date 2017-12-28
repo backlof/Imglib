@@ -3,12 +3,12 @@
 
 	Template(Settings settings)
 	{
-		settings.IncludeProject("Api");
+		settings.IncludeProject("Host");
 		settings.OutputFilenameFactory = (file) => {
 			return file.Name.Replace(".cs", ".ts");
 		};
 	}
-}namespace Api {$Enums(x => x.Namespace == "ImglibApi.Controller.Model")[
+}namespace Api {$Enums(x => x.Namespace == "ImglibHost.Controller.Model")[
 
 	export enum $Name {$Values[
 		$Name = $Value][,]

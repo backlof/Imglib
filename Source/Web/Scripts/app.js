@@ -1,80 +1,4 @@
 "use strict";
-var Api;
-(function (Api) {
-    var PictureType;
-    (function (PictureType) {
-        PictureType[PictureType["First"] = 0] = "First";
-        PictureType[PictureType["Second"] = 1] = "Second";
-    })(PictureType = Api.PictureType || (Api.PictureType = {}));
-})(Api || (Api = {}));
-var Service;
-(function (Service) {
-    var OwenSelfHostingApi = (function () {
-        function OwenSelfHostingApi() {
-            this.base = "http://localhost:9000";
-            this.name = "api";
-        }
-        return OwenSelfHostingApi;
-    }());
-    Service.OwenSelfHostingApi = OwenSelfHostingApi;
-})(Service || (Service = {}));
-var Service;
-(function (Service) {
-    var LocalRcpClient = (function () {
-        function LocalRcpClient(_host) {
-            this._host = _host;
-        }
-        LocalRcpClient.prototype.getActionUrl = function (controller, action) {
-            return this._host.base + "/" + this._host.name + "/" + controller + "/" + action;
-        };
-        LocalRcpClient.prototype.post = function (data, controller, action) {
-            var promise = $.Deferred();
-            $.ajax({
-                url: this.getActionUrl(controller, action),
-                method: "POST",
-                data: JSON.stringify(data),
-                dataType: "application/json"
-            }).done(function (data) {
-                promise.resolve(data);
-            }).fail(function () {
-                promise.reject();
-            });
-            return promise;
-        };
-        LocalRcpClient.prototype.get = function (data, controller, action) {
-            var promise = $.Deferred();
-            $.ajax({
-                url: this.getActionUrl(controller, action),
-                method: "GET",
-                data: JSON.stringify(data),
-                dataType: "application/json"
-            }).done(function () {
-                promise.resolve();
-            }).fail(function () {
-                promise.reject();
-            });
-            return promise;
-        };
-        return LocalRcpClient;
-    }());
-    Service.LocalRcpClient = LocalRcpClient;
-})(Service || (Service = {}));
-var Api;
-(function (Api) {
-    var ImageService = (function () {
-        function ImageService(_rcpService) {
-            this._rcpService = _rcpService;
-        }
-        ImageService.prototype.givePictureBack = function (picture) {
-            return this._rcpService.post(picture, "image", "givepictureback");
-        };
-        ImageService.prototype.testStuff = function (value) {
-            return this._rcpService.post(value, "image", "teststuff");
-        };
-        return ImageService;
-    }());
-    Api.ImageService = ImageService;
-})(Api || (Api = {}));
 var Bundle;
 (function (Bundle) {
     var HtmlScriptInsertKnockoutComponentRegisterer = (function () {
@@ -226,6 +150,60 @@ var ViewModel;
     }(ViewModel.ViewModelBase));
     ViewModel.MainViewModel = MainViewModel;
 })(ViewModel || (ViewModel = {}));
+var Service;
+(function (Service) {
+    var OwenSelfHostingApi = (function () {
+        function OwenSelfHostingApi() {
+            this.base = "http://localhost:8080";
+            this.name = "api";
+        }
+        return OwenSelfHostingApi;
+    }());
+    Service.OwenSelfHostingApi = OwenSelfHostingApi;
+})(Service || (Service = {}));
+var Service;
+(function (Service) {
+    var LocalRcpClient = (function () {
+        function LocalRcpClient(_host) {
+            this._host = _host;
+        }
+        LocalRcpClient.prototype.post = function (data, controller, action) {
+            var promise = $.Deferred();
+            this.getPromise(data, controller, action).done(function (data) {
+                if (data.success)
+                    promise.resolve(data.value);
+                else
+                    promise.reject();
+            }).fail(function () {
+                console.error("Ajax call failed");
+                promise.reject();
+            });
+            return promise;
+        };
+        LocalRcpClient.prototype.getPromise = function (data, controller, action) {
+            return $.ajax({
+                url: this._host.base + "/" + this._host.name + "/" + controller + "/" + action,
+                method: "POST",
+                data: JSON.stringify(data)
+            });
+        };
+        return LocalRcpClient;
+    }());
+    Service.LocalRcpClient = LocalRcpClient;
+})(Service || (Service = {}));
+var Api;
+(function (Api) {
+    var ImageService = (function () {
+        function ImageService(_rcpService) {
+            this._rcpService = _rcpService;
+        }
+        ImageService.prototype.givePictureBack = function (picture) {
+            return this._rcpService.post(picture, "image", "givepictureback");
+        };
+        return ImageService;
+    }());
+    Api.ImageService = ImageService;
+})(Api || (Api = {}));
 Object.defineProperty(Date, "Now", {
     get: function () {
         return new Date();
@@ -345,7 +323,7 @@ var Bundle;
     Bundle.KnockoutGenericComponentConfiguration = KnockoutGenericComponentConfiguration;
     var KnockoutComponentConfigurations = (function () {
         function KnockoutComponentConfigurations() {
-            this.Rated = new KnockoutGenericComponentConfiguration("rated", function (param, resolver) { return new ViewModel.RatedViewModel(param); });
+            this.Rated = new KnockoutGenericComponentConfiguration("rated", function (param, resolver) { return new ViewModel.RatedViewModel(param, resolver.ImageService); });
             this.Test = new KnockoutGenericComponentConfiguration("test", function (param, resolver) { return new ViewModel.TestViewModel(param); });
             this.Rating = new KnockoutGenericComponentConfiguration("rating", function (param, resolver) { return new ViewModel.RatingViewModel(param, resolver.ImageService); });
             this.Tags = new KnockoutGenericComponentConfiguration("tags", function (param, resolver) { return new ViewModel.TagsViewModel(param); });
@@ -378,6 +356,48 @@ var Application = (function () {
 $(document).ready(function () {
     var app = new Application(new Service.ServiceResolver());
 });
+var test = function (param) {
+    $(document).trigger("Test", param);
+};
+var testish = function () {
+    $(document).trigger("Testish");
+};
+var Browser;
+(function (Browser) {
+    var BrowserEventConfiguration = (function () {
+        function BrowserEventConfiguration(name) {
+            this.name = name;
+        }
+        return BrowserEventConfiguration;
+    }());
+    Browser.BrowserEventConfiguration = BrowserEventConfiguration;
+    Browser.Event = {
+        Test: new BrowserEventConfiguration("Test"),
+        Testish: new BrowserEventConfiguration("Testish")
+    };
+})(Browser || (Browser = {}));
+var Browser;
+(function (Browser) {
+    var BrowserInvoker = (function () {
+        function BrowserInvoker() {
+        }
+        Object.defineProperty(BrowserInvoker.prototype, "isSupported", {
+            get: function () {
+                return "AddFiles" in window.external && "OpenWebPageInBrowser" in window.external;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        BrowserInvoker.prototype.addFiles = function () {
+            return window.external.AddFiles();
+        };
+        BrowserInvoker.prototype.openWebPageInBrowser = function (url) {
+            window.external.OpenWebPageInBrowser(url);
+        };
+        return BrowserInvoker;
+    }());
+    Browser.BrowserInvoker = BrowserInvoker;
+})(Browser || (Browser = {}));
 var _this = this;
 var StringContainsParameter;
 (function (StringContainsParameter) {
@@ -412,10 +432,18 @@ var ViewModel;
 (function (ViewModel) {
     var RatedViewModel = (function (_super) {
         __extends(RatedViewModel, _super);
-        function RatedViewModel(param) {
+        function RatedViewModel(param, _imageService) {
             var _this = _super.call(this) || this;
+            _this._imageService = _imageService;
             _this.header = ko.observable();
             _this.header(param.rating + " stars");
+            _this._imageService.givePictureBack({ id: 10, myProperty: new Date(), name: "the name" }).done(function () {
+                console.log("done");
+            }).fail(function () {
+                console.log("fail");
+            }).always(function () {
+                console.log("always");
+            });
             return _this;
         }
         RatedViewModel.prototype.onDisposal = function () {
@@ -480,45 +508,11 @@ var ViewModel;
     }(ViewModel.ViewModelBase));
     ViewModel.TestViewModel = TestViewModel;
 })(ViewModel || (ViewModel = {}));
-var Browser;
-(function (Browser) {
-    var BrowserInvoker = (function () {
-        function BrowserInvoker() {
-        }
-        Object.defineProperty(BrowserInvoker.prototype, "isSupported", {
-            get: function () {
-                return "AddFiles" in window.external && "OpenWebPageInBrowser" in window.external;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        BrowserInvoker.prototype.addFiles = function () {
-            return window.external.AddFiles();
-        };
-        BrowserInvoker.prototype.openWebPageInBrowser = function (url) {
-            window.external.OpenWebPageInBrowser(url);
-        };
-        return BrowserInvoker;
-    }());
-    Browser.BrowserInvoker = BrowserInvoker;
-})(Browser || (Browser = {}));
-var test = function (param) {
-    $(document).trigger("Test", param);
-};
-var testish = function () {
-    $(document).trigger("Testish");
-};
-var Browser;
-(function (Browser) {
-    var BrowserEventConfiguration = (function () {
-        function BrowserEventConfiguration(name) {
-            this.name = name;
-        }
-        return BrowserEventConfiguration;
-    }());
-    Browser.BrowserEventConfiguration = BrowserEventConfiguration;
-    Browser.Event = {
-        Test: new BrowserEventConfiguration("Test"),
-        Testish: new BrowserEventConfiguration("Testish")
-    };
-})(Browser || (Browser = {}));
+var Api;
+(function (Api) {
+    var PictureType;
+    (function (PictureType) {
+        PictureType[PictureType["First"] = 0] = "First";
+        PictureType[PictureType["Second"] = 1] = "Second";
+    })(PictureType = Api.PictureType || (Api.PictureType = {}));
+})(Api || (Api = {}));

@@ -1,15 +1,17 @@
-﻿using Ninject;
+﻿using Microsoft.Owin.FileSystems;
+using Microsoft.Owin.StaticFiles;
+using Owin;
+using Ninject;
 using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
-using Owin;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Routing;
-using ImglibApi.Repository;
+using ImglibHost.Repository;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 
-namespace ImglibApi
+namespace ImglibHost
 {
 	public class Startup
 	{
@@ -21,26 +23,29 @@ namespace ImglibApi
 			config.Routes.MapHttpRoute(
 				 name: "Web Api RPC",
 				 routeTemplate: "api/{controller}/{action}",
-				 defaults: new { },
-				  constraints: new
-				  {
-					  action = @"[A-Za-z]+",
-					  httpMethod = new HttpMethodConstraint(HttpMethod.Post)
-				  }
+				 defaults: new { id = RouteParameter.Optional },
+				 constraints: new
+				 {
+					 action = @"[A-Za-z]+",
+					 httpMethod = new HttpMethodConstraint(HttpMethod.Post)
+				 }
 			);
-
-			config.Formatters.JsonFormatter.UseDataContractJsonSerializer = false;
 
 #if DEBUG
 			config.Formatters.JsonFormatter.SerializerSettings.Formatting = Formatting.Indented;
 #else
 			config.Formatters.JsonFormatter.SerializerSettings.Formatting = Formatting.None;
 #endif
-
-			//Deserialization is case insensitive
-			config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-
+			config.Formatters.JsonFormatter.UseDataContractJsonSerializer = false;
+			config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); //REMEMBER Deserialization is case insensitive
 			appBuilder.UseNinjectMiddleware(SetUp).UseNinjectWebApi(config);
+
+			appBuilder.UseFileServer(new FileServerOptions
+			{
+				EnableDefaultFiles = true,
+				FileSystem = new PhysicalFileSystem(""),
+				EnableDirectoryBrowsing = true, // Will not happen as long as there is an Index.html
+			});
 		}
 
 		public StandardKernel SetUp()
@@ -49,7 +54,6 @@ namespace ImglibApi
 			var kernel = new StandardKernel();
 			kernel.Bind<ImglibRepository>().ToSelf().InSingletonScope();
 			return kernel;
-
 		}
 	}
 }

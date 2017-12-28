@@ -5,7 +5,7 @@
 	}
 
 	export class OwenSelfHostingApi implements IApiHost {
-		public base = "http://localhost:9000";
+		public base = "http://localhost:8080";
 		public name = "api";
 	}
 }

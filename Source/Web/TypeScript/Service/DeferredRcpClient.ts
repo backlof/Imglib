@@ -3,8 +3,7 @@
 namespace Service {
 
 	export interface IDeferredRcpClient {
-		post<TIn, TOut>(data: TIn, controller: string, method: string): JQueryDeferred<TOut>;
-		get<TIn>(data: TIn, controller: string, method: string): JQueryDeferred<void>;
+		post<TIn, TOut>(data: TIn, controller: string, action: string): JQueryDeferred<TOut>;
 	}
 
 	export class LocalRcpClient implements IDeferredRcpClient {
@@ -12,42 +11,32 @@ namespace Service {
 		constructor(private _host: IApiHost) {
 		}
 
-		private getActionUrl(controller: string, action: string) {
-			return `${this._host.base}/${this._host.name}/${controller}/${action}`;
-		}
-
 		public post<TIn, TOut>(data: TIn, controller: string, action: string): JQueryDeferred<TOut> {
 			const promise = $.Deferred<TOut>();
 
-			$.ajax({
-				url: this.getActionUrl(controller, action),
-				method: "POST",
-				data: JSON.stringify(data),
-				dataType: "application/json"
-			}).done((data) => {
-				promise.resolve(data);
+			this.getPromise<TIn,TOut>(data, controller, action).done((data) => {
+				if (data.success)
+					promise.resolve(data.value);
+				else
+					promise.reject();
 			}).fail(() => {
+				console.error("Ajax call failed");
 				promise.reject();
 			});
 
 			return promise;
 		}
 
-		public get<TIn>(data: TIn, controller: string, action: string): JQueryDeferred<void> {
-			const promise = $.Deferred<void>();
-
-			$.ajax({
-				url: this.getActionUrl(controller, action),
-				method: "GET",
-				data: JSON.stringify(data),
-				dataType: "application/json"
-			}).done(() => {
-				promise.resolve();
-			}).fail(() => {
-				promise.reject();
+		private getPromise<TIn, TOut>(data: TIn, controller: string, action: string): JQueryPromise<Api.Result<TOut>> {
+			return $.ajax({
+				url: `${this._host.base}/${this._host.name}/${controller}/${action}`,
+				method: "POST",
+				data: JSON.stringify(data)
+				//dataType: "application/json",
+				//contentType: 'application/json; charset=utf-8',
 			});
 
-			return promise as JQueryDeferred<void>;
+			//REMEMBER JQuery will fail the call if it believes the JSON return object isn't valid
 		}
 	}
 }

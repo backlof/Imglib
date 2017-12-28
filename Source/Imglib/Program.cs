@@ -1,9 +1,8 @@
-﻿using ImglibApi;
-using ImglibWeb;
+﻿using ImglibHost;
 using System;
 using System.Windows.Forms;
 
-namespace ImglibApp
+namespace Imglib
 {
 	static class Program
 	{
@@ -14,8 +13,8 @@ namespace ImglibApp
 		static void Main(string[] args)
 		{
 #if DEBUG
-			//OpenApplicationInBrowser();
-			OpenApplicationInWindowsForms();
+			OpenApplicationInBrowser();
+			//OpenApplicationInWindowsForms();
 #else
 			OpenApplicationInWindowsForms();
 #endif
@@ -24,18 +23,14 @@ namespace ImglibApp
 
 		public static void OpenApplicationInBrowser()
 		{
-			//Console.WriteLine("Initializing...");
-			//Console.WriteLine();
+			var host = new Host();
 
-			var api = new WebApiHost();
-			var fileServer = new WebServerHost();
-			System.Diagnostics.Process.Start(fileServer.Url);
+			System.Diagnostics.Process.Start(host.BaseUrl);
 
 			Console.Write("Press enter to exit:");
 			Console.Read();
 
-			api.Dispose();
-			fileServer.Dispose();
+			host.Dispose();
 		}
 
 		public static void OpenApplicationInWindowsForms()

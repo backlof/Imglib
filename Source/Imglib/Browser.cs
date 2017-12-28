@@ -7,21 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ImglibApi;
-using ImglibWeb;
+using ImglibHost;
 
-namespace ImglibApp
+namespace Imglib
 {
 	public partial class Browser : Form
 	{
-		private readonly WebApiHost _webApiHost;
-		private readonly WebServerHost _webServerHost;
+		private readonly Host _host;
 		private ScriptInvoker _invoker;
 
 		public Browser()
 		{
-			_webApiHost = new WebApiHost();
-			_webServerHost = new WebServerHost();
+			_host = new Host();
 			InitializeComponent();
 		}
 
@@ -33,7 +30,7 @@ namespace ImglibApp
 			browser.IsWebBrowserContextMenuEnabled = false;
 			browser.WebBrowserShortcutsEnabled = false;
 			browser.ScrollBarsEnabled = false;
-			browser.Navigate(_webServerHost.Url);
+			browser.Navigate(_host.BaseUrl);
 		}
 
 		private void OnWebBrowserDocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
@@ -46,8 +43,7 @@ namespace ImglibApp
 			//_invoker.Invoke(x => x.Testish());
 			_invoker.Invoke(x => x.Test(), "Outpit");
 
-			_webApiHost.Dispose();
-			_webServerHost.Dispose();
+			_host.Dispose();
 
 			base.OnFormClosing(e);
 		}

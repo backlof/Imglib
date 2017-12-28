@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Security.Permissions;
 
-namespace ImglibApp
+namespace Imglib
 {
 	//REMEMBER Frontend feezes when these functions are running
 	//REMEMBER Lists and arrays don't work

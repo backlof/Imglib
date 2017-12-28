@@ -4,7 +4,7 @@
 	
 	Template(Settings settings)
 	{
-		settings.IncludeProject("Api");
+		settings.IncludeProject("Host");
 		settings.OutputFilenameFactory = (file) => {
 			return file.Name.Replace("Controller.cs", "Service.ts");
 		};
@@ -38,12 +38,17 @@
 	{
 		return c.Methods.Where(m => m.Type.Unwrap().IsDefined).Select(m => m.Type.Unwrap());
 	}
+
+	string ResultType(Method method)
+	{
+		return method.Type == "IResult" ? "void" : method.Type.TypeArguments[0].Name;
+	}
 }/// <reference path="../Service/DeferredRcpClient.ts" />
 
 namespace Api {$Classes(:ApiController)[
 	
 	export interface I$ClassName {$Methods[
-		$name($FirstParameterName: $FirstParameterType) : JQueryDeferred<$ReturnType>;]
+		$name($FirstParameterName: $FirstParameterType) : JQueryDeferred<$ResultType>;]
 	}
 
 	export class $ClassName implements I$ClassName {
@@ -52,7 +57,7 @@ namespace Api {$Classes(:ApiController)[
 		}
 		$Methods[
 		public $name($FirstParameterName: $FirstParameterType) {
-			return this._rcpService.post<$FirstParameterType, $ReturnType>($FirstParameterName, $Parent["$controllerpage"], "$methodName");
+			return this._rcpService.post<$FirstParameterType, $ResultType>($FirstParameterName, $Parent["$controllerpage"], "$methodName");
 		}
 	]}
 ]}

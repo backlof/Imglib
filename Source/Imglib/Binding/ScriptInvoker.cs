@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ImglibApp
+namespace Imglib
 {
 	//REMEMBER This only works for one parameter, which is why it's the return type
 	//REMEMBER Only checks for methods
