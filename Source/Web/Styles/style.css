@@ -27,6 +27,10 @@ body {
 a {
   color: #333333;
 }
+/* Show pointer even when anchor is missing href attribute */
+a:hover {
+  cursor: pointer;
+}
 /* Header design */
 header {
   font-weight: bold;

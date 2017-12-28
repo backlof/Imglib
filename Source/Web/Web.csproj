@@ -136,6 +136,8 @@
     <Content Include="TypeScript\Api\Enum.tst" />
     <Content Include="TypeScript\Api\Model.tst" />
     <Content Include="TypeScript\Api\Service.tst" />
+    <None Include="TypeScript\Service\WebBrowserHandler.tst" />
+    <None Include="TypeScript\Service\ScriptInvokeFunctions.tst" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Index.html">
@@ -173,7 +175,15 @@
     <TypeScriptCompile Include="TypeScript\Service\ApiHost.ts" />
     <TypeScriptCompile Include="TypeScript\Service\DeferredRcpClient.ts" />
     <TypeScriptCompile Include="TypeScript\Service\Logger.ts" />
+    <TypeScriptCompile Include="TypeScript\Service\ScriptInvokeFunction.ts">
+      <DependentUpon>ScriptInvokeFunctions.tst</DependentUpon>
+      <CustomToolNamespace>..\Imglib\Binding\ScriptInvoker.cs</CustomToolNamespace>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Service\ServiceResolver.ts" />
+    <TypeScriptCompile Include="TypeScript\Service\WebBrowserHandler.ts">
+      <DependentUpon>WebBrowserHandler.tst</DependentUpon>
+      <CustomToolNamespace>..\Imglib\Binding\WindowExternalObject.cs</CustomToolNamespace>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Utility\Date.ts" />
     <TypeScriptCompile Include="TypeScript\Utility\String.ts" />
     <TypeScriptCompile Include="TypeScript\ViewModel\MainViewModel.ts" />

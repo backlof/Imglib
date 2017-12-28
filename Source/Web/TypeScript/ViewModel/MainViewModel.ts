@@ -8,7 +8,7 @@ namespace ViewModel {
 
 		private subpage = ko.observable<KnockoutComponent>();
 
-		constructor(private _logger: Service.ILogger) {
+		constructor(private _logger: Service.ILogger, private _browserHandler: Service.IWebBrowserHandler) {
 			super();
 
 			this.openTest();
@@ -37,6 +37,18 @@ namespace ViewModel {
 
 		public openTag(tag: string) {
 			this.subpage(Bundle.getComponent(Bundle.Component.Tag, { tag: tag }));
+		}
+
+		public openAbout() {
+			this._browserHandler.openAboutPage();
+		}
+
+		public addFiles() {
+			var binding = this._browserHandler.bind<boolean>("AddedFolder", (jq, param) => {
+				this._logger.log(`${param}`);
+				this._browserHandler.unbind(binding);
+			});
+			this._browserHandler.addFiles();
 		}
 	}
 }

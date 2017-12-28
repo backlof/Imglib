@@ -14,6 +14,7 @@ namespace Service {
 		readonly ImageService: Api.IImageService;
 		readonly Logger: Service.ILogger;
 		readonly BindingViewModel: ViewModel.ViewModelBase;
+		readonly WebBrowserHandler: Service.IWebBrowserHandler;
 	}
 
 	export class ServiceResolver implements IServiceResolver {
@@ -31,6 +32,10 @@ namespace Service {
 		}
 
 		constructor() {
+		}
+
+		get WebBrowserHandler(): IWebBrowserHandler {
+			return this.Singleton("WebBrowserHandler", () => new Service.WebBrowserHandler());
 		}
 
 		get ComponentResolver(): Bundle.HtmlScriptInsertKnockoutComponentRegisterer {
@@ -54,7 +59,7 @@ namespace Service {
 		}
 
 		get BindingViewModel(): ViewModel.ViewModelBase {
-			return this.Transient(() => new ViewModel.MainViewModel(this.Logger));
+			return this.Transient(() => new ViewModel.MainViewModel(this.Logger, this.WebBrowserHandler));
 		}
 	}
 }

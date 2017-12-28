@@ -49,6 +49,12 @@ a {
 	color: @text;
 }
 
+/* Show pointer even when anchor is missing href attribute */
+
+a:hover  {
+	cursor: pointer;
+}
+
 /* Header design */
 
 header {
@@ -80,12 +86,11 @@ footer {
 	overflow: hidden;
 	font-size: 11px;
 	/*text-align: right;*/
-
 	& > * {
 		display: inline-block;
 	}
 
-	#footer-timestamp{
+	#footer-timestamp {
 		font-weight: bold;
 		margin-right: 4px;
 	}

@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+	<meta http-equiv="X-UA-Compatible" content="IE=11,10,9">
 	<meta charset="utf-8" />
 	<title>Imglib</title>
 	<link rel="stylesheet" href="Styles/normalize.css">
@@ -14,27 +15,27 @@
 	<section>
 		<nav>
 			<div>
-				<a href="http://github.com/backlof/Imglib" target="_blank">About</a>
+				<a data-bind="click: function() { openAbout(); }">About</a>
 				<!-- TODO The web page should be in native browser: create event caught by application -->
 			</div>
 			<div>
-				<a href="#" data-bind="click: function() { openRating(); }">Rating</a>
-				<a href="#" data-bind="click: function() { openRated(5); }">5 stars</a>
-				<a href="#" data-bind="click: function() { openRated(4); }">4 stars</a>
-				<a href="#" data-bind="click: function() { openRated(3); }">3 stars</a>
-				<a href="#" data-bind="click: function() { openRated(2); }">2 stars</a>
-				<a href="#" data-bind="click: function() { openRated(1); }">1 star</a>
+				<a data-bind="click: function() { openRating(); }">Rating</a>
+				<a data-bind="click: function() { openRated(5); }">5 stars</a>
+				<a data-bind="click: function() { openRated(4); }">4 stars</a>
+				<a data-bind="click: function() { openRated(3); }">3 stars</a>
+				<a data-bind="click: function() { openRated(2); }">2 stars</a>
+				<a data-bind="click: function() { openRated(1); }">1 star</a>
 			</div>
 			<div class="tags">
-				<a href="#" data-bind="click: function() { openTags(); }">Tags</a>
-				<a href="#" data-bind="click: function() { openTag('blurry'); }">blurry</a>
-				<a href="#" data-bind="click: function() { openTag('tag2'); }">tag2</a>
+				<a data-bind="click: function() { openTags(); }">Tags</a>
+				<a data-bind="click: function() { openTag('blurry'); }">blurry</a>
+				<a data-bind="click: function() { openTag('tag2'); }">tag2</a>
 			</div>
 			<div>
-				<a href="#" data-bind="click: function() { }">Add files</a>
+				<a data-bind="click: function() { addFiles(); }">Add files</a>
 			</div>
 			<div>
-				<a href="#" data-bind="click: function() { openTest(); }">Test</a>
+				<a data-bind="click: function() { openTest(); }">Test</a>
 			</div>
 		</nav>
 		<!-- TODO Remove if around subpage when you no longer need it (start at default subpage) -->

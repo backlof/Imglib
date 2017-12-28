@@ -14,33 +14,41 @@ namespace ImglibApp
 {
 	public partial class Browser : Form
 	{
-		private readonly WebApiHost _webApi;
-		private readonly WebServerHost _fileServer;
+		private readonly WebApiHost _webApiHost;
+		private readonly WebServerHost _webServerHost;
 
 		public Browser()
 		{
-			_webApi = new WebApiHost();
-			_fileServer = new WebServerHost();
+			_webApiHost = new WebApiHost();
+			_webServerHost = new WebServerHost();
 			InitializeComponent();
 		}
 
-		private void Form1_Load(object sender, EventArgs e)
+		private void OnFormLoaded(object sender, EventArgs e)
 		{
-			webBrowser1.Navigate(_fileServer.Url);
-			//var directory = System.IO.Directory.GetCurrentDirectory();
-			//new Uri(System.IO.Path.Combine(directory, "Web", "Page.html")));
+			browser.AllowNavigation = false;
+			browser.AllowWebBrowserDrop = false;
+			browser.IsWebBrowserContextMenuEnabled = false;
+			browser.WebBrowserShortcutsEnabled = false;
+			browser.ObjectForScripting = new WindowExternalObject(browser, new ScriptInvoker(browser));
+			browser.Navigate(_webServerHost.Url);
 		}
 
-		private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+		private void OnWebBrowserDocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
 		{
-
 		}
 
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			_webApi.Dispose();
-			_fileServer.Dispose();
+			_webApiHost.Dispose();
+			_webServerHost.Dispose();
+
 			base.OnFormClosing(e);
+		}
+
+		public void OpenAboutPage()
+		{
+			
 		}
 	}
 }

@@ -141,9 +141,10 @@ var ViewModel;
 (function (ViewModel) {
     var MainViewModel = (function (_super) {
         __extends(MainViewModel, _super);
-        function MainViewModel(_logger) {
+        function MainViewModel(_logger, _browserHandler) {
             var _this = _super.call(this) || this;
             _this._logger = _logger;
+            _this._browserHandler = _browserHandler;
             _this.subpage = ko.observable();
             _this.openTest();
             _this._logger.log("Testing the logging system");
@@ -166,6 +167,17 @@ var ViewModel;
         };
         MainViewModel.prototype.openTag = function (tag) {
             this.subpage(Bundle.getComponent(Bundle.Component.Tag, { tag: tag }));
+        };
+        MainViewModel.prototype.openAbout = function () {
+            this._browserHandler.openAboutPage();
+        };
+        MainViewModel.prototype.addFiles = function () {
+            var _this = this;
+            var binding = this._browserHandler.bind("AddedFolder", function (jq, param) {
+                _this._logger.log(param + " " + (param === true));
+                _this._browserHandler.unbind(binding);
+            });
+            this._browserHandler.addFiles();
         };
         return MainViewModel;
     }(ViewModel.ViewModelBase));
@@ -221,6 +233,13 @@ var Service;
         ServiceResolver.prototype.Transient = function (getter) {
             return getter();
         };
+        Object.defineProperty(ServiceResolver.prototype, "WebBrowserHandler", {
+            get: function () {
+                return this.Singleton("WebBrowserHandler", function () { return new Service.WebBrowserHandler(); });
+            },
+            enumerable: true,
+            configurable: true
+        });
         Object.defineProperty(ServiceResolver.prototype, "ComponentResolver", {
             get: function () {
                 var _this = this;
@@ -262,7 +281,7 @@ var Service;
         Object.defineProperty(ServiceResolver.prototype, "BindingViewModel", {
             get: function () {
                 var _this = this;
-                return this.Transient(function () { return new ViewModel.MainViewModel(_this.Logger); });
+                return this.Transient(function () { return new ViewModel.MainViewModel(_this.Logger, _this.WebBrowserHandler); });
             },
             enumerable: true,
             configurable: true
@@ -314,7 +333,6 @@ var Application = (function () {
     return Application;
 }());
 $(document).ready(function () {
-    console.log("test");
     var app = new Application(new Service.ServiceResolver());
 });
 var _this = this;
@@ -409,3 +427,37 @@ var ViewModel;
     }(ViewModel.ViewModelBase));
     ViewModel.TestViewModel = TestViewModel;
 })(ViewModel || (ViewModel = {}));
+var Service;
+(function (Service) {
+    var WebBrowserHandler = (function () {
+        function WebBrowserHandler() {
+        }
+        WebBrowserHandler.prototype.unbind = function (boundObj) {
+            $(document).off(boundObj.event, boundObj.handler);
+        };
+        WebBrowserHandler.prototype.bind = function (event, handler) {
+            $(document).on(event, handler);
+            return {
+                event: event,
+                handler: handler
+            };
+        };
+        WebBrowserHandler.prototype.addFiles = function () {
+            if (window.external.AddFiles)
+                window.external.AddFiles();
+            else
+                console.error("AddFiles is not registered on window.external", window.external);
+        };
+        WebBrowserHandler.prototype.openAboutPage = function () {
+            if (window.external.OpenAboutPage)
+                window.external.OpenAboutPage();
+            else
+                console.error("OpenAboutPage is not registered on window.external", window.external);
+        };
+        return WebBrowserHandler;
+    }());
+    Service.WebBrowserHandler = WebBrowserHandler;
+})(Service || (Service = {}));
+var addedFolder = function (param) {
+    $(document).trigger("AddedFolder", param);
+};

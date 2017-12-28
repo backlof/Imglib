@@ -14,15 +14,17 @@ namespace ImglibApp
 		static void Main(string[] args)
 		{
 #if DEBUG
-			InitializeDebug();
+			OpenApplicationInWindowsForms();
 #else
-			InitializeRelease();
+			OpenApplicationInWindowsForms();
 #endif
 		}
 
-		public static void InitializeDebug()
+
+		public static void OpenApplicationInBrowser()
 		{
-			Console.WriteLine("Initializing...");
+			//Console.WriteLine("Initializing...");
+			//Console.WriteLine();
 
 			var api = new WebApiHost();
 			var fileServer = new WebServerHost();
@@ -35,7 +37,7 @@ namespace ImglibApp
 			fileServer.Dispose();
 		}
 
-		public static void InitializeRelease()
+		public static void OpenApplicationInWindowsForms()
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
