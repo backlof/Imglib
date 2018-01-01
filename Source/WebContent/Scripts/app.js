@@ -197,9 +197,6 @@ var Api;
         function ImageService(_rcpService) {
             this._rcpService = _rcpService;
         }
-        ImageService.prototype.givePictureBack = function (picture) {
-            return this._rcpService.post(picture, "image", "givepictureback");
-        };
         return ImageService;
     }());
     Api.ImageService = ImageService;
@@ -437,13 +434,6 @@ var ViewModel;
             _this._imageService = _imageService;
             _this.header = ko.observable();
             _this.header(param.rating + " stars");
-            _this._imageService.givePictureBack({ id: 10, myProperty: new Date(), name: "the name" }).done(function () {
-                console.log("done");
-            }).fail(function () {
-                console.log("fail");
-            }).always(function () {
-                console.log("always");
-            });
             return _this;
         }
         RatedViewModel.prototype.onDisposal = function () {
@@ -510,9 +500,20 @@ var ViewModel;
 })(ViewModel || (ViewModel = {}));
 var Api;
 (function (Api) {
-    var PictureType;
-    (function (PictureType) {
-        PictureType[PictureType["First"] = 0] = "First";
-        PictureType[PictureType["Second"] = 1] = "Second";
-    })(PictureType = Api.PictureType || (Api.PictureType = {}));
+    var TestService = (function () {
+        function TestService(_rcpService) {
+            this._rcpService = _rcpService;
+        }
+        TestService.prototype.valueCheck = function (input) {
+            return this._rcpService.post(input, "test", "valuecheck");
+        };
+        TestService.prototype.exceptionMethod = function (input) {
+            return this._rcpService.post(input, "test", "exceptionmethod");
+        };
+        TestService.prototype.failMethod = function (input) {
+            return this._rcpService.post(input, "test", "failmethod");
+        };
+        return TestService;
+    }());
+    Api.TestService = TestService;
 })(Api || (Api = {}));

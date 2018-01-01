@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace ImglibHost.Controller.Model
 {
-	public class Picture
+	public class TestInput
 	{
-		public int Id { get; set; }
+		public int Age { get; set; }
 		public string Name { get; set; }
-		public DateTime MyProperty { get; set; }
 	}
 }

@@ -1,25 +1,19 @@
 ﻿using System.Web.Http;
-using ImglibHost.Repository;
 using ImglibHost.Controller.Model;
-using System;
+using ImglibRepository.Repository;
 
 namespace ImglibHost.Controller
 {
-	//REMEMBER Void type leads to 404
+	//REMEMBER void type leads to 404
 	//REMEMBER Argument needs to be an object instead of a primary value (fails)
 
 	public class ImageController : ApiController
 	{
-		private readonly ImglibRepository _repository;
+		private readonly IRepository _repository;
 
-		public ImageController(ImglibRepository repository)
+		public ImageController(IRepository repository)
 		{
 			_repository = repository;
-		}
-
-		public IResultWithValue<Picture> GivePictureBack(Picture picture)
-		{
-			return Result.Value(picture);
 		}
 	}
 }

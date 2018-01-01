@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace ImglibHost.Controller.Model
 {
-	public enum PictureType
+	public class TestData
 	{
-		First,
-		Second
+		public string PersonData { get; set; }
 	}
 }

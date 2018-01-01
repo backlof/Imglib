@@ -140,23 +140,23 @@
     <TypeScriptCompile Include="Scripts\typings\knockout\knockout.d.ts" />
     <TypeScriptCompile Include="TypeScript\Api\ImageService.ts">
       <DependentUpon>Service.tst</DependentUpon>
-      <CustomToolNamespace>..\FileServer\Controller\ImageController.cs</CustomToolNamespace>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="TypeScript\Api\Picture.ts">
-      <DependentUpon>Model.tst</DependentUpon>
-      <CustomToolNamespace>..\FileServer\Controller\Model\Picture.cs</CustomToolNamespace>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="TypeScript\Api\PictureType.ts">
-      <DependentUpon>Enum.tst</DependentUpon>
-      <CustomToolNamespace>..\FileServer\Controller\Model\PictureType.cs</CustomToolNamespace>
+      <CustomToolNamespace>..\Host\Controller\ImageController.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Api\Result.ts">
       <DependentUpon>Result.tst</DependentUpon>
       <CustomToolNamespace>..\FileServer\Controller\Result.cs</CustomToolNamespace>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="TypeScript\Api\TestParameters.ts">
+    <TypeScriptCompile Include="TypeScript\Api\TestData.ts">
       <DependentUpon>Model.tst</DependentUpon>
-      <CustomToolNamespace>..\FileServer\Controller\Model\TestParameters.cs</CustomToolNamespace>
+      <CustomToolNamespace>..\Host\Controller\Model\TestData.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="TypeScript\Api\TestInput.ts">
+      <DependentUpon>Model.tst</DependentUpon>
+      <CustomToolNamespace>..\Host\Controller\Model\TestInput.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="TypeScript\Api\TestService.ts">
+      <DependentUpon>Service.tst</DependentUpon>
+      <CustomToolNamespace>..\Host\Controller\TestController.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Application.ts" />
     <TypeScriptCompile Include="TypeScript\Browser\BrowserEventConfiguration.ts">

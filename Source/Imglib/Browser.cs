@@ -30,7 +30,7 @@ namespace Imglib
 			browser.IsWebBrowserContextMenuEnabled = false;
 			browser.WebBrowserShortcutsEnabled = false;
 			browser.ScrollBarsEnabled = false;
-			browser.Navigate(_host.BaseUrl);
+			browser.Navigate(_host.Url);
 		}
 
 		private void OnWebBrowserDocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)

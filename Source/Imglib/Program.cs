@@ -25,7 +25,7 @@ namespace Imglib
 		{
 			var host = new Host();
 
-			System.Diagnostics.Process.Start(host.BaseUrl);
+			System.Diagnostics.Process.Start(host.Url);
 
 			Console.Write("Press enter to exit:");
 			Console.Read();

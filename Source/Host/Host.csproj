@@ -92,20 +92,24 @@
     <Compile Include="Controller\ImageController.cs" />
     <Compile Include="Controller\Model\IResult.cs" />
     <Compile Include="Controller\Model\IResultWithValue.cs" />
-    <Compile Include="Controller\Model\Picture.cs" />
-    <Compile Include="Controller\Model\PictureType.cs" />
-    <Compile Include="Controller\Model\TestParameters.cs" />
+    <Compile Include="Controller\Model\TestData.cs" />
+    <Compile Include="Controller\Model\TestInput.cs" />
     <Compile Include="Controller\Result.cs" />
+    <Compile Include="Controller\TestController.cs" />
+    <Compile Include="Functionality\StarRater.cs" />
     <Compile Include="Host.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\ImglibRepository.cs" />
-    <Compile Include="Startup.cs" />
+    <Compile Include="Service\ImageService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Repository\Repository.csproj">
+      <Project>{2649f97f-c2fc-475f-80c0-2fcdb1b14688}</Project>
+      <Name>Repository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebContent\WebContent.csproj">
       <Project>{6aa8ce27-62b4-4a45-a28d-98be4b3ed248}</Project>
       <Name>WebContent</Name>
