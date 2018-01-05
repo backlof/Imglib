@@ -1,4 +1,39 @@
 "use strict";
+var Api;
+(function (Api) {
+    var ImageService = (function () {
+        function ImageService(_rcpService) {
+            this._rcpService = _rcpService;
+        }
+        return ImageService;
+    }());
+    Api.ImageService = ImageService;
+})(Api || (Api = {}));
+var Api;
+(function (Api) {
+    var TestService = (function () {
+        function TestService(_rcpService) {
+            this._rcpService = _rcpService;
+        }
+        TestService.prototype.fail = function (input) {
+            return this._rcpService.put(input, "test", "fail");
+        };
+        TestService.prototype.success = function (input) {
+            return this._rcpService.put(input, "test", "success");
+        };
+        TestService.prototype.stuff = function (intp) {
+            return this._rcpService.post(intp, "test", "stuff");
+        };
+        TestService.prototype.shit = function (tst) {
+            return this._rcpService.post(tst, "test", "shit");
+        };
+        TestService.prototype.getter = function () {
+            return this._rcpService.get("test", "getter");
+        };
+        return TestService;
+    }());
+    Api.TestService = TestService;
+})(Api || (Api = {}));
 var Bundle;
 (function (Bundle) {
     var HtmlScriptInsertKnockoutComponentRegisterer = (function () {
@@ -29,7 +64,7 @@ var Bundle;
         HtmlScriptInsertKnockoutComponentRegisterer.prototype.register = function (components) {
             var _this = this;
             var promise = $.Deferred();
-            $.when.apply($, components.filter(function (x) { return x != null; }).map(function (component) { return _this.registerComponent(component); })).done(function () {
+            $.when.apply($, components.map(function (component) { return _this.registerComponent(component); })).done(function () {
                 promise.resolve();
             }).fail(function () {
                 promise.reject();
@@ -98,10 +133,11 @@ var ViewModel;
 (function (ViewModel) {
     var MainViewModel = (function (_super) {
         __extends(MainViewModel, _super);
-        function MainViewModel(_logger, _browserHandler) {
+        function MainViewModel(_logger, _browserHandler, _testService) {
             var _this = _super.call(this) || this;
             _this._logger = _logger;
             _this._browserHandler = _browserHandler;
+            _this._testService = _testService;
             _this.subpage = ko.observable();
             _this.onBrowserEvent(Browser.Event.Testish, function (sda) {
                 alert(sda);
@@ -152,6 +188,60 @@ var ViewModel;
 })(ViewModel || (ViewModel = {}));
 var Service;
 (function (Service) {
+    var LocalRcpClient = (function () {
+        function LocalRcpClient(_host) {
+            this._host = _host;
+        }
+        LocalRcpClient.prototype.post = function (arg, controller, action) {
+            var promise = $.Deferred();
+            this.getPromise(arg, controller, action).done(function (result) {
+                console.log(result);
+                if (result.success)
+                    promise.resolve(result.value);
+                else
+                    promise.reject(result.error);
+            }).fail(function () {
+            });
+            return promise;
+        };
+        LocalRcpClient.prototype.put = function (arg, controller, action) {
+            var promise = $.Deferred();
+            this.getPromise(arg, controller, action).done(function (result) {
+                if (result.success)
+                    promise.resolve();
+                else
+                    promise.reject(result.error);
+            }).fail(function () {
+                promise.reject();
+            });
+            return promise;
+        };
+        LocalRcpClient.prototype.get = function (controller, action) {
+            var promise = $.Deferred();
+            this.getPromise({}, controller, action).done(function (result) {
+                if (result.success)
+                    promise.resolve(result.value);
+                else
+                    promise.reject(result.error);
+            }).fail(function () {
+                promise.reject();
+            });
+            return promise;
+        };
+        LocalRcpClient.prototype.getPromise = function (arg, controller, action) {
+            return $.ajax({
+                url: this._host.base + "/" + this._host.name + "/" + controller + "/" + action,
+                method: "POST",
+                data: arg,
+                dataType: "json"
+            });
+        };
+        return LocalRcpClient;
+    }());
+    Service.LocalRcpClient = LocalRcpClient;
+})(Service || (Service = {}));
+var Service;
+(function (Service) {
     var OwenSelfHostingApi = (function () {
         function OwenSelfHostingApi() {
             this.base = "http://localhost:8080";
@@ -161,46 +251,6 @@ var Service;
     }());
     Service.OwenSelfHostingApi = OwenSelfHostingApi;
 })(Service || (Service = {}));
-var Service;
-(function (Service) {
-    var LocalRcpClient = (function () {
-        function LocalRcpClient(_host) {
-            this._host = _host;
-        }
-        LocalRcpClient.prototype.post = function (data, controller, action) {
-            var promise = $.Deferred();
-            this.getPromise(data, controller, action).done(function (data) {
-                if (data.success)
-                    promise.resolve(data.value);
-                else
-                    promise.reject();
-            }).fail(function () {
-                console.error("Ajax call failed");
-                promise.reject();
-            });
-            return promise;
-        };
-        LocalRcpClient.prototype.getPromise = function (data, controller, action) {
-            return $.ajax({
-                url: this._host.base + "/" + this._host.name + "/" + controller + "/" + action,
-                method: "POST",
-                data: JSON.stringify(data)
-            });
-        };
-        return LocalRcpClient;
-    }());
-    Service.LocalRcpClient = LocalRcpClient;
-})(Service || (Service = {}));
-var Api;
-(function (Api) {
-    var ImageService = (function () {
-        function ImageService(_rcpService) {
-            this._rcpService = _rcpService;
-        }
-        return ImageService;
-    }());
-    Api.ImageService = ImageService;
-})(Api || (Api = {}));
 Object.defineProperty(Date, "Now", {
     get: function () {
         return new Date();
@@ -289,6 +339,14 @@ var Service;
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(ServiceResolver.prototype, "TestService", {
+            get: function () {
+                var _this = this;
+                return this.Singleton("TestService", function () { return new Api.TestService(_this.RcpService); });
+            },
+            enumerable: true,
+            configurable: true
+        });
         Object.defineProperty(ServiceResolver.prototype, "Logger", {
             get: function () {
                 return this.Singleton("Logger", function () { return new Service.FooterBarLogger(); });
@@ -299,7 +357,7 @@ var Service;
         Object.defineProperty(ServiceResolver.prototype, "BindingViewModel", {
             get: function () {
                 var _this = this;
-                return this.Transient(function () { return new ViewModel.MainViewModel(_this.Logger, _this.BrowserInvoker); });
+                return this.Transient(function () { return new ViewModel.MainViewModel(_this.Logger, _this.BrowserInvoker, _this.TestService); });
             },
             enumerable: true,
             configurable: true
@@ -500,20 +558,8 @@ var ViewModel;
 })(ViewModel || (ViewModel = {}));
 var Api;
 (function (Api) {
-    var TestService = (function () {
-        function TestService(_rcpService) {
-            this._rcpService = _rcpService;
-        }
-        TestService.prototype.valueCheck = function (input) {
-            return this._rcpService.post(input, "test", "valuecheck");
-        };
-        TestService.prototype.exceptionMethod = function (input) {
-            return this._rcpService.post(input, "test", "exceptionmethod");
-        };
-        TestService.prototype.failMethod = function (input) {
-            return this._rcpService.post(input, "test", "failmethod");
-        };
-        return TestService;
-    }());
-    Api.TestService = TestService;
+    var ErrorCode;
+    (function (ErrorCode) {
+        ErrorCode[ErrorCode["NotFound"] = 1] = "NotFound";
+    })(ErrorCode = Api.ErrorCode || (Api.ErrorCode = {}));
 })(Api || (Api = {}));

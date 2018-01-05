@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
-using ImglibRepository.Table;
+using Imglib.Repository.Table;
 using Microsoft.Data.Sqlite;
 
-namespace ImglibRepository.Context
+namespace Imglib.Repository.Context
 {
 	public class SqlLiteContext : DbContext, IDisposable
 	{
@@ -41,7 +41,6 @@ namespace ImglibRepository.Context
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-
 			optionsBuilder.UseSqlite(CreateConnection());
 		}
 
@@ -50,7 +49,6 @@ namespace ImglibRepository.Context
 			base.OnModelCreating(modelBuilder);
 
 			#region Tables
-
 			modelBuilder.Entity<Image>()
 				.ToTable("Images");
 

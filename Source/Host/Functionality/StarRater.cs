@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImglibHost.Functionality
+namespace Imglib.Host.Functionality
 {
 	public static class StarRater
 	{

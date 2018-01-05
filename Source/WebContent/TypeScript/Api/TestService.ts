@@ -1,28 +1,30 @@
-﻿/// <reference path="../Service/DeferredRcpClient.ts" />
+﻿namespace Api {
 
-namespace Api {
-	
 	export interface ITestService {
-		valueCheck(input: TestInput) : JQueryDeferred<TestData>;
-		exceptionMethod(input: TestInput) : JQueryDeferred<TestData>;
-		failMethod(input: TestInput) : JQueryDeferred<TestData>;
+		fail(input: TestParamneter): Api.VoidDeferred;
+		success(input: TestParamneter): Api.VoidDeferred;
+		stuff(intp: TestParamneter): Api.GenericDeferred<TestData>;
+		getter(): Api.GenericDeferred<TestData>;
 	}
 
 	export class TestService implements ITestService {
 
-		constructor(private _rcpService: Service.IDeferredRcpClient) { 
+		constructor(private _rcpService: Service.IDeferredRcpClient) {	}
+
+		public fail(input: TestParamneter){
+			return this._rcpService.put<TestParamneter>(input,  "test", "fail");
 		}
-		
-		public valueCheck(input: TestInput) {
-			return this._rcpService.post<TestInput, TestData>(input, "test", "valuecheck");
+
+		public success(input: TestParamneter){
+			return this._rcpService.put<TestParamneter>(input,  "test", "success");
 		}
-	
-		public exceptionMethod(input: TestInput) {
-			return this._rcpService.post<TestInput, TestData>(input, "test", "exceptionmethod");
+
+		public stuff(intp: TestParamneter) {
+			return this._rcpService.post<TestParamneter, TestData>(intp, "test", "stuff");
 		}
-	
-		public failMethod(input: TestInput) {
-			return this._rcpService.post<TestInput, TestData>(input, "test", "failmethod");
+
+		public getter() {
+			return this._rcpService.get<TestData>("test", "getter");
 		}
 	}
 }

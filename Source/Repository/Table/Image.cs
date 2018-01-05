@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace ImglibRepository.Table
+namespace Imglib.Repository.Table
 {
 	public partial class Image : ITable
 	{

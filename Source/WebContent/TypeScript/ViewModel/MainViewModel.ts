@@ -8,7 +8,7 @@ namespace ViewModel {
 
 		private subpage = ko.observable<KnockoutComponent>();
 
-		constructor(private _logger: Service.ILogger, private _browserHandler: Browser.IBrowserInvoker) {
+		constructor(private _logger: Service.ILogger, private _browserHandler: Browser.IBrowserInvoker, private _testService: Api.ITestService) {
 			super();
 
 			this.onBrowserEvent(Browser.Event.Testish, (sda) => {

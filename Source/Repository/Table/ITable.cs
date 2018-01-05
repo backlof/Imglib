@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ImglibRepository.Table
+namespace Imglib.Repository.Table
 {
 	public interface ITable
 	{

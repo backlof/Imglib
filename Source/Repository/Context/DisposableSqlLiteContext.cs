@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace ImglibRepository.Context
+namespace Imglib.Repository.Context
 {
 	public class DisposableSqlLiteContext : SqlLiteContext
 	{

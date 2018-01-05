@@ -7,18 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ImglibHost;
+using Imglib.Host;
 
 namespace Imglib
 {
 	public partial class Browser : Form
 	{
-		private readonly Host _host;
+		private readonly Host.WebHost _host;
 		private ScriptInvoker _invoker;
 
 		public Browser()
 		{
-			_host = new Host();
+			_host = new Host.WebHost();
 			InitializeComponent();
 		}
 

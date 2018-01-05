@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImglibHost.Controller.Model
+namespace Imglib.Host.Controller.Model
 {
 	public class TestData
 	{

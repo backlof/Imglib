@@ -11,11 +11,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ImglibWeb</RootNamespace>
     <AssemblyName>WebContent</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TypeScriptToolsVersion>2.3</TypeScriptToolsVersion>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -84,6 +85,17 @@
     <Content Include="Scripts\app.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.2.1.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\jquery-3.2.1.min.js" />
+    <Content Include="Scripts\jquery-3.2.1.slim.js" />
+    <Content Include="Scripts\jquery-3.2.1.slim.min.js" />
+    <Content Include="Scripts\knockout-3.4.2.debug.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\knockout-3.4.2.js" />
     <Content Include="Styles\style.min.css">
       <DependentUpon>style.css</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -107,7 +119,6 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
-    <None Include="packages.config" />
     <Content Include="Styles\style.css">
       <DependentUpon>style.less</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -116,18 +127,15 @@
     <Content Include="TypeScript\Api\Enum.tst" />
     <Content Include="TypeScript\Api\Model.tst" />
     <Content Include="TypeScript\Api\Service.tst" />
+    <None Include="packages.config" />
+    <None Include="Scripts\jquery-3.2.1.min.map" />
+    <None Include="Scripts\jquery-3.2.1.slim.min.map" />
     <None Include="TypeScript\Api\Result.tst" />
     <None Include="TypeScript\Browser\BrowserInvoker.tst" />
     <None Include="TypeScript\Browser\BrowserEventConfiguration.tst" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Index.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Scripts\jquery-3.2.1.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Scripts\knockout-3.4.2.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Styles\normalize.css">
@@ -138,25 +146,44 @@
     <TypeScriptCompile Include="Scripts\typings\imglib.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\knockout\knockout.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\knockout\tests\jasmine.extensions.d.ts" />
+    <TypeScriptCompile Include="TypeScript\Api\VoidDeferred.ts" />
+    <TypeScriptCompile Include="TypeScript\Api\EmptyParameter.ts">
+      <DependentUpon>Model.tst</DependentUpon>
+      <CustomToolNamespace>..\Host\Controller\Model\EmptyParameter.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="TypeScript\Api\ErrorCode.ts">
+      <DependentUpon>Enum.tst</DependentUpon>
+      <CustomToolNamespace>..\Host\Controller\Model\ErrorCode.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="TypeScript\Api\GenericDeferred.ts" />
+    <TypeScriptCompile Include="TypeScript\Api\IdTest.ts">
+      <DependentUpon>Model.tst</DependentUpon>
+      <CustomToolNamespace>..\Host\Controller\Model\IdTest.cs</CustomToolNamespace>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Api\ImageService.ts">
       <DependentUpon>Service.tst</DependentUpon>
       <CustomToolNamespace>..\Host\Controller\ImageController.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Api\Result.ts">
-      <DependentUpon>Result.tst</DependentUpon>
-      <CustomToolNamespace>..\FileServer\Controller\Result.cs</CustomToolNamespace>
+      <DependentUpon>Model.tst</DependentUpon>
+      <CustomToolNamespace>..\Host\Controller\Model\Result.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Api\TestData.ts">
       <DependentUpon>Model.tst</DependentUpon>
       <CustomToolNamespace>..\Host\Controller\Model\TestData.cs</CustomToolNamespace>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="TypeScript\Api\TestInput.ts">
+    <TypeScriptCompile Include="TypeScript\Api\TestParamneter.ts">
       <DependentUpon>Model.tst</DependentUpon>
-      <CustomToolNamespace>..\Host\Controller\Model\TestInput.cs</CustomToolNamespace>
+      <CustomToolNamespace>..\Host\Controller\Model\TestParamneter.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Api\TestService.ts">
       <DependentUpon>Service.tst</DependentUpon>
       <CustomToolNamespace>..\Host\Controller\TestController.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="TypeScript\Api\VoidResult.ts">
+      <DependentUpon>Model.tst</DependentUpon>
+      <CustomToolNamespace>..\Host\Controller\Model\VoidResult.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Application.ts" />
     <TypeScriptCompile Include="TypeScript\Browser\BrowserEventConfiguration.ts">

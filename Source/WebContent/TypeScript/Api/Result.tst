@@ -8,7 +8,7 @@
 			return "Result.ts";
 		};
 	}
-}namespace Api {$Classes(x => x.Namespace == "ImglibHost.Controller" && x.Name == "ConcatResult")[
+}namespace Api {$Classes(x => x.Namespace == "Imglib.Host.Controller" && x.Name == "ConcatResult")[
 
 	export interface Result$TypeParameters {
 		$Properties[$name: $Type;][

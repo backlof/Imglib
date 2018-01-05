@@ -1,7 +1,7 @@
-﻿using ImglibRepository.Repository;
+﻿using Imglib.Repository;
 using System;
 
-namespace ImglibHost.Service
+namespace Imglib.Host.Service
 {
 	public class ImageService
 	{

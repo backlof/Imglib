@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ImglibRepository.Table
+namespace Imglib.Repository.Table
 {
 	public partial class Rating : ITable
 	{

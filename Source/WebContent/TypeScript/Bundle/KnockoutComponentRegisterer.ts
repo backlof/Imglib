@@ -36,7 +36,7 @@
 		public register(components: KnockoutComponentConfiguration[]) {
 			const promise = $.Deferred<void>();
 
-			$.when.apply($, components.filter(x => x != null).map(component => this.registerComponent(component))).done(() => {
+			$.when.apply($, components.map(component => this.registerComponent(component))).done(() => {
 				promise.resolve();
 			}).fail(() => {
 				promise.reject();

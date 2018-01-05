@@ -1,13 +1,13 @@
-﻿/// <reference path="../Service/DeferredRcpClient.ts" />
+﻿namespace Api {
 
-namespace Api {
-	
 	export interface IImageService {
+		
+		
+		
 	}
 
 	export class ImageService implements IImageService {
 
-		constructor(private _rcpService: Service.IDeferredRcpClient) { 
-		}
-		}
+		constructor(private _rcpService: Service.IDeferredRcpClient) {	}
+	}
 }

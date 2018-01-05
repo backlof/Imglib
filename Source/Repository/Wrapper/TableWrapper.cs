@@ -1,12 +1,12 @@
-﻿using ImglibRepository.Context;
-using ImglibRepository.Table;
+﻿using Imglib.Repository.Context;
+using Imglib.Repository.Table;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace ImglibRepository.Wrapper
+namespace Imglib.Repository.Wrapper
 {
 	public class TableWrapper<TTable> : ITableWrapper<TTable> where TTable : class, ITable
 	{

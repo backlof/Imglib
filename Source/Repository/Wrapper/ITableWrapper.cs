@@ -4,9 +4,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using ImglibRepository.Table;
+using Imglib.Repository.Table;
 
-namespace ImglibRepository.Wrapper
+namespace Imglib.Repository.Wrapper
 {
 	public interface ITableWrapper<TTable> where TTable : class, ITable
 	{

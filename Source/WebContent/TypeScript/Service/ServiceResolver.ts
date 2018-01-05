@@ -54,12 +54,16 @@ namespace Service {
 			return this.Singleton("ImageService", () => new Api.ImageService(this.RcpService));
 		}
 
+		get TestService(): Api.ITestService {
+			return this.Singleton("TestService", () => new Api.TestService(this.RcpService));
+		}
+
 		get Logger(): ILogger {
 			return this.Singleton("Logger", () => new Service.FooterBarLogger());
 		}
 
 		get BindingViewModel(): ViewModel.ViewModelBase {
-			return this.Transient(() => new ViewModel.MainViewModel(this.Logger, this.BrowserInvoker));
+			return this.Transient(() => new ViewModel.MainViewModel(this.Logger, this.BrowserInvoker, this.TestService));
 		}
 	}
 }

@@ -1,4 +1,4 @@
-﻿using ImglibHost;
+﻿using Imglib.Host;
 using System;
 using System.Windows.Forms;
 
@@ -23,7 +23,7 @@ namespace Imglib
 
 		public static void OpenApplicationInBrowser()
 		{
-			var host = new Host();
+			var host = new Host.WebHost();
 
 			System.Diagnostics.Process.Start(host.Url);
 

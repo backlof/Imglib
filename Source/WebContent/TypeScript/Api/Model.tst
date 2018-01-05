@@ -13,7 +13,7 @@
 	{
 		return c.Methods.Where(m => m.Type.Unwrap().IsDefined).Select(m => m.Type.Unwrap());
 	}
-}namespace Api {$Classes(x => x.Namespace == "ImglibHost.Controller.Model")[
+}namespace Api {$Classes(x => x.Namespace == "Imglib.Host.Controller.Model")[
 
 	export interface $Name$TypeParameters {$Properties[
 		$name: $Type;]
