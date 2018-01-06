@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Imglib.Host.Controller.Model;
 
 namespace Imglib.Host.Controller.Model
 {
-	public class VoidResult : IResult
+	public interface IVoidResult
+	{
+		bool Success { get; set; }
+		ErrorCode Error { get; set; }
+	}
+
+	public class VoidResult : IVoidResult
 	{
 		public bool Success { get; set; }
 		public ErrorCode Error { get; set; }

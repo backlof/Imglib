@@ -8,27 +8,27 @@ namespace Imglib.Host.Controller
 	{
 		public TestController() { }
 
-		public IResult Exception(EmptyParameter value)
+		public IVoidResult Exception(EmptyParameter value)
 		{
 			throw new Exception();
 		}
 
-		public IResult Fail(TestParamneter input)
+		public IVoidResult Fail(TestParamneter input)
 		{
 			return Result.Fail(ErrorCode.NotFound);
 		}
 
-		public IResult Success(TestParamneter input)
+		public IVoidResult Success(TestParamneter input)
 		{
 			return Result.Success();
 		}
 
-		public IResultWithValue<TestData> Stuff(TestParamneter intp)
+		public IGenericResult<TestData> Stuff(TestParamneter intp)
 		{
 			throw new System.Exception();
 		}
 
-		public IResultWithValue<TestData> Getter(EmptyParameter empty)
+		public IGenericResult<TestData> Getter(EmptyParameter empty)
 		{
 			throw new System.Exception();
 		}

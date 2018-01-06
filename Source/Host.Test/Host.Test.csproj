@@ -90,7 +90,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions.cs" />
-    <Compile Include="Functionality\StarRaterTests.cs" />
+    <Compile Include="Module\SortCalculatorTests.cs" />
+    <Compile Include="Module\StartRatingCalculatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server\ApiTests.cs" />
     <Compile Include="Server\FileServerTests.cs" />

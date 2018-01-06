@@ -2,10 +2,6 @@
 using Imglib.Repository.Table;
 using Imglib.Repository.Wrapper;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Imglib.Repository
 {
@@ -15,6 +11,8 @@ namespace Imglib.Repository
 
 		public ITableWrapper<Image> Images { get; private set; }
 		public ITableWrapper<Rating> Ratings { get; private set; }
+		public ITableWrapper<Tag> Tags { get; private set; }
+		public ITableWrapper<ImageTag> ImageTags { get; private set; }
 
 		public SqlLiteRepository(SqlLiteContext context)
 		{
@@ -22,6 +20,8 @@ namespace Imglib.Repository
 
 			Images = new TableWrapper<Image>(context, c => c.Images);
 			Ratings = new TableWrapper<Rating>(context, c => c.Ratings);
+			Tags = new TableWrapper<Tag>(context, c => c.Tags);
+			ImageTags = new TableWrapper<ImageTag>(context, c => c.ImageTags);
 		}
 
 		public void Dispose()

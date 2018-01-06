@@ -4,22 +4,22 @@ namespace Imglib.Host.Controller
 {
 	public class Result
 	{
-		public static IResultWithValue<T> Value<T>(T value)
+		public static IGenericResult<T> Value<T>(T value)
 		{
-			return new Result<T> { Success = true, Value = value };
+			return new GenericResult<T> { Success = true, Value = value };
 		}
 
-		public static IResultWithValue<T> Fail<T>(ErrorCode code)
+		public static IGenericResult<T> Fail<T>(ErrorCode code)
 		{
-			return new Result<T> { Success = false, Error = code };
+			return new GenericResult<T> { Success = false, Error = code };
 		}
 
-		public static IResult Fail(ErrorCode code)
+		public static IVoidResult Fail(ErrorCode code)
 		{
 			return new VoidResult { Success = false, Error = code };
 		}
 
-		public static IResult Success()
+		public static IVoidResult Success()
 		{
 			return new VoidResult { Success = true };
 		}

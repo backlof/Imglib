@@ -6,6 +6,5 @@ namespace Imglib.Repository.Table
 {
 	public interface ITable
 	{
-		int Id { get; set; }
 	}
 }

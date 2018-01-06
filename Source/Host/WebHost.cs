@@ -15,6 +15,7 @@ using Imglib.Repository.Context;
 using Imglib.Repository;
 using Imglib.Host.Service;
 using System.IO;
+using Imglib.Host.Module;
 
 namespace Imglib.Host
 {
@@ -44,9 +45,9 @@ namespace Imglib.Host
 			_port = port;
 			_kernel = new StandardKernel();
 			#region Declare dependencies
-			//TODO Clean up dependencies?
 			_kernel.Bind<IRepository>().To<LocalSqlLiteRepository>().InSingletonScope();
 			_kernel.Bind<ImageService>().To<ImageService>().InTransientScope();
+			_kernel.Bind<IImageFolder>().To<ImageFolder>().InTransientScope();
 			#endregion
 			#region Create services
 			ImageService = _kernel.Get<ImageService>();

@@ -3,7 +3,45 @@ var Api;
 (function (Api) {
     var ErrorCode;
     (function (ErrorCode) {
-        ErrorCode[ErrorCode["NotFound"] = 1] = "NotFound";
+        ErrorCode[ErrorCode["Continue"] = 100] = "Continue";
+        ErrorCode[ErrorCode["SwitchingProtocols"] = 101] = "SwitchingProtocols";
+        ErrorCode[ErrorCode["OK"] = 200] = "OK";
+        ErrorCode[ErrorCode["Created"] = 201] = "Created";
+        ErrorCode[ErrorCode["Accepted"] = 202] = "Accepted";
+        ErrorCode[ErrorCode["NonAuthoritativeInformation"] = 203] = "NonAuthoritativeInformation";
+        ErrorCode[ErrorCode["NoContent"] = 204] = "NoContent";
+        ErrorCode[ErrorCode["ResetContent"] = 205] = "ResetContent";
+        ErrorCode[ErrorCode["PartialContent"] = 206] = "PartialContent";
+        ErrorCode[ErrorCode["MultipleChoices"] = 300] = "MultipleChoices";
+        ErrorCode[ErrorCode["MovedPermanently"] = 301] = "MovedPermanently";
+        ErrorCode[ErrorCode["Found"] = 302] = "Found";
+        ErrorCode[ErrorCode["SeeOther"] = 303] = "SeeOther";
+        ErrorCode[ErrorCode["NotModified"] = 304] = "NotModified";
+        ErrorCode[ErrorCode["UseProxy"] = 305] = "UseProxy";
+        ErrorCode[ErrorCode["TemporaryRedirect"] = 307] = "TemporaryRedirect";
+        ErrorCode[ErrorCode["BadRequest"] = 400] = "BadRequest";
+        ErrorCode[ErrorCode["PaymentRequired"] = 402] = "PaymentRequired";
+        ErrorCode[ErrorCode["Forbidden"] = 403] = "Forbidden";
+        ErrorCode[ErrorCode["NotFound"] = 404] = "NotFound";
+        ErrorCode[ErrorCode["MethodNotAllowed"] = 405] = "MethodNotAllowed";
+        ErrorCode[ErrorCode["NotAcceptable"] = 406] = "NotAcceptable";
+        ErrorCode[ErrorCode["ProxyAuthenticationRequired"] = 407] = "ProxyAuthenticationRequired";
+        ErrorCode[ErrorCode["RequestTimeout"] = 408] = "RequestTimeout";
+        ErrorCode[ErrorCode["Conflict"] = 409] = "Conflict";
+        ErrorCode[ErrorCode["Gone"] = 410] = "Gone";
+        ErrorCode[ErrorCode["LengthRequired"] = 411] = "LengthRequired";
+        ErrorCode[ErrorCode["PreconditionFailed"] = 412] = "PreconditionFailed";
+        ErrorCode[ErrorCode["RequestEntityTooLarge"] = 413] = "RequestEntityTooLarge";
+        ErrorCode[ErrorCode["RequestUriTooLarge"] = 414] = "RequestUriTooLarge";
+        ErrorCode[ErrorCode["UnsupportedMediaType"] = 415] = "UnsupportedMediaType";
+        ErrorCode[ErrorCode["RequestedRangeNotSatisfiable"] = 416] = "RequestedRangeNotSatisfiable";
+        ErrorCode[ErrorCode["ExpectationFailed"] = 417] = "ExpectationFailed";
+        ErrorCode[ErrorCode["InternalServerError"] = 500] = "InternalServerError";
+        ErrorCode[ErrorCode["NotImplemented"] = 501] = "NotImplemented";
+        ErrorCode[ErrorCode["BadGateway"] = 502] = "BadGateway";
+        ErrorCode[ErrorCode["ServiceUnavailable"] = 503] = "ServiceUnavailable";
+        ErrorCode[ErrorCode["GatewayTimeout"] = 504] = "GatewayTimeout";
+        ErrorCode[ErrorCode["HttpVersionNotSupported"] = 505] = "HttpVersionNotSupported";
     })(ErrorCode = Api.ErrorCode || (Api.ErrorCode = {}));
 })(Api || (Api = {}));
 var Api;
@@ -22,18 +60,6 @@ var Api;
         function TestService(_rcpService) {
             this._rcpService = _rcpService;
         }
-        TestService.prototype.fail = function (input) {
-            return this._rcpService.put(input, "test", "fail");
-        };
-        TestService.prototype.success = function (input) {
-            return this._rcpService.put(input, "test", "success");
-        };
-        TestService.prototype.stuff = function (intp) {
-            return this._rcpService.post(intp, "test", "stuff");
-        };
-        TestService.prototype.getter = function () {
-            return this._rcpService.get("test", "getter");
-        };
         return TestService;
     }());
     Api.TestService = TestService;
@@ -198,7 +224,8 @@ var Service;
                     promise.resolve(result.value);
                 else
                     promise.reject(result.error);
-            }).fail(function () {
+            }).fail(function (xhr) {
+                promise.reject(xhr.status);
             });
             return promise;
         };
@@ -209,8 +236,8 @@ var Service;
                     promise.resolve();
                 else
                     promise.reject(result.error);
-            }).fail(function () {
-                promise.reject();
+            }).fail(function (xhr) {
+                promise.reject(xhr.status);
             });
             return promise;
         };
@@ -221,8 +248,8 @@ var Service;
                     promise.resolve(result.value);
                 else
                     promise.reject(result.error);
-            }).fail(function () {
-                promise.reject();
+            }).fail(function (xhr) {
+                promise.reject(xhr.status);
             });
             return promise;
         };

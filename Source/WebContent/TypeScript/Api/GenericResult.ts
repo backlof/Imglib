@@ -1,6 +1,6 @@
 ﻿namespace Api {
 
-	export interface Result<T> {
+	export interface GenericResult<T> {
 		value: T;
 		success: boolean;
 		error: ErrorCode;

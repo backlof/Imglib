@@ -12,5 +12,7 @@ namespace Imglib.Repository
 	{
 		ITableWrapper<Image> Images { get; }
 		ITableWrapper<Rating> Ratings { get; }
+		ITableWrapper<Tag> Tags { get; }
+		ITableWrapper<ImageTag> ImageTags { get; }
 	}
 }

@@ -112,7 +112,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlLiteRepository.cs" />
     <Compile Include="Table\Image.cs" />
+    <Compile Include="Table\ImageTag.cs" />
     <Compile Include="Table\ITable.cs" />
+    <Compile Include="Table\Tag.cs" />
     <Compile Include="Wrapper\ITableWrapper.cs" />
     <Compile Include="Table\Rating.cs" />
     <Compile Include="Wrapper\TableWrapper.cs" />

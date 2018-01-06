@@ -51,28 +51,25 @@
 
 	IEnumerable<Method> ValueMethods(Class c)
 	{
-		return AcceptableMethods(c).Where(x => x.Type.Name.StartsWith("IResultWithValue<"));
+		return AcceptableMethods(c).Where(x => x.Type.Name.StartsWith("IGenericResult<"));
 	}
 
 	IEnumerable<Method> VoidMethods(Class c)
 	{
-		return AcceptableMethods(c).Where(x => x.Type.Name == "IResult");
+		return AcceptableMethods(c).Where(x => x.Type.Name == "IVoidResult");
 	}
 
 	IEnumerable<Method> GetMethods(Class c)
 	{
-		return c.Methods.Where(x => x.Type.Name.StartsWith("IResultWithValue<") && x.Parameters.Count == 1 && x.Parameters[0].Type.Name == "EmptyParameter");
+		return c.Methods.Where(x => x.Type.Name.StartsWith("IGenericResult<") && x.Parameters.Count == 1 && x.Parameters[0].Type.Name == "EmptyParameter");
 	}
 
 }namespace Api {$Classes(:ApiController)[
 
-	export interface I$ClassName {
-		$VoidMethods[$name($FirstParameterName: $FirstParameterType): Api.VoidDeferred;][
-		]
-		$ValueMethods[$name($FirstParameterName: $FirstParameterType): Api.GenericDeferred<$ResultType>;][
-		]
-		$GetMethods[$name(): Api.GenericDeferred<$ResultType>;][
-		]
+	export interface I$ClassName {$VoidMethods[
+		$name($FirstParameterName: $FirstParameterType): Api.VoidDeferred;][]$ValueMethods[
+		$name($FirstParameterName: $FirstParameterType): Api.GenericDeferred<$ResultType>;][]$GetMethods[
+		$name(): Api.GenericDeferred<$ResultType>;][]
 	}
 
 	export class $ClassName implements I$ClassName {

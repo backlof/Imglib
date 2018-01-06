@@ -26,9 +26,5 @@ namespace Imglib.Repository.Wrapper
 		void Remove(params TTable[] entries);
 		void Remove(IEnumerable< TTable> entries);
 		void Remove(Expression<Func<TTable, bool>> condition);
-
-		void RemoveById(int id);
-		void RemoveById(params int[] ids);
-		void RemoveById(IEnumerable<int> ids);
 	}
 }

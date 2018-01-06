@@ -6,19 +6,24 @@
 		get<TOut>(controller: string, action: string): Api.GenericDeferred<TOut>;
 	}
 
+	export interface IJQueryXhr {
+		status: Api.ErrorCode;
+	}
+
 	export class LocalRcpClient implements IDeferredRcpClient {
 
 		constructor(private _host: IApiHost) { }
 
 		public post<TIn, TOut>(arg: TIn, controller: string, action: string): Api.GenericDeferred<TOut> {
 			const promise = $.Deferred<TOut>();
-			this.getPromise<TIn, Api.Result<TOut>>(arg, controller, action).done((result) => {
+			this.getPromise<TIn, Api.GenericResult<TOut>>(arg, controller, action).done((result) => {
 				console.log(result);
 				if (result.success)
 					promise.resolve(result.value);
 				else
 					promise.reject(result.error);
-			}).fail(() => {
+			}).fail((xhr: IJQueryXhr) => {
+				promise.reject(xhr.status);
 			});
 
 			return promise as Api.GenericDeferred<TOut>;
@@ -32,8 +37,8 @@
 					promise.resolve();
 				else
 					promise.reject(result.error);
-			}).fail(() => {
-				promise.reject();
+			}).fail((xhr: IJQueryXhr) => {
+				promise.reject(xhr.status);
 			});
 
 			return promise as Api.VoidDeferred;
@@ -42,13 +47,13 @@
 		public get<TOut>(controller: string, action: string): Api.GenericDeferred<TOut> {
 			const promise = $.Deferred<TOut>();
 
-			this.getPromise<Api.EmptyParameter, Api.Result<TOut>>({}, controller, action).done((result) => {
+			this.getPromise<Api.EmptyParameter, Api.GenericResult<TOut>>({}, controller, action).done((result) => {
 				if (result.success)
 					promise.resolve(result.value);
 				else
 					promise.reject(result.error);
-			}).fail(() => {
-				promise.reject();
+			}).fail((xhr: IJQueryXhr) => {
+				promise.reject(xhr.status);
 			});
 
 			return promise as Api.GenericDeferred<TOut>;

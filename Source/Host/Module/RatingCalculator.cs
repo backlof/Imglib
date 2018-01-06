@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Imglib.Host.Functionality
+﻿namespace Imglib.Host.Module
 {
-	public static class StarRater
+	public class RatingCalculator : IRatingCalculator
 	{
-		public static int? Rate(int wins, int losses)
+		public int? GetRating(int wins, int losses)
 		{
 			if (wins == 0 && losses == 0)
 			{

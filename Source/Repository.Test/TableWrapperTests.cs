@@ -23,7 +23,7 @@ namespace Imglib.Repository.Test
 				{
 					WinnerId = 1,
 					LoserId = 2,
-					Time = DateTime.Now
+					Added = DateTime.Now
 				});
 
 				var images = repository.Images.Untracked.Select(image => new
@@ -102,7 +102,7 @@ namespace Imglib.Repository.Test
 
 				repository.Ratings.Insert(new Rating
 				{
-					Time = DateTime.Now,
+					Added = DateTime.Now,
 					LoserId = 1,
 					WinnerId = 2
 				});
@@ -125,28 +125,6 @@ namespace Imglib.Repository.Test
 				repository.Images.Remove(x => x.Id > 10);
 
 				Assert.AreEqual(10, repository.Images.Untracked.Count());
-			}
-
-			using (var repository = new DisposableSqlLiteRepository())
-			{
-				// Should be able to remove by id
-
-				repository.Images.Insert(MakeImages(1).ToArray());
-
-				repository.Images.RemoveById(1);
-
-				Assert.IsFalse(repository.Images.Untracked.Any());
-			}
-
-			using (var repository = new DisposableSqlLiteRepository())
-			{
-				// Should be able to remove by multiple ids
-
-				repository.Images.Insert(MakeImages(5).ToArray());
-
-				repository.Images.RemoveById(new[] { 1, 2, 3, 4, 5 });
-
-				Assert.IsFalse(repository.Images.Untracked.Any());
 			}
 
 			using (var repository = new DisposableSqlLiteRepository())

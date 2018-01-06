@@ -147,6 +147,26 @@
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\knockout\knockout.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\knockout\tests\jasmine.extensions.d.ts" />
+    <TypeScriptCompile Include="TypeScript\Api\GenericResult.ts">
+      <DependentUpon>Model.tst</DependentUpon>
+      <CustomToolNamespace>..\Host\Controller\Model\GenericResult.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="TypeScript\Api\ImageFromSet.ts">
+      <DependentUpon>Model.tst</DependentUpon>
+      <CustomToolNamespace>..\Host\Controller\Model\ImageFromSet.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="TypeScript\Api\ImageRatingResult.ts">
+      <DependentUpon>Model.tst</DependentUpon>
+      <CustomToolNamespace>..\Host\Controller\Model\ImageRatingResult.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="TypeScript\Api\ImageSet.ts">
+      <DependentUpon>Model.tst</DependentUpon>
+      <CustomToolNamespace>..\Host\Controller\Model\ImageSet.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="TypeScript\Api\VoidResult.ts">
+      <DependentUpon>Model.tst</DependentUpon>
+      <CustomToolNamespace>..\Host\Controller\Model\VoidResult.cs</CustomToolNamespace>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Api\VoidDeferred.ts" />
     <TypeScriptCompile Include="TypeScript\Api\EmptyParameter.ts">
       <DependentUpon>Model.tst</DependentUpon>
@@ -165,10 +185,6 @@
       <DependentUpon>Service.tst</DependentUpon>
       <CustomToolNamespace>..\Host\Controller\ImageController.cs</CustomToolNamespace>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="TypeScript\Api\Result.ts">
-      <DependentUpon>Model.tst</DependentUpon>
-      <CustomToolNamespace>..\Host\Controller\Model\Result.cs</CustomToolNamespace>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Api\TestData.ts">
       <DependentUpon>Model.tst</DependentUpon>
       <CustomToolNamespace>..\Host\Controller\Model\TestData.cs</CustomToolNamespace>
@@ -180,10 +196,6 @@
     <TypeScriptCompile Include="TypeScript\Api\TestService.ts">
       <DependentUpon>Service.tst</DependentUpon>
       <CustomToolNamespace>..\Host\Controller\TestController.cs</CustomToolNamespace>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="TypeScript\Api\VoidResult.ts">
-      <DependentUpon>Model.tst</DependentUpon>
-      <CustomToolNamespace>..\Host\Controller\Model\VoidResult.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Application.ts" />
     <TypeScriptCompile Include="TypeScript\Browser\BrowserEventConfiguration.ts">

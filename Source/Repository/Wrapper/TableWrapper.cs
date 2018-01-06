@@ -169,47 +169,5 @@ namespace Imglib.Repository.Wrapper
 		}
 
 		#endregion
-
-		#region RemoveById
-
-		public void RemoveById(int id)
-		{
-			if (id < 1)
-			{
-				throw new ArgumentOutOfRangeException("id");
-			}
-
-			Remove(x => x.Id == id);
-		}
-
-		public void RemoveById(params int[] ids)
-		{
-			if (ids == null)
-			{
-				throw new ArgumentNullException("ids");
-			}
-			if (ids.Any(x => x < 1))
-			{
-				throw new ArgumentOutOfRangeException("ids");
-			}
-
-			Remove(x => ids.Contains(x.Id));
-		}
-
-		public void RemoveById(IEnumerable<int> ids)
-		{
-			if (ids == null)
-			{
-				throw new ArgumentNullException("ids");
-			}
-			if (ids.Any(x => x < 1))
-			{
-				throw new ArgumentOutOfRangeException("ids");
-			}
-
-			Remove(x => ids.Contains(x.Id));
-		}
-
-		#endregion
 	}
 }

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Imglib.Host.Controller.Model
 {
-	public class Result<T> : IResultWithValue<T>
+	public class ImageSet
 	{
-		public T Value { get; set; }
-		public bool Success { get; set; }
-		public ErrorCode Error { get; set; }
+		public bool MissingImages { get; set; }
+		public ImageFromSet First { get; set; }
+		public ImageFromSet Second { get; set; }
 	}
 }
