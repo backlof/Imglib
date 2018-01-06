@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Imglib.Host.Module
+namespace Imglib.Host.Controller.Model
 {
-	public interface IRatingCalculator
+	public class ImageByRate
 	{
-		int GetRating(int wins, int losses);
+		public ImageInList[] Images { get; set; }
 	}
 }

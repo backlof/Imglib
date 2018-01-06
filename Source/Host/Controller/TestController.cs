@@ -15,7 +15,7 @@ namespace Imglib.Host.Controller
 
 		public IVoidResult Fail(TestParamneter input)
 		{
-			return Result.Fail(ErrorCode.NotFound);
+			return Result.Fail(ErrorCode.NoSuchId);
 		}
 
 		public IVoidResult Success(TestParamneter input)
@@ -25,12 +25,12 @@ namespace Imglib.Host.Controller
 
 		public IGenericResult<TestData> Stuff(TestParamneter intp)
 		{
-			throw new System.Exception();
+			throw new Exception();
 		}
 
 		public IGenericResult<TestData> Getter(EmptyParameter empty)
 		{
-			throw new System.Exception();
+			throw new Exception();
 		}
 	}
 }

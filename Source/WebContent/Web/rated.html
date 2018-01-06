@@ -1,2 +1,9 @@
 ﻿<h2 data-bind="text: header"></h2>
 <div>This is a test template</div>
+
+<ul class="image-list" data-bind="foreach: images">
+	<li>
+		<img data-bind="attr: { 'src' : path }" />
+		<!-- Have button for actions that show up when you hover -->
+	</li>
+</ul>

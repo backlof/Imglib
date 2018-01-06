@@ -8,6 +8,8 @@ namespace Imglib.Host.Controller.Model
 {
 	public enum ErrorCode
 	{
+		NoSuchId = 1,
+
 
 		#region HTTP status codes
 		Continue = 100,

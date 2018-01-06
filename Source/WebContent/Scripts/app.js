@@ -3,6 +3,7 @@ var Api;
 (function (Api) {
     var ErrorCode;
     (function (ErrorCode) {
+        ErrorCode[ErrorCode["NoSuchId"] = 1] = "NoSuchId";
         ErrorCode[ErrorCode["Continue"] = 100] = "Continue";
         ErrorCode[ErrorCode["SwitchingProtocols"] = 101] = "SwitchingProtocols";
         ErrorCode[ErrorCode["OK"] = 200] = "OK";
@@ -50,6 +51,15 @@ var Api;
         function ImageService(_rcpService) {
             this._rcpService = _rcpService;
         }
+        ImageService.prototype.rateImages = function (ratings) {
+            return this._rcpService.put(ratings, "image", "rateimages");
+        };
+        ImageService.prototype.findImagesByRating = function (query) {
+            return this._rcpService.post(query, "image", "findimagesbyrating");
+        };
+        ImageService.prototype.getImageSet = function () {
+            return this._rcpService.get("image", "getimageset");
+        };
         return ImageService;
     }());
     Api.ImageService = ImageService;
@@ -60,6 +70,18 @@ var Api;
         function TestService(_rcpService) {
             this._rcpService = _rcpService;
         }
+        TestService.prototype.fail = function (input) {
+            return this._rcpService.put(input, "test", "fail");
+        };
+        TestService.prototype.success = function (input) {
+            return this._rcpService.put(input, "test", "success");
+        };
+        TestService.prototype.stuff = function (intp) {
+            return this._rcpService.post(intp, "test", "stuff");
+        };
+        TestService.prototype.getter = function () {
+            return this._rcpService.get("test", "getter");
+        };
         return TestService;
     }());
     Api.TestService = TestService;
@@ -516,6 +538,18 @@ var ViewModel;
             var _this = _super.call(this) || this;
             _this._imageService = _imageService;
             _this.header = ko.observable();
+            _this.images = ko.observableArray();
+            _this.skip = 0;
+            _this.take = 20;
+            _this._imageService.findImagesByRating({ rating: param.rating, skip: _this.skip, take: _this.take }).done(function (value) {
+                _this.images(value.images.map(function (image) {
+                    return {
+                        path: "Images/" + image.fileName
+                    };
+                }));
+            }).fail(function () {
+            }).always(function () {
+            });
             _this.header(param.rating + " stars");
             return _this;
         }
@@ -581,3 +615,46 @@ var ViewModel;
     }(ViewModel.ViewModelBase));
     ViewModel.TestViewModel = TestViewModel;
 })(ViewModel || (ViewModel = {}));
+var Binding;
+(function (Binding) {
+    var LoadingBinding = (function () {
+        function LoadingBinding() {
+        }
+        LoadingBinding.prototype.init = function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            if (valueAccessor == null) {
+                console.error();
+            }
+            else {
+                var innerHtml_1 = element.innerHTML;
+                var spinner_1 = document.createElement("div");
+                spinner_1.classList.add("loading-spinner");
+                var bindingHandler = function (value) {
+                    if (value) {
+                        while (element.lastChild) {
+                            element.removeChild(element.lastChild);
+                        }
+                        element.appendChild(spinner_1);
+                    }
+                    else {
+                        while (element.lastChild) {
+                            element.removeChild(element.lastChild);
+                        }
+                        element.innerHTML = innerHtml_1;
+                        for (var i = 0; i < element.children.length; i++) {
+                            ko.applyBindings(viewModel, element.children[i]);
+                        }
+                    }
+                };
+                if (valueAccessor()()) {
+                    bindingHandler(true);
+                }
+                var subscription_1 = valueAccessor().subscribe(bindingHandler);
+                ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+                    subscription_1.dispose();
+                });
+            }
+        };
+        return LoadingBinding;
+    }());
+    ko.bindingHandlers.loading = new LoadingBinding();
+})(Binding || (Binding = {}));

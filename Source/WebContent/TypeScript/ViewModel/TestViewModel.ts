@@ -7,6 +7,7 @@ namespace ViewModel {
 	}
 
 	export class TestViewModel extends ViewModelBase {
+
 		constructor(param: ITestViewModelParams) {
 			super();
 		}

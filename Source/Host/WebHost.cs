@@ -48,6 +48,8 @@ namespace Imglib.Host
 			_kernel.Bind<IRepository>().To<LocalSqlLiteRepository>().InSingletonScope();
 			_kernel.Bind<ImageService>().To<ImageService>().InTransientScope();
 			_kernel.Bind<IImageFolder>().To<ImageFolder>().InTransientScope();
+			_kernel.Bind<IRatingCalculator>().To<RatingCalculator>().InSingletonScope();
+			_kernel.Bind<ISortCalculator>().To<SortCalculator>().InSingletonScope();
 			#endregion
 			#region Create services
 			ImageService = _kernel.Get<ImageService>();

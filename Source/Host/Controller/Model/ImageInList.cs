@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Imglib.Host.Controller.Model
 {
-	public class IdTest
+	public class ImageInList
 	{
-		public int Id { get; set; }
+		public string FileName { get; set; }
 	}
 }

@@ -1,6 +1,7 @@
 ﻿namespace Api {
 
 	export enum ErrorCode {
+		NoSuchId = 1,
 		Continue = 100,
 		SwitchingProtocols = 101,
 		OK = 200,

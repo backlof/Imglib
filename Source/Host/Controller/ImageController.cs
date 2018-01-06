@@ -10,6 +10,7 @@ namespace Imglib.Host.Controller
 {
 	//REMEMBER void type leads to 404
 	//REMEMBER Argument needs to be an object instead of a primary value (fails)
+	//REMEMBER Method names can't start with Get, Put, Post etc
 
 	public class ImageController : ApiController
 	{
@@ -24,6 +25,30 @@ namespace Imglib.Host.Controller
 			_rating = rating;
 			_sort = sort;
 			_folder = folder;
+		}
+
+		public IGenericResult<ImageByRate> FindImagesByRating(ImageRatingQuery query)
+		{
+			var images = _repository.Images.Untracked
+				.Where(x => x.Rating == query.Rating)
+				.Select(x => new
+				{
+					x.Id,
+					x.FileName,
+					WinCount = x.Wins.Count,
+					LossCount = x.Losses.Count
+				})
+				.ToList()
+				.Select(x => new ImageInList
+				{
+					FileName = x.FileName
+				})
+				.ToArray();
+
+			return Result.Value(new ImageByRate
+			{
+				Images = images
+			});
 		}
 
 		public IVoidResult RateImages(ImageRatingResult ratings)

@@ -151,9 +151,21 @@
       <DependentUpon>Model.tst</DependentUpon>
       <CustomToolNamespace>..\Host\Controller\Model\GenericResult.cs</CustomToolNamespace>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="TypeScript\Api\ImageByRate.ts">
+      <DependentUpon>Model.tst</DependentUpon>
+      <CustomToolNamespace>..\Host\Controller\Model\ImageByRate.cs</CustomToolNamespace>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Api\ImageFromSet.ts">
       <DependentUpon>Model.tst</DependentUpon>
       <CustomToolNamespace>..\Host\Controller\Model\ImageFromSet.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="TypeScript\Api\ImageInList.ts">
+      <DependentUpon>Model.tst</DependentUpon>
+      <CustomToolNamespace>..\Host\Controller\Model\ImageInList.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="TypeScript\Api\ImageRatingQuery.ts">
+      <DependentUpon>Model.tst</DependentUpon>
+      <CustomToolNamespace>..\Host\Controller\Model\ImageRatingQuery.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Api\ImageRatingResult.ts">
       <DependentUpon>Model.tst</DependentUpon>
@@ -177,10 +189,6 @@
       <CustomToolNamespace>..\Host\Controller\Model\ErrorCode.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Api\GenericDeferred.ts" />
-    <TypeScriptCompile Include="TypeScript\Api\IdTest.ts">
-      <DependentUpon>Model.tst</DependentUpon>
-      <CustomToolNamespace>..\Host\Controller\Model\IdTest.cs</CustomToolNamespace>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Api\ImageService.ts">
       <DependentUpon>Service.tst</DependentUpon>
       <CustomToolNamespace>..\Host\Controller\ImageController.cs</CustomToolNamespace>
@@ -198,6 +206,7 @@
       <CustomToolNamespace>..\Host\Controller\TestController.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Application.ts" />
+    <TypeScriptCompile Include="TypeScript\Binding\LoadingBinding.ts" />
     <TypeScriptCompile Include="TypeScript\Browser\BrowserEventConfiguration.ts">
       <DependentUpon>BrowserEventConfiguration.tst</DependentUpon>
       <CustomToolNamespace>..\Imglib\Binding\ScriptInvoker.cs</CustomToolNamespace>

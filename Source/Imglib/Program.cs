@@ -13,8 +13,8 @@ namespace Imglib
 		static void Main(string[] args)
 		{
 #if DEBUG
-			//OpenApplicationInBrowser();
-			OpenApplicationInWindowsForms();
+			OpenApplicationInBrowser();
+			//OpenApplicationInWindowsForms();
 #else
 			OpenApplicationInWindowsForms();
 #endif
@@ -23,9 +23,9 @@ namespace Imglib
 
 		public static void OpenApplicationInBrowser()
 		{
-			var host = new Host.WebHost();
+			var host = new WebHost();
 
-			System.Diagnostics.Process.Start(host.Url);
+			//System.Diagnostics.Process.Start(host.Url);
 
 			Console.Write("Press enter to exit:");
 			Console.Read();

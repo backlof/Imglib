@@ -2,11 +2,11 @@
 {
 	public class RatingCalculator : IRatingCalculator
 	{
-		public int? GetRating(int wins, int losses)
+		public int GetRating(int wins, int losses)
 		{
 			if (wins == 0 && losses == 0)
 			{
-				return null;
+				return 0;
 			}
 			else if (losses == 0)
 			{

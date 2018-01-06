@@ -12,7 +12,7 @@ namespace Imglib.Repository.Table
 		public string FileName { get; set; }
 		public byte[] Checksum { get; set; }
 		public DateTime Added { get; set; }
-		public int? Rating { get; set; }
+		public int Rating { get; set; }
 		public double Sort { get; set; }
 	}
 
