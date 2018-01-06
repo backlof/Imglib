@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Security.Permissions;
+using System.IO;
+using Imglib.Host;
 
 namespace Imglib
 {
@@ -26,15 +28,40 @@ namespace Imglib
 	public class WindowExternalObject : IWindowExternalObject
 	{
 		private readonly WebBrowser _webBrowser;
+		private readonly WebHost _host;
 
-		public WindowExternalObject(ref WebBrowser browser)
+		public WindowExternalObject(ref WebBrowser browser, ref WebHost host)
 		{
 			_webBrowser = browser;
+			_host = host;
 		}
 
 		public bool AddFiles()
 		{
-			return true;
+			var fileDialog = new OpenFileDialog
+			{
+				Multiselect = true,
+				Filter = "Image Files|*.jpg;*.jpeg;*.png;",
+				InitialDirectory = Directory.GetCurrentDirectory(),
+				Title = "Select images to add to library."
+			};
+
+			if (fileDialog.ShowDialog() == DialogResult.OK)
+			{
+				if (fileDialog.FileNames.Any())
+				{
+					_host.ImageService.AddImages(fileDialog.FileNames);
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		public void OpenWebPageInBrowser(string url)

@@ -22,13 +22,15 @@ namespace Imglib.Repository.Wrapper
 		public IQueryable<TTable> Untracked => _dbSet.AsNoTracking();
 		public IQueryable<TTable> Tracked => _dbSet.AsTracking();
 
-		public void DetachAll(params TTable[] entries)
+		private void DetachAll(ICollection<TTable> entries)
 		{
 			foreach (var entry in entries)
 			{
 				_context.Entry(entry).State = EntityState.Detached;
 			}
 		}
+
+		#region Insert
 
 		public void Insert(TTable entry)
 		{
@@ -53,6 +55,20 @@ namespace Imglib.Repository.Wrapper
 			DetachAll(entries);
 		}
 
+		public void Insert(IEnumerable<TTable> entries)
+		{
+			if (entries == null)
+			{
+				throw new ArgumentNullException("entries");
+			}
+
+			Insert(entries.ToArray());
+		}
+
+		#endregion
+
+		#region Update
+
 		public void Update(TTable entry)
 		{
 			if (entry == null)
@@ -76,57 +92,14 @@ namespace Imglib.Repository.Wrapper
 			DetachAll(entries);
 		}
 
-		public void Remove(params TTable[] entries)
+		public void Update(IEnumerable<TTable> entries)
 		{
 			if (entries == null)
 			{
 				throw new ArgumentNullException("entries");
 			}
 
-			_dbSet.RemoveRange(entries);
-			_context.SaveChanges();
-
-			DetachAll(entries);
-		}
-
-		public void Remove(TTable entry)
-		{
-			if (entry == null)
-			{
-				throw new ArgumentNullException("entry");
-			}
-
-			Remove(new[] { entry });
-		}
-
-		public void RemoveById(int id)
-		{
-			if (id < 1)
-			{
-				throw new ArgumentOutOfRangeException("id");
-			}
-
-			Remove(x => x.Id == id);
-		}
-
-		public void RemoveById(params int[] ids)
-		{
-			if (ids == null)
-			{
-				throw new ArgumentNullException("ids");
-			}
-
-			Remove(x => ids.Contains(x.Id));
-		}
-
-		public void Remove(Expression<Func<TTable, bool>> condition)
-		{
-			if (condition == null)
-			{
-				throw new ArgumentNullException("condition");
-			}
-
-			Remove(Untracked.Where(condition).ToArray());
+			Insert(entries.ToArray());
 		}
 
 		public void Update(Action<TTable> changes, Expression<Func<TTable, bool>> condition)
@@ -147,5 +120,96 @@ namespace Imglib.Repository.Wrapper
 
 			}).ToArray());
 		}
+
+		#endregion
+
+		#region Remove
+
+		public void Remove(TTable entry)
+		{
+			if (entry == null)
+			{
+				throw new ArgumentNullException("entry");
+			}
+
+			Remove(new[] { entry });
+		}
+
+		public void Remove(params TTable[] entries)
+		{
+			if (entries == null)
+			{
+				throw new ArgumentNullException("entries");
+			}
+
+			_dbSet.RemoveRange(entries);
+			_context.SaveChanges();
+
+			DetachAll(entries);
+		}
+
+		public void Remove(IEnumerable<TTable> entries)
+		{
+			if (entries == null)
+			{
+				throw new ArgumentNullException("entries");
+			}
+
+			Remove(entries.ToArray());
+		}
+
+		public void Remove(Expression<Func<TTable, bool>> condition)
+		{
+			if (condition == null)
+			{
+				throw new ArgumentNullException("condition");
+			}
+
+			Remove(Untracked.Where(condition).ToArray());
+		}
+
+		#endregion
+
+		#region RemoveById
+
+		public void RemoveById(int id)
+		{
+			if (id < 1)
+			{
+				throw new ArgumentOutOfRangeException("id");
+			}
+
+			Remove(x => x.Id == id);
+		}
+
+		public void RemoveById(params int[] ids)
+		{
+			if (ids == null)
+			{
+				throw new ArgumentNullException("ids");
+			}
+			if (ids.Any(x => x < 1))
+			{
+				throw new ArgumentOutOfRangeException("ids");
+			}
+
+			Remove(x => ids.Contains(x.Id));
+		}
+
+		public void RemoveById(IEnumerable<int> ids)
+		{
+			if (ids == null)
+			{
+				throw new ArgumentNullException("ids");
+			}
+			if (ids.Any(x => x < 1))
+			{
+				throw new ArgumentOutOfRangeException("ids");
+			}
+
+			Remove(x => ids.Contains(x.Id));
+		}
+
+		#endregion
 	}
 }

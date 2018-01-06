@@ -13,8 +13,8 @@ namespace Imglib
 		static void Main(string[] args)
 		{
 #if DEBUG
-			OpenApplicationInBrowser();
-			//OpenApplicationInWindowsForms();
+			//OpenApplicationInBrowser();
+			OpenApplicationInWindowsForms();
 #else
 			OpenApplicationInWindowsForms();
 #endif

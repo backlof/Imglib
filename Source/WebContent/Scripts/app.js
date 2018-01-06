@@ -1,6 +1,13 @@
 "use strict";
 var Api;
 (function (Api) {
+    var ErrorCode;
+    (function (ErrorCode) {
+        ErrorCode[ErrorCode["NotFound"] = 1] = "NotFound";
+    })(ErrorCode = Api.ErrorCode || (Api.ErrorCode = {}));
+})(Api || (Api = {}));
+var Api;
+(function (Api) {
     var ImageService = (function () {
         function ImageService(_rcpService) {
             this._rcpService = _rcpService;
@@ -23,9 +30,6 @@ var Api;
         };
         TestService.prototype.stuff = function (intp) {
             return this._rcpService.post(intp, "test", "stuff");
-        };
-        TestService.prototype.shit = function (tst) {
-            return this._rcpService.post(tst, "test", "shit");
         };
         TestService.prototype.getter = function () {
             return this._rcpService.get("test", "getter");
@@ -139,12 +143,6 @@ var ViewModel;
             _this._browserHandler = _browserHandler;
             _this._testService = _testService;
             _this.subpage = ko.observable();
-            _this.onBrowserEvent(Browser.Event.Testish, function (sda) {
-                alert(sda);
-            });
-            _this.onBrowserEvent(Browser.Event.Test, function (value) {
-                alert(value);
-            });
             _this.openTest();
             return _this;
         }
@@ -556,10 +554,3 @@ var ViewModel;
     }(ViewModel.ViewModelBase));
     ViewModel.TestViewModel = TestViewModel;
 })(ViewModel || (ViewModel = {}));
-var Api;
-(function (Api) {
-    var ErrorCode;
-    (function (ErrorCode) {
-        ErrorCode[ErrorCode["NotFound"] = 1] = "NotFound";
-    })(ErrorCode = Api.ErrorCode || (Api.ErrorCode = {}));
-})(Api || (Api = {}));

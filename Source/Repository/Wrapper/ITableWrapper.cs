@@ -15,16 +15,20 @@ namespace Imglib.Repository.Wrapper
 
 		void Insert(TTable entry);
 		void Insert(params TTable[] entry);
+		void Insert(IEnumerable<TTable> entry);
 
 		void Update(TTable entry);
 		void Update(params TTable[] entries);
+		void Update(IEnumerable<TTable> entries);
 		void Update(Action<TTable> changes, Expression<Func<TTable, bool>> condition);
 
 		void Remove(TTable entry);
 		void Remove(params TTable[] entries);
+		void Remove(IEnumerable< TTable> entries);
 		void Remove(Expression<Func<TTable, bool>> condition);
 
 		void RemoveById(int id);
 		void RemoveById(params int[] ids);
+		void RemoveById(IEnumerable<int> ids);
 	}
 }

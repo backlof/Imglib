@@ -13,12 +13,12 @@ namespace Imglib
 {
 	public partial class Browser : Form
 	{
-		private readonly Host.WebHost _host;
+		private WebHost _host;
 		private ScriptInvoker _invoker;
 
 		public Browser()
 		{
-			_host = new Host.WebHost();
+			_host = new WebHost();
 			InitializeComponent();
 		}
 
@@ -35,16 +35,12 @@ namespace Imglib
 
 		private void OnWebBrowserDocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
 		{
-			browser.ObjectForScripting = new WindowExternalObject(ref browser);
+			browser.ObjectForScripting = new WindowExternalObject(ref browser, ref _host);
 		}
 
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			//_invoker.Invoke(x => x.Testish());
-			_invoker.Invoke(x => x.Test(), "Outpit");
-
 			_host.Dispose();
-
 			base.OnFormClosing(e);
 		}
 	}
