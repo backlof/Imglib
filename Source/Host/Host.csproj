@@ -126,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\ImageController.cs" />
+    <Compile Include="Controller\Model\ImageDelectionQuery.cs" />
     <Compile Include="Controller\Model\ErrorCode.cs" />
     <Compile Include="Controller\Model\GenericResult.cs" />
     <Compile Include="Controller\Model\ImageByRate.cs" />

@@ -27,6 +27,12 @@ namespace Imglib.Host.Controller
 			_folder = folder;
 		}
 
+		public IVoidResult DeleteImage(ImageDelectionQuery query)
+		{
+			_repository.Images.Remove(x => x.Id == query.Id);
+			return Result.Success();
+		}
+
 		public IGenericResult<ImageByRate> FindImagesByRating(ImageRatingQuery query)
 		{
 			var images = _repository.Images.Untracked
@@ -41,6 +47,7 @@ namespace Imglib.Host.Controller
 				.ToList()
 				.Select(x => new ImageInList
 				{
+					Id = x.Id,
 					FileName = x.FileName
 				})
 				.ToArray();

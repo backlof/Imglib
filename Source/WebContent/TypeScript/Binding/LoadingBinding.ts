@@ -6,9 +6,6 @@ namespace Binding {
 
 	class LoadingBinding implements KnockoutBindingHandler {
 
-		//private static Key(): string { return "inner-html"; }
-		//private static SpinnerKey(): string { return "spinner"; }
-
 		public init(element: HTMLDivElement, valueAccessor: () => KnockoutObservable<boolean>, allBindingsAccessor?: KnockoutAllBindingsAccessor, viewModel?: ViewModel.ViewModelBase, bindingContext?: KnockoutBindingContext): void | { controlsDescendantBindings: boolean; } {
 
 			if (valueAccessor == null) {

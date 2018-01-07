@@ -29,7 +29,7 @@ namespace Imglib
 			browser.AllowWebBrowserDrop = false;
 			browser.IsWebBrowserContextMenuEnabled = false;
 			browser.WebBrowserShortcutsEnabled = false;
-			browser.ScrollBarsEnabled = false;
+			//browser.ScrollBarsEnabled = false;
 			browser.Navigate(_host.Url);
 		}
 

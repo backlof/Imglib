@@ -51,6 +51,9 @@ var Api;
         function ImageService(_rcpService) {
             this._rcpService = _rcpService;
         }
+        ImageService.prototype.deleteImage = function (query) {
+            return this._rcpService.put(query, "image", "deleteimage");
+        };
         ImageService.prototype.rateImages = function (ratings) {
             return this._rcpService.put(ratings, "image", "rateimages");
         };
@@ -241,7 +244,6 @@ var Service;
         LocalRcpClient.prototype.post = function (arg, controller, action) {
             var promise = $.Deferred();
             this.getPromise(arg, controller, action).done(function (result) {
-                console.log(result);
                 if (result.success)
                     promise.resolve(result.value);
                 else
@@ -458,6 +460,49 @@ var Application = (function () {
 $(document).ready(function () {
     var app = new Application(new Service.ServiceResolver());
 });
+var Binding;
+(function (Binding) {
+    var LoadingBinding = (function () {
+        function LoadingBinding() {
+        }
+        LoadingBinding.prototype.init = function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            if (valueAccessor == null) {
+                console.error();
+            }
+            else {
+                var innerHtml_1 = element.innerHTML;
+                var spinner_1 = document.createElement("div");
+                spinner_1.classList.add("loading-spinner");
+                var bindingHandler = function (value) {
+                    if (value) {
+                        while (element.lastChild) {
+                            element.removeChild(element.lastChild);
+                        }
+                        element.appendChild(spinner_1);
+                    }
+                    else {
+                        while (element.lastChild) {
+                            element.removeChild(element.lastChild);
+                        }
+                        element.innerHTML = innerHtml_1;
+                        for (var i = 0; i < element.children.length; i++) {
+                            ko.applyBindings(viewModel, element.children[i]);
+                        }
+                    }
+                };
+                if (valueAccessor()()) {
+                    bindingHandler(true);
+                }
+                var subscription_1 = valueAccessor().subscribe(bindingHandler);
+                ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+                    subscription_1.dispose();
+                });
+            }
+        };
+        return LoadingBinding;
+    }());
+    ko.bindingHandlers.loading = new LoadingBinding();
+})(Binding || (Binding = {}));
 var test = function (param) {
     $(document).trigger("Test", param);
 };
@@ -532,6 +577,27 @@ String.padLeft = function (value, length, type) {
 };
 var ViewModel;
 (function (ViewModel) {
+    var Image = (function () {
+        function Image(fileName, id, _imageService, hasFailedToDeleteImage) {
+            this.id = id;
+            this._imageService = _imageService;
+            this.hasFailedToDeleteImage = hasFailedToDeleteImage;
+            this.isDeleting = ko.observable(false);
+            this.url = "Images/" + fileName;
+        }
+        Image.prototype.onDeleteClick = function () {
+            var _this = this;
+            this.isDeleting(true);
+            this._imageService.deleteImage({ id: this.id }).done(function () {
+                _this.hasFailedToDeleteImage(false);
+            }).fail(function () {
+                _this.hasFailedToDeleteImage(true);
+            }).always(function () {
+                _this.isDeleting(false);
+            });
+        };
+        return Image;
+    }());
     var RatedViewModel = (function (_super) {
         __extends(RatedViewModel, _super);
         function RatedViewModel(param, _imageService) {
@@ -541,16 +607,18 @@ var ViewModel;
             _this.images = ko.observableArray();
             _this.skip = 0;
             _this.take = 20;
+            _this.isLoading = ko.observable(false);
+            _this.hasFailedToDeleteImage = ko.observable(false);
+            _this.hasFailedToLoadImages = ko.observable(false);
+            _this.header(param.rating === 0 ? "Unrated" : param.rating + " stars");
             _this._imageService.findImagesByRating({ rating: param.rating, skip: _this.skip, take: _this.take }).done(function (value) {
                 _this.images(value.images.map(function (image) {
-                    return {
-                        path: "Images/" + image.fileName
-                    };
+                    return new Image(image.fileName, image.id, _this._imageService, _this.hasFailedToDeleteImage);
                 }));
             }).fail(function () {
+                _this.hasFailedToLoadImages(true);
             }).always(function () {
             });
-            _this.header(param.rating + " stars");
             return _this;
         }
         RatedViewModel.prototype.onDisposal = function () {
@@ -617,44 +685,52 @@ var ViewModel;
 })(ViewModel || (ViewModel = {}));
 var Binding;
 (function (Binding) {
-    var LoadingBinding = (function () {
-        function LoadingBinding() {
+    var HideBinding = (function () {
+        function HideBinding() {
         }
-        LoadingBinding.prototype.init = function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-            if (valueAccessor == null) {
-                console.error();
-            }
-            else {
-                var innerHtml_1 = element.innerHTML;
-                var spinner_1 = document.createElement("div");
-                spinner_1.classList.add("loading-spinner");
-                var bindingHandler = function (value) {
-                    if (value) {
-                        while (element.lastChild) {
-                            element.removeChild(element.lastChild);
-                        }
-                        element.appendChild(spinner_1);
-                    }
-                    else {
-                        while (element.lastChild) {
-                            element.removeChild(element.lastChild);
-                        }
-                        element.innerHTML = innerHtml_1;
-                        for (var i = 0; i < element.children.length; i++) {
-                            ko.applyBindings(viewModel, element.children[i]);
-                        }
-                    }
+        HideBinding.prototype.update = function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            ko.bindingHandlers.visible.update(element, function () { return !ko.utils.unwrapObservable(valueAccessor()); }, allBindingsAccessor, viewModel, bindingContext);
+        };
+        return HideBinding;
+    }());
+    ko.bindingHandlers.hide = new HideBinding();
+})(Binding || (Binding = {}));
+var Binding;
+(function (Binding) {
+    var AlertBinding = (function () {
+        function AlertBinding() {
+        }
+        AlertBinding.prototype.init = function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            if (ko.isWriteableObservable(valueAccessor())) {
+                var observable_1 = valueAccessor();
+                element.innerHTML = "<span class=\"alert-close-button\">&times;</span>" + element.innerHTML;
+                var span_1 = element.getElementsByTagName("span")[0];
+                var callback_1 = function () {
+                    observable_1(false);
+                    element.hidden = true;
                 };
-                if (valueAccessor()()) {
-                    bindingHandler(true);
-                }
-                var subscription_1 = valueAccessor().subscribe(bindingHandler);
-                ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
-                    subscription_1.dispose();
+                span_1.addEventListener("click", callback_1);
+                var subscription_2 = observable_1.subscribe(function (value) {
+                    element.hidden = !value;
                 });
+                ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+                    span_1.removeEventListener("click", callback_1);
+                    subscription_2.dispose();
+                });
+                element.hidden = !observable_1();
+            }
+            else if (valueAccessor() != null && valueAccessor() == true) {
+                element.innerHTML = "<span class=\"alert-close-button\">&times;</span>" + element.innerHTML;
+                var span_2 = element.getElementsByTagName("span")[0];
+                var callback_2 = function () {
+                    element.hidden = true;
+                    span_2.removeEventListener("click", callback_2);
+                    element.parentNode.removeChild(element);
+                };
+                span_2.addEventListener("click", callback_2);
             }
         };
-        return LoadingBinding;
+        return AlertBinding;
     }());
-    ko.bindingHandlers.loading = new LoadingBinding();
+    ko.bindingHandlers.alert = new AlertBinding();
 })(Binding || (Binding = {}));

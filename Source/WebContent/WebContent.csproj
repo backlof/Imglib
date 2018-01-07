@@ -155,6 +155,10 @@
       <DependentUpon>Model.tst</DependentUpon>
       <CustomToolNamespace>..\Host\Controller\Model\ImageByRate.cs</CustomToolNamespace>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="TypeScript\Api\ImageDelectionQuery.ts">
+      <DependentUpon>Model.tst</DependentUpon>
+      <CustomToolNamespace>..\Host\Controller\Model\ImageDelectionQuery.cs</CustomToolNamespace>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Api\ImageFromSet.ts">
       <DependentUpon>Model.tst</DependentUpon>
       <CustomToolNamespace>..\Host\Controller\Model\ImageFromSet.cs</CustomToolNamespace>
@@ -206,6 +210,8 @@
       <CustomToolNamespace>..\Host\Controller\TestController.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Application.ts" />
+    <TypeScriptCompile Include="TypeScript\Binding\AlertBinding.ts" />
+    <TypeScriptCompile Include="TypeScript\Binding\HideBinding.ts" />
     <TypeScriptCompile Include="TypeScript\Binding\LoadingBinding.ts" />
     <TypeScriptCompile Include="TypeScript\Browser\BrowserEventConfiguration.ts">
       <DependentUpon>BrowserEventConfiguration.tst</DependentUpon>

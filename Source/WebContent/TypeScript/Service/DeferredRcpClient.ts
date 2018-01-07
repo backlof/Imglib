@@ -17,7 +17,6 @@
 		public post<TIn, TOut>(arg: TIn, controller: string, action: string): Api.GenericDeferred<TOut> {
 			const promise = $.Deferred<TOut>();
 			this.getPromise<TIn, Api.GenericResult<TOut>>(arg, controller, action).done((result) => {
-				console.log(result);
 				if (result.success)
 					promise.resolve(result.value);
 				else
