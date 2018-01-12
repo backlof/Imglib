@@ -1,4 +1,5 @@
 ﻿/// <reference path="ViewModelBase.ts" />
+/// <reference path="../Binding/NotificationBinding.ts" />
 
 namespace ViewModel {
 
@@ -17,7 +18,7 @@ namespace ViewModel {
 		private url: string;
 		private isDeleting = ko.observable(false);
 
-		constructor(fileName: string, private id: number, private _imageService: Api.IImageService, private hasFailedToDeleteImage: KnockoutObservable<boolean>) {
+		constructor(fileName: string, private id: number, private _imageService: Api.IImageService, private notification: NotificationTrigger) {
 			//this.backgroundImage = `url(Images/${fileName})`;
 			this.url = `Images/${fileName}`;
 		}
@@ -25,9 +26,8 @@ namespace ViewModel {
 		private onDeleteClick(): void {
 			this.isDeleting(true);
 			this._imageService.deleteImage({ id: this.id }).done(() => {
-				this.hasFailedToDeleteImage(false);
 			}).fail(() => {
-				this.hasFailedToDeleteImage(true);
+				this.notification.show("Failed to delete image", NotificationType.Danger);
 			}).always(() => {
 				this.isDeleting(false);
 			});
@@ -43,8 +43,7 @@ namespace ViewModel {
 		private take = 20;
 
 		private isLoading = ko.observable(false);
-		private hasFailedToDeleteImage = ko.observable(false);
-		private hasFailedToLoadImages = ko.observable(false);
+		private notification = new NotificationTrigger();
 
 		constructor(param: IRatedViewModelParams, private _imageService: Api.IImageService) {
 			super();
@@ -53,11 +52,12 @@ namespace ViewModel {
 			//TODO Create a scroll handler
 
 			this._imageService.findImagesByRating({ rating: param.rating, skip: this.skip, take: this.take }).done((value) => {
+				this.notification.show("Failed", NotificationType.Danger);
 				this.images(value.images.map(image => {
-					return new Image(image.fileName, image.id, this._imageService, this.hasFailedToDeleteImage);
+					return new Image(image.fileName, image.id, this._imageService, this.notification);
 				}));
 			}).fail(() => {
-				this.hasFailedToLoadImages(true);
+				this.notification.show("Failed to load images", NotificationType.Danger);
 			}).always(() => {
 
 			});

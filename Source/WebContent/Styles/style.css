@@ -239,25 +239,28 @@ article ul {
   }
 }
 /*#endregion*/
-/* The alert message box */
-.alert.danger {
+/*#region Notification*/
+.notification.danger {
   background-color: #f44336;
 }
-.alert.info {
+.notification.info {
   background-color: #2196F3;
 }
-.alert.warning {
+.notification.warning {
   background-color: #ff9800;
 }
-.alert.success {
+.notification.success {
   background-color: #4CAF50;
 }
-.alert {
+.notification {
   padding: 20px;
   color: white;
   margin-bottom: 15px;
 }
-.alert-close-button {
+.notification-test {
+  float: left;
+}
+.notification-close-button {
   margin-left: 15px;
   color: white;
   font-weight: bold;
@@ -267,6 +270,7 @@ article ul {
   cursor: pointer;
   transition: 0.3s;
 }
-.alert-close-button:hover {
+.notification-close-button:hover {
   color: black;
 }
+/*#endregion*/

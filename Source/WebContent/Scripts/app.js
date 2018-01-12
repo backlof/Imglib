@@ -462,6 +462,18 @@ $(document).ready(function () {
 });
 var Binding;
 (function (Binding) {
+    var HideBinding = (function () {
+        function HideBinding() {
+        }
+        HideBinding.prototype.update = function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            ko.bindingHandlers.visible.update(element, function () { return !ko.utils.unwrapObservable(valueAccessor()); }, allBindingsAccessor, viewModel, bindingContext);
+        };
+        return HideBinding;
+    }());
+    ko.bindingHandlers.hide = new HideBinding();
+})(Binding || (Binding = {}));
+var Binding;
+(function (Binding) {
     var LoadingBinding = (function () {
         function LoadingBinding() {
         }
@@ -575,13 +587,86 @@ String.padLeft = function (value, length, type) {
         str = "0" + str;
     return str;
 };
+var NotificationType;
+(function (NotificationType) {
+    NotificationType[NotificationType["Warning"] = 0] = "Warning";
+    NotificationType[NotificationType["Danger"] = 1] = "Danger";
+    NotificationType[NotificationType["Info"] = 2] = "Info";
+    NotificationType[NotificationType["Success"] = 3] = "Success";
+})(NotificationType || (NotificationType = {}));
+var NotificationTrigger = (function () {
+    function NotificationTrigger() {
+    }
+    NotificationTrigger.prototype.show = function (text, type) {
+        if (this.onShow)
+            this.onShow(text, type);
+    };
+    NotificationTrigger.prototype.hide = function () {
+        if (this.onHide)
+            this.onHide();
+    };
+    return NotificationTrigger;
+}());
+var Binding;
+(function (Binding) {
+    var NotificationBinding = (function () {
+        function NotificationBinding() {
+        }
+        NotificationBinding.prototype.init = function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            var value = valueAccessor();
+            element.hidden = true;
+            if (value != null && value instanceof NotificationTrigger) {
+                element.innerHTML = "<span class=\"notification-text\"></span><span class=\"notification-close-button\">&times;</span>";
+                var children = element.getElementsByTagName("span");
+                var textNode_1 = children[0];
+                var buttonNode_1 = children[1];
+                value["onHide"] = function () {
+                    element.hidden = true;
+                };
+                value["onShow"] = function (text, alert) {
+                    switch (alert) {
+                        case NotificationType.Danger:
+                            element.className = "notification danger";
+                            break;
+                        case NotificationType.Info:
+                            element.className = "notification info";
+                            break;
+                        case NotificationType.Success:
+                            element.className = "notification success";
+                            break;
+                        case NotificationType.Warning:
+                            element.className = "notification warning";
+                            break;
+                        default:
+                            console.error("Not an accepted notification type");
+                            break;
+                    }
+                    textNode_1.textContent = text;
+                    element.hidden = false;
+                };
+                var callback_1 = function () {
+                    element.hidden = true;
+                };
+                buttonNode_1.addEventListener("click", callback_1);
+                ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+                    buttonNode_1.removeEventListener("click", callback_1);
+                });
+            }
+            else {
+                console.error("Param should be of Alert type");
+            }
+        };
+        return NotificationBinding;
+    }());
+    ko.bindingHandlers.notification = new NotificationBinding();
+})(Binding || (Binding = {}));
 var ViewModel;
 (function (ViewModel) {
     var Image = (function () {
-        function Image(fileName, id, _imageService, hasFailedToDeleteImage) {
+        function Image(fileName, id, _imageService, notification) {
             this.id = id;
             this._imageService = _imageService;
-            this.hasFailedToDeleteImage = hasFailedToDeleteImage;
+            this.notification = notification;
             this.isDeleting = ko.observable(false);
             this.url = "Images/" + fileName;
         }
@@ -589,9 +674,8 @@ var ViewModel;
             var _this = this;
             this.isDeleting(true);
             this._imageService.deleteImage({ id: this.id }).done(function () {
-                _this.hasFailedToDeleteImage(false);
             }).fail(function () {
-                _this.hasFailedToDeleteImage(true);
+                _this.notification.show("Failed to delete image", NotificationType.Danger);
             }).always(function () {
                 _this.isDeleting(false);
             });
@@ -608,15 +692,15 @@ var ViewModel;
             _this.skip = 0;
             _this.take = 20;
             _this.isLoading = ko.observable(false);
-            _this.hasFailedToDeleteImage = ko.observable(false);
-            _this.hasFailedToLoadImages = ko.observable(false);
+            _this.notification = new NotificationTrigger();
             _this.header(param.rating === 0 ? "Unrated" : param.rating + " stars");
             _this._imageService.findImagesByRating({ rating: param.rating, skip: _this.skip, take: _this.take }).done(function (value) {
+                _this.notification.show("Failed", NotificationType.Danger);
                 _this.images(value.images.map(function (image) {
-                    return new Image(image.fileName, image.id, _this._imageService, _this.hasFailedToDeleteImage);
+                    return new Image(image.fileName, image.id, _this._imageService, _this.notification);
                 }));
             }).fail(function () {
-                _this.hasFailedToLoadImages(true);
+                _this.notification.show("Failed to load images", NotificationType.Danger);
             }).always(function () {
             });
             return _this;
@@ -683,54 +767,3 @@ var ViewModel;
     }(ViewModel.ViewModelBase));
     ViewModel.TestViewModel = TestViewModel;
 })(ViewModel || (ViewModel = {}));
-var Binding;
-(function (Binding) {
-    var HideBinding = (function () {
-        function HideBinding() {
-        }
-        HideBinding.prototype.update = function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-            ko.bindingHandlers.visible.update(element, function () { return !ko.utils.unwrapObservable(valueAccessor()); }, allBindingsAccessor, viewModel, bindingContext);
-        };
-        return HideBinding;
-    }());
-    ko.bindingHandlers.hide = new HideBinding();
-})(Binding || (Binding = {}));
-var Binding;
-(function (Binding) {
-    var AlertBinding = (function () {
-        function AlertBinding() {
-        }
-        AlertBinding.prototype.init = function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-            if (ko.isWriteableObservable(valueAccessor())) {
-                var observable_1 = valueAccessor();
-                element.innerHTML = "<span class=\"alert-close-button\">&times;</span>" + element.innerHTML;
-                var span_1 = element.getElementsByTagName("span")[0];
-                var callback_1 = function () {
-                    observable_1(false);
-                    element.hidden = true;
-                };
-                span_1.addEventListener("click", callback_1);
-                var subscription_2 = observable_1.subscribe(function (value) {
-                    element.hidden = !value;
-                });
-                ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
-                    span_1.removeEventListener("click", callback_1);
-                    subscription_2.dispose();
-                });
-                element.hidden = !observable_1();
-            }
-            else if (valueAccessor() != null && valueAccessor() == true) {
-                element.innerHTML = "<span class=\"alert-close-button\">&times;</span>" + element.innerHTML;
-                var span_2 = element.getElementsByTagName("span")[0];
-                var callback_2 = function () {
-                    element.hidden = true;
-                    span_2.removeEventListener("click", callback_2);
-                    element.parentNode.removeChild(element);
-                };
-                span_2.addEventListener("click", callback_2);
-            }
-        };
-        return AlertBinding;
-    }());
-    ko.bindingHandlers.alert = new AlertBinding();
-})(Binding || (Binding = {}));

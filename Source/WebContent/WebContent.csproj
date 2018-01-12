@@ -210,7 +210,7 @@
       <CustomToolNamespace>..\Host\Controller\TestController.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="TypeScript\Application.ts" />
-    <TypeScriptCompile Include="TypeScript\Binding\AlertBinding.ts" />
+    <TypeScriptCompile Include="TypeScript\Binding\NotificationBinding.ts" />
     <TypeScriptCompile Include="TypeScript\Binding\HideBinding.ts" />
     <TypeScriptCompile Include="TypeScript\Binding\LoadingBinding.ts" />
     <TypeScriptCompile Include="TypeScript\Browser\BrowserEventConfiguration.ts">
