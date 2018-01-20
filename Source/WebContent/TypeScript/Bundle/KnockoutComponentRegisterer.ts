@@ -1,4 +1,4 @@
-﻿module Bundle {
+﻿namespace Bundle {
 
 	export interface IKnockoutComponentRegisterer {
 		register(components: KnockoutComponentConfiguration[]): JQueryDeferred<void>;

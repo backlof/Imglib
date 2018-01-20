@@ -243,6 +243,7 @@ article {
 	display: inline-block;
 	margin: 0;
 	padding: 0;
+	margin-bottom: 30px;
 	/*margin: 0 0 1em;*/
 	width: 100%;
 
@@ -257,7 +258,15 @@ article {
 	}
 }
 
-@media only screen and (min-width: 400px) {
+@media only screen and (min-width: 0px) {
+	.masonry {
+		-moz-column-count: 1;
+		-webkit-column-count: 1;
+		column-count: 1;
+	}
+}
+
+@media only screen and (min-width: 500px) {
 	.masonry {
 		-moz-column-count: 2;
 		-webkit-column-count: 2;
@@ -265,7 +274,7 @@ article {
 	}
 }
 
-@media only screen and (min-width: 700px) {
+@media only screen and (min-width: 950px) {
 	.masonry {
 		-moz-column-count: 3;
 		-webkit-column-count: 3;
@@ -273,7 +282,7 @@ article {
 	}
 }
 
-@media only screen and (min-width: 900px) {
+@media only screen and (min-width: 1350px) {
 	.masonry {
 		-moz-column-count: 4;
 		-webkit-column-count: 4;
@@ -281,7 +290,7 @@ article {
 	}
 }
 
-@media only screen and (min-width: 1100px) {
+@media only screen and (min-width: 1700px) {
 	.masonry {
 		-moz-column-count: 5;
 		-webkit-column-count: 5;
@@ -289,7 +298,7 @@ article {
 	}
 }
 
-@media only screen and (min-width: 1300px) {
+@media only screen and (min-width: 2000px) {
 	.masonry {
 		-moz-column-count: 6;
 		-webkit-column-count: 6;
@@ -297,7 +306,7 @@ article {
 	}
 }
 
-@media only screen and (min-width: 1500px) {
+@media only screen and (min-width: 2250px) {
 	.masonry {
 		-moz-column-count: 7;
 		-webkit-column-count: 7;
@@ -305,19 +314,11 @@ article {
 	}
 }
 
-@media only screen and (min-width: 1700px) {
+@media only screen and (min-width: 2450px) {
 	.masonry {
 		-moz-column-count: 8;
 		-webkit-column-count: 8;
 		column-count: 8;
-	}
-}
-
-@media only screen and (min-width: 1900px) {
-	.masonry {
-		-moz-column-count: 9;
-		-webkit-column-count: 9;
-		column-count: 9;
 	}
 }
 
@@ -367,3 +368,19 @@ article {
 }
 
 /*#endregion*/
+
+div.image-compare {
+	white-space: nowrap;
+
+	div.image-to-compare {
+		width: 50%;
+		display: inline-block;
+
+		img {
+			max-width: 100%;
+			vertical-align: middle;
+			margin: 0;
+			padding: 0;
+		}
+	}
+}

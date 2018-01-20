@@ -4,6 +4,7 @@ var Api;
     var ErrorCode;
     (function (ErrorCode) {
         ErrorCode[ErrorCode["NoSuchId"] = 1] = "NoSuchId";
+        ErrorCode[ErrorCode["NoImages"] = 2] = "NoImages";
         ErrorCode[ErrorCode["Continue"] = 100] = "Continue";
         ErrorCode[ErrorCode["SwitchingProtocols"] = 101] = "SwitchingProtocols";
         ErrorCode[ErrorCode["OK"] = 200] = "OK";
@@ -60,8 +61,8 @@ var Api;
         ImageService.prototype.findImagesByRating = function (query) {
             return this._rcpService.post(query, "image", "findimagesbyrating");
         };
-        ImageService.prototype.getImageSet = function () {
-            return this._rcpService.get("image", "getimageset");
+        ImageService.prototype.findImageSet = function () {
+            return this._rcpService.get("image", "findimageset");
         };
         return ImageService;
     }());
@@ -165,8 +166,8 @@ var ViewModel;
             this.subscriptions.push(subscription);
             return subscription;
         };
-        ViewModelBase.prototype.computed = function (option) {
-            var computed = ko.pureComputed(option);
+        ViewModelBase.prototype.computed = function (option, context) {
+            var computed = ko.pureComputed(option, context);
             this.computeds.push(computed);
             return computed;
         };
@@ -515,78 +516,6 @@ var Binding;
     }());
     ko.bindingHandlers.loading = new LoadingBinding();
 })(Binding || (Binding = {}));
-var test = function (param) {
-    $(document).trigger("Test", param);
-};
-var testish = function () {
-    $(document).trigger("Testish");
-};
-var Browser;
-(function (Browser) {
-    var BrowserEventConfiguration = (function () {
-        function BrowserEventConfiguration(name) {
-            this.name = name;
-        }
-        return BrowserEventConfiguration;
-    }());
-    Browser.BrowserEventConfiguration = BrowserEventConfiguration;
-    Browser.Event = {
-        Test: new BrowserEventConfiguration("Test"),
-        Testish: new BrowserEventConfiguration("Testish")
-    };
-})(Browser || (Browser = {}));
-var Browser;
-(function (Browser) {
-    var BrowserInvoker = (function () {
-        function BrowserInvoker() {
-        }
-        Object.defineProperty(BrowserInvoker.prototype, "isSupported", {
-            get: function () {
-                return "AddFiles" in window.external && "OpenWebPageInBrowser" in window.external;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        BrowserInvoker.prototype.addFiles = function () {
-            return window.external.AddFiles();
-        };
-        BrowserInvoker.prototype.openWebPageInBrowser = function (url) {
-            window.external.OpenWebPageInBrowser(url);
-        };
-        return BrowserInvoker;
-    }());
-    Browser.BrowserInvoker = BrowserInvoker;
-})(Browser || (Browser = {}));
-var _this = this;
-var StringContainsParameter;
-(function (StringContainsParameter) {
-    StringContainsParameter[StringContainsParameter["IgnoreCase"] = 0] = "IgnoreCase";
-    StringContainsParameter[StringContainsParameter["CaseSensitive"] = 1] = "CaseSensitive";
-})(StringContainsParameter || (StringContainsParameter = {}));
-String.prototype.contains = function (p, type) {
-    var value = _this.valueOf();
-    switch (type) {
-        case StringContainsParameter.IgnoreCase:
-            return value.indexOf(p.toLowerCase()) !== -1;
-        default:
-            return value.indexOf(p) !== -1;
-    }
-};
-String.padLeft = function (value, length, type) {
-    if (type === void 0) { type = "0"; }
-    if (!type)
-        throw new Error();
-    if (type.length !== 1)
-        throw new Error();
-    if (value == null)
-        throw new Error();
-    var str = value + "";
-    if (length < str.length)
-        throw new Error();
-    while (str.length < length)
-        str = "0" + str;
-    return str;
-};
 var NotificationType;
 (function (NotificationType) {
     NotificationType[NotificationType["Warning"] = 0] = "Warning";
@@ -660,6 +589,78 @@ var Binding;
     }());
     ko.bindingHandlers.notification = new NotificationBinding();
 })(Binding || (Binding = {}));
+var test = function (param) {
+    $(document).trigger("Test", param);
+};
+var testish = function () {
+    $(document).trigger("Testish");
+};
+var Browser;
+(function (Browser) {
+    var BrowserEventConfiguration = (function () {
+        function BrowserEventConfiguration(name) {
+            this.name = name;
+        }
+        return BrowserEventConfiguration;
+    }());
+    Browser.BrowserEventConfiguration = BrowserEventConfiguration;
+    Browser.Event = {
+        Test: new BrowserEventConfiguration("Test"),
+        Testish: new BrowserEventConfiguration("Testish")
+    };
+})(Browser || (Browser = {}));
+var Browser;
+(function (Browser) {
+    var BrowserInvoker = (function () {
+        function BrowserInvoker() {
+        }
+        Object.defineProperty(BrowserInvoker.prototype, "isSupported", {
+            get: function () {
+                return "AddFiles" in window.external && "OpenWebPageInBrowser" in window.external;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        BrowserInvoker.prototype.addFiles = function () {
+            return window.external.AddFiles();
+        };
+        BrowserInvoker.prototype.openWebPageInBrowser = function (url) {
+            window.external.OpenWebPageInBrowser(url);
+        };
+        return BrowserInvoker;
+    }());
+    Browser.BrowserInvoker = BrowserInvoker;
+})(Browser || (Browser = {}));
+var _this = this;
+var StringContainsParameter;
+(function (StringContainsParameter) {
+    StringContainsParameter[StringContainsParameter["IgnoreCase"] = 0] = "IgnoreCase";
+    StringContainsParameter[StringContainsParameter["CaseSensitive"] = 1] = "CaseSensitive";
+})(StringContainsParameter || (StringContainsParameter = {}));
+String.prototype.contains = function (p, type) {
+    var value = _this.valueOf();
+    switch (type) {
+        case StringContainsParameter.IgnoreCase:
+            return value.indexOf(p.toLowerCase()) !== -1;
+        default:
+            return value.indexOf(p) !== -1;
+    }
+};
+String.padLeft = function (value, length, type) {
+    if (type === void 0) { type = "0"; }
+    if (!type)
+        throw new Error();
+    if (type.length !== 1)
+        throw new Error();
+    if (value == null)
+        throw new Error();
+    var str = value + "";
+    if (length < str.length)
+        throw new Error();
+    while (str.length < length)
+        str = "0" + str;
+    return str;
+};
 var ViewModel;
 (function (ViewModel) {
     var Image = (function () {
@@ -689,22 +690,52 @@ var ViewModel;
             _this._imageService = _imageService;
             _this.header = ko.observable();
             _this.images = ko.observableArray();
-            _this.skip = 0;
-            _this.take = 20;
-            _this.isLoading = ko.observable(false);
+            _this.take = 10;
+            _this.isLoadingPage = ko.observable(false);
+            _this.isLoadingMore = ko.observable(false);
             _this.notification = new NotificationTrigger();
+            _this.hasReachedEnd = ko.observable(false);
             _this.header(param.rating === 0 ? "Unrated" : param.rating + " stars");
-            _this._imageService.findImagesByRating({ rating: param.rating, skip: _this.skip, take: _this.take }).done(function (value) {
-                _this.notification.show("Failed", NotificationType.Danger);
-                _this.images(value.images.map(function (image) {
-                    return new Image(image.fileName, image.id, _this._imageService, _this.notification);
-                }));
+            _this.rating = param.rating;
+            _this.skip = 0;
+            _this.load();
+            return _this;
+        }
+        RatedViewModel.prototype.load = function () {
+            var _this = this;
+            this.isLoadingPage(true);
+            return this._imageService.findImagesByRating({ rating: this.rating, skip: this.skip, take: this.skip + this.take }).done(function (value) {
+                _this.images(value.images.map(function (image) { return _this.map(image); }));
+                _this.skip = _this.skip + value.images.length;
+                _this.hasReachedEnd(value.images.length < _this.take);
             }).fail(function () {
                 _this.notification.show("Failed to load images", NotificationType.Danger);
             }).always(function () {
+                _this.isLoadingPage(false);
             });
-            return _this;
-        }
+        };
+        RatedViewModel.prototype.loadMore = function () {
+            var _this = this;
+            this.isLoadingMore(true);
+            return this._imageService.findImagesByRating({ rating: this.rating, skip: this.skip, take: this.skip + this.take }).done(function (value) {
+                var images = value.images.map(function (image) { return _this.map(image); });
+                _this.images.valueWillMutate();
+                for (var _i = 0, images_1 = images; _i < images_1.length; _i++) {
+                    var image = images_1[_i];
+                    _this.images.push(image);
+                }
+                _this.images.valueHasMutated();
+                _this.skip = _this.skip + value.images.length;
+                _this.hasReachedEnd(value.images.length < _this.take);
+            }).fail(function () {
+                _this.notification.show("Failed to load images", NotificationType.Danger);
+            }).always(function () {
+                _this.isLoadingMore(false);
+            });
+        };
+        RatedViewModel.prototype.map = function (image) {
+            return new Image(image.fileName, image.id, this._imageService, this.notification);
+        };
         RatedViewModel.prototype.onDisposal = function () {
         };
         return RatedViewModel;
@@ -718,8 +749,42 @@ var ViewModel;
         function RatingViewModel(params, _imageService) {
             var _this = _super.call(this) || this;
             _this._imageService = _imageService;
+            _this.isLoading = ko.observable(false);
+            _this.isSaving = ko.observable(false);
+            _this.showSpinner = _this.computed(function () { return _this.isLoading() || _this.isSaving(); });
+            _this.notification = new NotificationTrigger();
+            _this.first = ko.observable();
+            _this.second = ko.observable();
+            _this.showRating = ko.observable(true);
+            _this.loadImageSet();
             return _this;
         }
+        RatingViewModel.prototype.loadImageSet = function () {
+            var _this = this;
+            return this._imageService.findImageSet().done(function (result) {
+                _this.first(_this.map(result.first));
+                _this.second(_this.map(result.second));
+            }).fail(function (error) {
+                _this.showRating(false);
+                if (error == Api.ErrorCode.NoImages) {
+                    _this.notification.show("There are no images yet.", NotificationType.Warning);
+                }
+                else {
+                    _this.notification.show("Failed to load images.", NotificationType.Danger);
+                }
+            }).always(function () {
+                _this.isLoading(false);
+            });
+        };
+        RatingViewModel.prototype.map = function (image) {
+            return {
+                url: image.path,
+            };
+        };
+        RatingViewModel.prototype.rateFirstAsWinner = function () {
+        };
+        RatingViewModel.prototype.rateSecondAsWinner = function () {
+        };
         RatingViewModel.prototype.onDisposal = function () {
         };
         return RatingViewModel;

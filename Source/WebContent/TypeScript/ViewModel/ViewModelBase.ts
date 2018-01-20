@@ -44,8 +44,8 @@
 			return subscription;
 		}
 
-		protected computed<T>(option: KnockoutComputedDefine<T>): KnockoutComputed<T> {
-			const computed = ko.pureComputed(option);
+		protected computed<T>(option: () => T | KnockoutComputedDefine<T>, context?: any): KnockoutComputed<T> {
+			const computed = ko.pureComputed(option as () => T, context);
 			this.computeds.push(computed);
 			return computed;
 		}

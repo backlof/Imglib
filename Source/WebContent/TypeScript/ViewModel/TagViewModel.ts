@@ -1,6 +1,6 @@
 ﻿/// <reference path="ViewModelBase.ts" />
 
-module ViewModel {
+namespace ViewModel {
 
 	export interface ITagViewModelParams {
 		tag: string;

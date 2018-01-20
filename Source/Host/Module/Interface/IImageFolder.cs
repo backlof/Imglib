@@ -3,6 +3,7 @@
 	public interface IImageFolder
 	{
 		string DirectoryPath { get; }
-		string ImagePath(string filename);
+		string GetFullPath(string filename);
+		string GetRelativeWebPath(string filename);
 	}
 }

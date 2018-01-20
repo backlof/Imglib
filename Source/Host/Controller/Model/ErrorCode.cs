@@ -9,6 +9,7 @@ namespace Imglib.Host.Controller.Model
 	public enum ErrorCode
 	{
 		NoSuchId = 1,
+		NoImages = 2,
 
 
 		#region HTTP status codes

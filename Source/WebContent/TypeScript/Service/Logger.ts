@@ -1,6 +1,6 @@
 ﻿/// <reference path="../Utility/Date.ts" />
 
-module Service {
+namespace Service {
 
 	export interface ILogger {
 		log(value: string): void;

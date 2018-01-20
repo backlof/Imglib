@@ -39,28 +39,63 @@ namespace ViewModel {
 		private header = ko.observable<string>();
 
 		private images = ko.observableArray<Image>();
-		private skip = 0;
-		private take = 20;
+		private skip: number;
+		private take = 10;
 
-		private isLoading = ko.observable(false);
+		private isLoadingPage = ko.observable(false);
+		private isLoadingMore = ko.observable(false);
 		private notification = new NotificationTrigger();
+		private rating: number;
+		private hasReachedEnd = ko.observable(false);
 
 		constructor(param: IRatedViewModelParams, private _imageService: Api.IImageService) {
 			super();
 
 			this.header(param.rating === 0 ? "Unrated" : `${param.rating} stars`);
-			//TODO Create a scroll handler
+			this.rating = param.rating;
+			this.skip = 0;
 
-			this._imageService.findImagesByRating({ rating: param.rating, skip: this.skip, take: this.take }).done((value) => {
-				this.notification.show("Failed", NotificationType.Danger);
-				this.images(value.images.map(image => {
-					return new Image(image.fileName, image.id, this._imageService, this.notification);
-				}));
+			this.load();
+			//TODO Create a scroll handler
+			//TODO Hide load button on end
+		}
+
+		private load() {
+			this.isLoadingPage(true);
+
+			return this._imageService.findImagesByRating({ rating: this.rating, skip: this.skip, take: this.skip + this.take }).done((value) => {
+				this.images(value.images.map(image => this.map(image)));
+				this.skip = this.skip + value.images.length;
+				this.hasReachedEnd(value.images.length < this.take);
 			}).fail(() => {
 				this.notification.show("Failed to load images", NotificationType.Danger);
 			}).always(() => {
-
+				this.isLoadingPage(false);
 			});
+		}
+
+		private loadMore() {
+			this.isLoadingMore(true);
+
+			return this._imageService.findImagesByRating({ rating: this.rating, skip: this.skip, take: this.skip + this.take }).done((value) => {
+				const images = value.images.map(image => this.map(image))
+				this.images.valueWillMutate();
+
+				for (var image of images) {
+					this.images.push(image);
+				}
+				this.images.valueHasMutated();
+				this.skip = this.skip + value.images.length;
+				this.hasReachedEnd(value.images.length < this.take);
+			}).fail(() => {
+				this.notification.show("Failed to load images", NotificationType.Danger);
+			}).always(() => {
+				this.isLoadingMore(false);
+			});
+		}
+
+		private map(image: Api.ImageInList) {
+			return new Image(image.fileName, image.id, this._imageService, this.notification);
 		}
 
 		public onDisposal(): void {

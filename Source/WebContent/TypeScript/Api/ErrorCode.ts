@@ -2,6 +2,7 @@
 
 	export enum ErrorCode {
 		NoSuchId = 1,
+		NoImages = 2,
 		Continue = 100,
 		SwitchingProtocols = 101,
 		OK = 200,

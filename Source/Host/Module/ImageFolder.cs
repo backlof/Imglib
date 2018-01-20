@@ -9,22 +9,29 @@ namespace Imglib.Host.Module
 {
 	public class ImageFolder : IImageFolder
 	{
-		private readonly string _dir;
-		public string DirectoryPath => _dir;
+		private static readonly string Folder = "Images";
+		private readonly string _directoryPath;
+		public string DirectoryPath => _directoryPath;
 
 		public ImageFolder()
 		{
-			_dir = Path.Combine(Directory.GetCurrentDirectory(), "Images");
+			_directoryPath = Path.Combine(Directory.GetCurrentDirectory(), ImageFolder.Folder);
 
-			if (!Directory.Exists(DirectoryPath))
+			if (!Directory.Exists(_directoryPath))
 			{
-				Directory.CreateDirectory(DirectoryPath);
+				Directory.CreateDirectory(_directoryPath);
 			}
 		}
 
-		public string ImagePath(string filename)
+
+		public string GetFullPath(string filename)
 		{
-			return Path.Combine(DirectoryPath, filename);
+			return Path.Combine(_directoryPath, filename);
+		}
+
+		public string GetRelativeWebPath(string filename)
+		{
+			return $"{ImageFolder.Folder}/{filename}";
 		}
 	}
 }

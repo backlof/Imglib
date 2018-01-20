@@ -1,2 +1,16 @@
 ﻿<h2>Rate images</h2>
-<div>This is where image rating will happen</div>
+<div data-bind="notification: notification"></div>
+
+<div data-bind="if: showRating">
+	<div data-bind="loading: showSpinner" class="image-compare">
+
+
+		<div data-bind="with: first, click: function() { rateFirstAsWinner(); }" class="image-to-compare">
+			<img data-bind="attr: { 'src': url }" width="1000" />
+		</div>
+
+		<div data-bind="with: second, click: function() { rateSecondAsWinner(); }" class="image-to-compare">
+			<img data-bind="attr: { 'src': url }" width="1000" />
+		</div>
+	</div>
+</div>

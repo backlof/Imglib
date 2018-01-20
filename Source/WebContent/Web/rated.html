@@ -1,8 +1,14 @@
 ﻿<h2 data-bind="text: header"></h2>
 <div data-bind="notification: notification"></div>
 
-<div class="masonry" data-bind="foreach: images">
-	<div class="brick">
-		<img data-bind="attr: { 'src': url }" width="300" />
+<div data-bind="loading: isLoadingPage">
+	<div class="masonry" data-bind="foreach: images">
+		<div class="brick">
+			<img data-bind="attr: { 'src': url }" width="500" />
+		</div>
 	</div>
+</div>
+
+<div data-bind="loading: isLoadingMore">
+	<a data-bind="click: function() { loadMore(); }">Load more</a>
 </div>

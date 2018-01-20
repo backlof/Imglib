@@ -37,6 +37,7 @@ namespace Imglib.Host.Controller
 		{
 			var images = _repository.Images.Untracked
 				.Where(x => x.Rating == query.Rating)
+				.OrderByDescending(x => x.Sort)
 				.Select(x => new
 				{
 					x.Id,
@@ -44,6 +45,8 @@ namespace Imglib.Host.Controller
 					WinCount = x.Wins.Count,
 					LossCount = x.Losses.Count
 				})
+				.Skip(query.Skip)
+				.Take(query.Take)
 				.ToList()
 				.Select(x => new ImageInList
 				{
@@ -64,7 +67,7 @@ namespace Imglib.Host.Controller
 			return Result.Success();
 		}
 
-		public IGenericResult<ImageSet> GetImageSet(EmptyParameter parameter)
+		public IGenericResult<ImageSet> FindImageSet(EmptyParameter parameter)
 		{
 			var images = _repository.Images.Untracked
 				.OrderBy(x => Guid.NewGuid())
@@ -78,18 +81,17 @@ namespace Imglib.Host.Controller
 
 			if (images.Count != 2)
 			{
-				return Result.Value(new ImageSet { MissingImages = true });
+				return Result.Fail<ImageSet>(ErrorCode.NoImages);
 			}
 			else
 			{
 				var first = images[0];
 				var second = images[1];
 
-
 				return Result.Value(new ImageSet
 				{
-					First = new ImageFromSet { Id = first.Id, Path = _folder.ImagePath(first.FileName) },
-					Second = new ImageFromSet { Id = second.Id, Path = _folder.ImagePath(second.FileName) }
+					First = new ImageFromSet { Id = first.Id, Path = _folder.GetRelativeWebPath(first.FileName) },
+					Second = new ImageFromSet { Id = second.Id, Path = _folder.GetRelativeWebPath(second.FileName) }
 				});
 			}
 		}

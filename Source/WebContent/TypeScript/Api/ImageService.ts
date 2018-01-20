@@ -4,7 +4,7 @@
 		deleteImage(query: ImageDelectionQuery): Api.VoidDeferred;
 		rateImages(ratings: ImageRatingResult): Api.VoidDeferred;
 		findImagesByRating(query: ImageRatingQuery): Api.GenericDeferred<ImageByRate>;
-		getImageSet(): Api.GenericDeferred<ImageSet>;
+		findImageSet(): Api.GenericDeferred<ImageSet>;
 	}
 
 	export class ImageService implements IImageService {
@@ -23,8 +23,8 @@
 			return this._rcpService.post<ImageRatingQuery, ImageByRate>(query, "image", "findimagesbyrating");
 		}
 
-		public getImageSet() {
-			return this._rcpService.get<ImageSet>("image", "getimageset");
+		public findImageSet() {
+			return this._rcpService.get<ImageSet>("image", "findimageset");
 		}
 	}
 }
