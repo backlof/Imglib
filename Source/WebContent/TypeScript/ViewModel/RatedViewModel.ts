@@ -7,31 +7,11 @@ namespace ViewModel {
 		rating?: number;
 	}
 
-	//export interface Image {
-	//	url: string;
-	//	delete: () => void;
-	//	isDeleting:
-	//}
-
-	class Image {
-
-		private url: string;
-		private isDeleting = ko.observable(false);
-
-		constructor(fileName: string, private id: number, private _imageService: Api.IImageService, private notification: NotificationTrigger) {
-			//this.backgroundImage = `url(Images/${fileName})`;
-			this.url = `Images/${fileName}`;
-		}
-
-		private onDeleteClick(): void {
-			this.isDeleting(true);
-			this._imageService.deleteImage({ id: this.id }).done(() => {
-			}).fail(() => {
-				this.notification.show("Failed to delete image", NotificationType.Danger);
-			}).always(() => {
-				this.isDeleting(false);
-			});
-		}
+	interface Image {
+		id: number;
+		url: string;
+		fileName: string;
+		isDeleting: KnockoutObservable<boolean>;
 	}
 
 	export class RatedViewModel extends ViewModelBase {
@@ -94,8 +74,26 @@ namespace ViewModel {
 			});
 		}
 
-		private map(image: Api.ImageInList) {
-			return new Image(image.fileName, image.id, this._imageService, this.notification);
+		private remove(image: Image) {
+			image.isDeleting(true);
+
+			this._imageService.deleteImage({ id: image.id }).done(() => {
+				this.skip -= 1;
+				this.images.remove(image);
+			}).fail(() => {
+				this.notification.show("Failed to delete image", NotificationType.Danger);
+			}).always(() => {
+				image.isDeleting(false);
+			});
+		}
+
+		private map(image: Api.ImageInList): Image {
+			return {
+				id: image.id,
+				fileName: image.fileName,
+				isDeleting: ko.observable(false),
+				url: image.url
+			};
 		}
 
 		public onDisposal(): void {

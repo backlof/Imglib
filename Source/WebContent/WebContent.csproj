@@ -130,6 +130,17 @@
     <None Include="packages.config" />
     <None Include="Scripts\jquery-3.2.1.min.map" />
     <None Include="Scripts\jquery-3.2.1.slim.min.map" />
+    <None Include="Styles\Groups\buttons.less" />
+    <None Include="Styles\Groups\footer.less" />
+    <None Include="Styles\Groups\global.less" />
+    <None Include="Styles\Groups\image_compare.less" />
+    <None Include="Styles\Groups\layout.less" />
+    <None Include="Styles\Groups\masonry.less" />
+    <None Include="Styles\Groups\navigation_bar.less" />
+    <None Include="Styles\Groups\notification.less" />
+    <None Include="Styles\Groups\spinner.less" />
+    <None Include="Styles\Groups\typography.less" />
+    <None Include="Styles\Groups\variables.less" />
     <None Include="TypeScript\Api\Result.tst" />
     <None Include="TypeScript\Browser\BrowserInvoker.tst" />
     <None Include="TypeScript\Browser\BrowserEventConfiguration.tst" />

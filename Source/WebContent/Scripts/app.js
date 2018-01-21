@@ -663,26 +663,6 @@ String.padLeft = function (value, length, type) {
 };
 var ViewModel;
 (function (ViewModel) {
-    var Image = (function () {
-        function Image(fileName, id, _imageService, notification) {
-            this.id = id;
-            this._imageService = _imageService;
-            this.notification = notification;
-            this.isDeleting = ko.observable(false);
-            this.url = "Images/" + fileName;
-        }
-        Image.prototype.onDeleteClick = function () {
-            var _this = this;
-            this.isDeleting(true);
-            this._imageService.deleteImage({ id: this.id }).done(function () {
-            }).fail(function () {
-                _this.notification.show("Failed to delete image", NotificationType.Danger);
-            }).always(function () {
-                _this.isDeleting(false);
-            });
-        };
-        return Image;
-    }());
     var RatedViewModel = (function (_super) {
         __extends(RatedViewModel, _super);
         function RatedViewModel(param, _imageService) {
@@ -733,8 +713,25 @@ var ViewModel;
                 _this.isLoadingMore(false);
             });
         };
+        RatedViewModel.prototype.remove = function (image) {
+            var _this = this;
+            image.isDeleting(true);
+            this._imageService.deleteImage({ id: image.id }).done(function () {
+                _this.skip -= 1;
+                _this.images.remove(image);
+            }).fail(function () {
+                _this.notification.show("Failed to delete image", NotificationType.Danger);
+            }).always(function () {
+                image.isDeleting(false);
+            });
+        };
         RatedViewModel.prototype.map = function (image) {
-            return new Image(image.fileName, image.id, this._imageService, this.notification);
+            return {
+                id: image.id,
+                fileName: image.fileName,
+                isDeleting: ko.observable(false),
+                url: image.url
+            };
         };
         RatedViewModel.prototype.onDisposal = function () {
         };

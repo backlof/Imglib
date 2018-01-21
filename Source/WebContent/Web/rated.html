@@ -4,7 +4,15 @@
 <div data-bind="loading: isLoadingPage">
 	<div class="masonry" data-bind="foreach: images">
 		<div class="brick">
-			<img data-bind="attr: { 'src': url }" width="500" />
+			<div>
+				<div class="image">
+					<img data-bind="attr: { 'src': url }" width="500" />
+				</div>
+				<div class="image-overlay">
+					<button data-bind="click: function() { $parent.remove($data); }">Remove</button>
+					<div data-bind="text: fileName"></div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

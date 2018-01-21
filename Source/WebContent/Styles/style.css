@@ -1,50 +1,31 @@
-﻿/* https://color.adobe.com/create/color-wheel/?base=3&rule=Analogous&selected=1&name=My%20Color%20Theme&mode=rgb&rgbvalues=0.7800000000000001,0.4737433590522465,0.6405158635103838,0.3345002298845005,0.33740158884511134,0.3900000000000001,0.7373985719883352,0.8200000000000001,0.29252683085210135,0.29692022746589514,0.7300000000000001,0.5859966556381474,0.7800000000000001,0.7259414642280124,0.6585074765352322&swatchOrder=0,1,2,3,4 */
-/* Color theme */
-/* top, right, bottom, left */
-.hidden {
-  display: none !important;
-  visibility: hidden;
+﻿.button {
+  border: none;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
 }
-.invisible {
-  visibility: hidden;
+.button.green {
+  background-color: #4CAF50;
+  color: white;
 }
-/* Change text globally*/
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 12px;
-  color: #333333;
-  /*line-height: 20px;*/
+.button.blue {
+  background-color: #008CBA;
+  color: white;
 }
-/* Create padding around the page */
-section {
-  padding: 12px 8px 12px 8px;
+.button.red {
+  background-color: #f44336;
 }
-/* Background color */
-body {
-  background-color: #fff;
+.button.gray {
+  background-color: #e7e7e7;
+  color: black;
 }
-/* Change the color of anchors to default in application */
-a {
-  color: #333333;
+.button.black {
+  background-color: #555555;
 }
-/* Show pointer even when anchor is missing href attribute */
-a:hover {
-  cursor: pointer;
-}
-/*#region Footer */
-.section:after {
-  content: "";
-  display: block;
-}
-footer,
-section:after {
-  height: 20px;
-  /*position: absolute;*/
-  /*right: 0;*/
-  /*bottom: 0;*/
-  /*left: 0;*/
+footer {
   color: #6b6b6b;
-  /*padding: 5px 0 3px 8px;*/
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 3px;
@@ -55,50 +36,30 @@ section:after {
   white-space: nowrap;
   overflow: hidden;
   font-size: 11px;
-  /*text-align: right;*/
 }
-footer > *,
-section:after > * {
+footer > * {
   display: inline-block;
 }
-footer #footer-timestamp,
-section:after #footer-timestamp {
+footer #footer-timestamp {
   font-weight: bold;
   margin-right: 4px;
 }
-/*#endregion*/
-/* Move navigation bar to the left */
 html,
 body {
   height: 100%;
 }
-section {
-  min-height: 100%;
-  margin-bottom: -20px;
+.hidden {
+  display: none !important;
+  visibility: hidden;
 }
-section > nav {
-  float: left;
-  border-right: solid 1px #f1f1f1;
-  padding-right: 22px;
+.invisible {
+  visibility: hidden;
 }
-section > article {
-  margin-left: 95px;
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  color: #333333;
 }
-/* Style links in navigation bar*/
-nav a {
-  display: block;
-}
-nav > div {
-  margin-bottom: 6px;
-}
-nav > div > :first-child {
-  font-weight: bold;
-  margin-bottom: 2px;
-}
-nav > div.tags > :not(:first-child) {
-  font-style: italic;
-}
-/* Style external links */
 a.link {
   color: #42ab87;
   text-decoration: underline;
@@ -106,58 +67,48 @@ a.link {
 a.link:visited {
   color: #4d4d4d;
 }
-/* Paragraph styling */
-article p {
-  line-height: 1.5em;
-  /*margin: 2px 0 8px 0;*/
-  margin: 0;
-}
-article p {
-  margin: 0 0 0.8em 0;
-}
-article ul {
-  padding-left: 2.5em;
-}
-/* Italic heading */
 .italic {
   font-style: italic;
 }
-/*#region Spinner */
-.loading-spinner {
-  width: 40px;
-  height: 40px;
-  background-color: #333;
-  margin: 100px auto;
-  -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
-  animation: sk-rotateplane 1.2s infinite ease-in-out;
+body {
+  background-color: #fff;
 }
-@-webkit-keyframes sk-rotateplane {
-  0% {
-    -webkit-transform: perspective(120px);
-  }
-  50% {
-    -webkit-transform: perspective(120px) rotateY(180deg);
-  }
-  100% {
-    -webkit-transform: perspective(120px) rotateY(180deg) rotateX(180deg);
-  }
+a {
+  color: #333333;
 }
-@keyframes sk-rotateplane {
-  0% {
-    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
-    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
-  }
-  50% {
-    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
-    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
-  }
-  100% {
-    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
-    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
-  }
+a:hover {
+  cursor: pointer;
 }
-/*#endregion*/
-/*#region Masonry*/
+div.image-compare {
+  white-space: nowrap;
+}
+div.image-compare div.image-to-compare {
+  width: 50%;
+  display: inline-block;
+}
+div.image-compare div.image-to-compare img {
+  max-width: 100%;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+}
+section {
+  padding: 12px 8px 12px 8px;
+}
+nav {
+  float: left;
+}
+article {
+  margin-left: 95px;
+}
+footer,
+section:after {
+  height: 20px;
+}
+section {
+  min-height: 100%;
+  margin: 0 0 -20px 0;
+}
 .masonry {
   margin: 0;
   padding: 0;
@@ -168,20 +119,40 @@ article ul {
 .brick {
   background-color: #eee;
   display: inline-block;
-  margin: 0;
+  margin: 0 0 30px 0;
   padding: 0;
-  margin-bottom: 30px;
-  /*margin: 0 0 1em;*/
   width: 100%;
 }
-.brick img {
+.brick > div {
+  display: block;
+}
+.brick div.image {
+  background: #ddd;
+}
+.brick div.image img {
   -moz-transition: all, 0.5s, ease-in-out;
   -webkit-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
   max-width: 100%;
-  vertical-align: bottom;
+  vertical-align: middle;
   margin: 0;
   padding: 0;
+}
+.brick div.image-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0, transparent 40%, transparent 60%, rgba(0, 0, 0, 0.3));
+  transition: all 0.15s ease-in-out;
+}
+.brick div.image-overlay div.bottom-box {
+  position: absolute;
+  width: 100%;
+}
+.brick div.image-overlay button.image-remove-button {
+  display: inline-block;
 }
 @media only screen and (min-width: 0px) {
   .masonry {
@@ -239,8 +210,28 @@ article ul {
     column-count: 8;
   }
 }
-/*#endregion*/
-/*#region Notification*/
+nav {
+  border-right: solid 1px #f1f1f1;
+  padding-right: 22px;
+}
+nav a {
+  display: block;
+}
+nav > div {
+  margin-bottom: 6px;
+}
+nav > div > :first-child {
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+nav > div.tags > :not(:first-child) {
+  font-style: italic;
+}
+.notification {
+  padding: 20px;
+  color: white;
+  margin-bottom: 15px;
+}
 .notification.danger {
   background-color: #f44336;
 }
@@ -253,15 +244,7 @@ article ul {
 .notification.success {
   background-color: #4CAF50;
 }
-.notification {
-  padding: 20px;
-  color: white;
-  margin-bottom: 15px;
-}
-.notification-test {
-  float: left;
-}
-.notification-close-button {
+.notification .notification-close-button {
   margin-left: 15px;
   color: white;
   font-weight: bold;
@@ -271,20 +254,46 @@ article ul {
   cursor: pointer;
   transition: 0.3s;
 }
-.notification-close-button:hover {
+.notification .notification-close-button:hover {
   color: black;
 }
-/*#endregion*/
-div.image-compare {
-  white-space: nowrap;
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  background-color: #333;
+  margin: 100px auto;
+  -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
+  animation: sk-rotateplane 1.2s infinite ease-in-out;
 }
-div.image-compare div.image-to-compare {
-  width: 50%;
-  display: inline-block;
+@-webkit-keyframes sk-rotateplane {
+  0% {
+    -webkit-transform: perspective(120px);
+  }
+  50% {
+    -webkit-transform: perspective(120px) rotateY(180deg);
+  }
+  100% {
+    -webkit-transform: perspective(120px) rotateY(180deg) rotateX(180deg);
+  }
 }
-div.image-compare div.image-to-compare img {
-  max-width: 100%;
-  vertical-align: middle;
-  margin: 0;
-  padding: 0;
+@keyframes sk-rotateplane {
+  0% {
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+  }
+  100% {
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+  }
+}
+article p {
+  line-height: 1.5em;
+  margin: 0 0 0.8em 0;
+}
+article ul {
+  padding-left: 2.5em;
 }

@@ -51,7 +51,8 @@ namespace Imglib.Host.Controller
 				.Select(x => new ImageInList
 				{
 					Id = x.Id,
-					FileName = x.FileName
+					FileName = x.FileName,
+					Url = _folder.GetRelativeWebPath(x.FileName)
 				})
 				.ToArray();
 

@@ -1,0 +1,29 @@
+﻿@import "variables.less";
+
+// Page padding
+
+section {
+	padding: 12px 8px 12px 8px;
+}
+
+// Navigation bar on left side
+
+nav {
+	float: left;
+}
+
+article {
+	margin-left: 95px;
+}
+
+// Footer on bottom
+// https://css-tricks.com/snippets/css/sticky-footer/
+
+footer, section:after {
+	height: @footer-height;
+}
+
+section {
+	min-height: 100%;
+	margin: 0 0 -@footer-height 0; // Bottom
+}

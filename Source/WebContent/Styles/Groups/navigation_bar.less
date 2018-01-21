@@ -1,0 +1,23 @@
+﻿@import "variables.less";
+
+nav {
+	border-right: solid 1px #f1f1f1;
+	padding-right: 22px;
+
+	a {
+		display: block;
+	}
+
+	& > div {
+		& > :first-child {
+			font-weight: bold;
+			margin-bottom: 2px;
+		}
+
+		margin-bottom: 6px;
+	}
+
+	& > div.tags > :not(:first-child) {
+		font-style: italic;
+	}
+}

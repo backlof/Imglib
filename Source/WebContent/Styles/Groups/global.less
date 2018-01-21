@@ -1,0 +1,67 @@
+﻿@import "variables.less";
+
+html, body {
+	height: 100%;
+}
+
+// Hidden class
+
+.hidden {
+	display: none !important;
+	visibility: hidden;
+}
+
+// Invisible class
+
+.invisible {
+	visibility: hidden;
+}
+
+// Change text globally
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: @text;
+}
+
+// Style external links
+
+a.link {
+	color: darken(@magenta, 5%);
+	text-decoration: underline;
+
+	&:visited {
+		color: lighten(@black, 30%);
+	}
+
+	&:hover {
+	}
+
+	&:active {
+	}
+}
+
+// Italic heading
+
+.italic {
+	font-style: italic;
+}
+
+// Background color
+
+body {
+	background-color: @white;
+}
+
+// Change the color of anchors to default in application
+
+a {
+	color: @text;
+}
+
+// Show pointer even when anchor is missing href attribute
+
+a:hover {
+	cursor: pointer;
+}

@@ -1,0 +1,43 @@
+﻿@import "variables.less";
+
+// https://www.w3schools.com/howto/howto_js_alert.asp
+
+.notification {
+	padding: 20px;
+	color: white;
+	margin-bottom: 15px;
+
+	&.danger {
+		background-color: @w3-fade-red;
+	}
+
+	&.info {
+		background-color: @w3-fade-blue;
+	}
+
+	&.warning {
+		background-color: @w3-fade-orange;
+	}
+
+	&.success {
+		background-color: @w3-fade-green;
+	}
+
+	.notification-text {
+	}
+
+	.notification-close-button {
+		margin-left: 15px;
+		color: white;
+		font-weight: bold;
+		float: right;
+		font-size: 22px;
+		line-height: 20px;
+		cursor: pointer;
+		transition: 0.3s;
+
+		&:hover {
+			color: black;
+		}
+	}
+}
