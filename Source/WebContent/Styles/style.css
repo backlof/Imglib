@@ -118,13 +118,15 @@ section {
 }
 .brick {
   background-color: #eee;
-  display: inline-block;
+  display: block;
+  /*inline-block*/
   margin: 0 0 30px 0;
   padding: 0;
   width: 100%;
 }
 .brick > div {
   display: block;
+  position: relative;
 }
 .brick div.image {
   background: #ddd;
@@ -146,6 +148,7 @@ section {
   right: 0;
   background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0, transparent 40%, transparent 60%, rgba(0, 0, 0, 0.3));
   transition: all 0.15s ease-in-out;
+  display: none;
 }
 .brick div.image-overlay div.bottom-box {
   position: absolute;
@@ -153,6 +156,9 @@ section {
 }
 .brick div.image-overlay button.image-remove-button {
   display: inline-block;
+}
+.brick:hover div.image-overlay {
+  display: block;
 }
 @media only screen and (min-width: 0px) {
   .masonry {
